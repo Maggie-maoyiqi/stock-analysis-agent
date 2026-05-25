@@ -1,0 +1,68 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis(2023-2024)
+Tutorial 6
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis(2023-2024)
+Tutorial 6 Midterm revision
+1. Suppose X∼ Nn (0, I ), and the sample mean
+¯
+X and sample variance S 2 are defined as:
+1
+¯
+X=
+n
+n
+Xi , S 2
+i=1
+=
+1
+n− 1
+n
+i=1
+¯
+Xi−
+X 2
+(a) Show that
+¯
+X and S 2 are independent using the Independence theorem .
+(b) Find the distribution of S 2 using the Cochran’s theorem.
+2. Let X and Y be independent standard normal random variables. Define
+Q1 = 0.36X 2 + 0.64Y 2 + 0.96X Y and Q2 = 0.64X 2 + 0.36Y 2
+(a) Show that Q1 and Q2 can be written in quadratic forms, namely
+Q1 = X Y A1
+ X
+Y
+ and Q2 = X Y A2
+Suppose A1 and A2 are symmetric, specify the matrices A1 and A2.
+(b) Find the distributions of Q1 and Q2.
+− 0.96X Y .
+ X
+Y
+ 
+3. Graphitized carbon was impregnated with potassium carbonate and then heated in a stream of
+15% carbon dioxide in nitrogen. In part of the experiment, the total amount of carbon monox-
+ide desorbed was found. The data give the amount of CO (carbon monoxide) desorbed. There
+are 5 observations on two variables. Consider a simple linear regression of Ratio (independent
+variable) regressed on Desorbed (dependent variable)
+Ratio
+Desorbed
+0.05
+0.5
+1.25
+2.1
+2.5
+0.1
+0.8
+1.81
+3.20
+4.01
+(a) (b) (c) (d) Write down the regression model. State clearly the assumptions.
+Estimate and interpret the regression coefficients.
+Find the predicted values and the residuals.
+Test whether Ratio has any effect on Desorbed based on the t test at the 5% level of signifi-
+cance.
+(e) Predict the mean Desorbed level when Ratio is 2.3.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1

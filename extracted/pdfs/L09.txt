@@ -1,0 +1,460 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 9 Extraneous Variation
+9 Extraneous Variation
+9.1 Introduction
+Studies of classification models sometimes encounter an extraneous source of variation, which
+may affect the responses or mask the true treatment effects, but is itself not of our primary
+interest.
+Examples:
+(i) Responses to different treatments are observed on experimental units located at differ-
+ent regions. ‘Region’ is an extraneous variable.
+(ii) Responses to different treatments are observed across a certain period of time. ‘Time’
+is an extraneous variable.
+(iii) Quality tests are done on products manufactured by different production lines. ‘Pro-
+duction line’ is an extraneous variable.
+Subjects having similar attributes of the extraneous variable usually exhibit more similar
+or homogeneous behaviour than subjects having different attributes of that variable. If it is
+not possible to remove extraneous variables, it is at least desirable to control them so as to
+• reduce experimental error variance, i.e. decrease the error S.S.,
+• increase precision of experiment, i.e. increase power to detect treatment effects.
+A common way to control extraneous variation is to incorporate any extraneous variables
+into the classification model in the form of additive effects.
+Type of extraneous variable Terminology Model
+Categorical blocking factor or blocks
+randomized block design
+Continuous concomitant variable or covariate
+analysis of covariance (ANCOVA)
+An important assumption underlying the randomized block design or ANCOVA is that the
+extraneous variables do not interact with the treatment effects. Thus,
+• for randomized block design, comparisons between treatment effects are unaffected by
+the block within which such comparisons are made;
+• for ANCOVA, comparisons between treatment effects are unaffected by the values of
+concomitant variables at which such comparisons are made.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+9.2 Randomized block design
+In a randomized block design, categorical extraneous factors are used to stratify samples into
+homogeneous groups called blocks. Treatments of our primary interest are randomly as-
+signed to the units within each block.
+Suppose we have available n experimental units which are grouped into b blocks. Each
+block is subject to t treatments under random allocation. Suppose that within the j th block,
+the i th treatment is being applied to ni j units, for i= 1, . . . , t and j= 1, . . . , b .Thus, the b
+blocks consist of n·1, . . . , n·b units, respectively, and the complete sample size is n = n··
+b
+=
+j=1
+t
+i=1 ni j.
+We can model the responses as
+yi j k= µ+ τi + γj + εi j k, i= 1, . . . , t , j= 1, . . . , b , k= 1, . . . , ni j , εi j k
+i.i.d.
+∼ N (0, σ2), (1)
+subject to the constraints that τt = γb = 0, where the treatment effects and the blocking effects
+are represented respectively by {τ1, . . . , τt }and {γ1, . . . , γb }. Alternatively, we may formulate
+the model as multiple linear regression on dummy variables A1, . . . , At−1, C1, . . . , Cb−1:
+Y= µ+ τ1A1 +···+ τt−1At−1 + γ1C1 +···+ γb−1Cb−1 + ε,
+which enables us to set up an n ×(t + b−1) design matrix X .
+Technically, the randomized block design is a two-way classification model with no inter-
+action terms. The two factors are the main factor and the blocking factor.
+Least squares estimators of µ, τi , γj :
+ˆ
+ˆ
+ˆ
+ˆ
+ˆ
+µ,
+τ1, . . . ,
+τt−1,
+γ1, . . . ,
+γb−1 = (X X )−1X Y .
+ANOVA—
+Main question: Are there significant treatment effects after controlling for blocking effects?
+A test for treatment effects amounts to testing
+(reduced model ω) H0 : τi = 0 ∀i vs (full model Ω) H1: no restrictions.
+Setting I= t and J= b in equation (5) of Chapter 8, the testing procedure described in Sec-
+tion 8.4.1(ii) can be applied here without change.
+Fitting the models yields:
+Model Ω ω
+Error S.S. SSEΩ =
+(yi j k−
+ˆ
+µ−
+ˆ
+τi−
+ˆ
+γj )2 SSEω=
+(yi j k−
+¯
+y·j·)2
+i , j,k
+i , j,k
+Setting the extra S.S. due to treatment to be SStr = SSEω−SSEΩ, the partition
+SST= SSEΩ +SStr + (SST−SSEω)
+leads to the ANOVA table:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+Source SS d. f. MS F -Ratio
+Between blocks SST−SSEω b−1
+Between treatments (given blocks) SStr t−1 MStr =
+SSEΩ
+Error SSEΩ n−t−b + 1 MSEΩ =
+SStr
+MStr
+Ftr =
+t−1
+MSEΩ
+n−t−b + 1
+Total SST n−1
+F test (of size α) for treatment effects —
+reject H0 iff the p -value (Ft−1, n−t−b +1 >Ftr) is smaller than α.
+If H0 is rejected, we say that there are significant treatment effects at αlevel.
+Analysis of treatment effects—
+(but not the same) procedure Treatment effects can be analysed using as de-
+scribed in Section 8.5, having the model without interactions (i.e. an additive model as given
+in equation (5) of Chapter 8), and with I , J set to be t , b respectively.
+Randomized block design with two factors—
+a similar If the treatments of interest are derived from two factors A and B, of I and J levels respec-
+tively, the randomized block design has the model formula
+yi j k l= µ+ αi + βj + (αβ)i j + γk + εi j k l, i= 1, . . . , I , j= 1, . . . , J , k= 1, . . . , b , l= 1, . . . , ni j k,
+i.i.d.
+with εi j k l
+∼ N (0, σ2), and ni j k denotes the sample size for treatment a i b j within block k.
+The main effects of A and B are represented respectively by {αi }and {βj }. The interaction
+effects between A and B are represented by {(αβ)i j }. The blocking effects are represented by
+{γk }.
+The parameters are subject to the default constraints
+αI = βJ = γb = (αβ)i J = (αβ)I j= 0 ∀i , j.
+The usual procedures for ANOVA tests and analysis of treatment means can be extended to
+the above model.
+9.3 Example: Education and income data
+An investigation was undertaken to study how education level affects monthly income of
+computer technicians. Four big computer companies participated in the survey. From each
+company six technicians were selected, two at each education level, to report on their monthly
+income. The data (in dollars) are given below:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+Education level \Company 1 2 3 4 Total
+1 (pre-high school) 8,000 6,500 10,100 7,200
+7,500 9,000 11,050 7,000 66,350
+2 (high school) 10,000 8,800 15,000 6,500
+9,100 9,000 14,300 7,500 80,200
+3 (college) 17,000 10,000 24,000 9,300
+16,500 11,000 25,500 8,900 122,200
+Total 68,100 54,300 99,950 46,400 268,750
+The factor of our primary interest is ‘education level’. However, there may be some system-
+atic discrepancies in pay between different companies. The four companies can be used as
+‘blocks’.
+Assuming a randomized block design, we model the monthly income as
+yi j k= µ+ τi + γj + εi j k, i= 1, 2, 3, j= 1, 2, 3, 4, k= 1, 2, εi j k
+i.i.d.
+∼ N (0, σ2),
+subject to the constraints that τ3 = γ4 = 0, where the ‘education’ effects and the ‘company’
+(blocking) effects are represented respectively by {τ1, τ2, τ3}and {γ1, γ2, γ3, γ4}.
+The following diagram displays the observed income data (marked ‘1’, ‘2’, ‘3’, ‘4’), and com-
+pares the estimated mean incomes ˆ
+µ+ˆ
+τi +ˆ
+γj obtained by fitting the randomized block de-
+sign model with those obtained by fitting a one-way classification model with no blocking (by
+‘companies’).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+An F test for ‘education’ effects can be based on the ANOVA table:
+Between blocks (companies) 278736979.2 3
+Between education levels 211460208.3 2 105730104.2 16.95371
+Error 112255208.3 18 6236400.5
+Total 602452395.8 23
+Source SS d. f. MS F -Ratio
+The p -value (F2,18 >16.95371) =effects on monthly income.
+If we had not blocked the data by ‘companies’, then we would have had a one-way ANOVA
+table:
+ 0.00007250836 shows that ‘education’ has highly significant
+Source SS d. f. MS F -Ratio
+Between education levels 211460208.3 2 105730104.2 5.67871241
+Error 390992187.5 21 18618675.6
+Total 602452395.8 23
+The p -value for ‘education’ effects becomes (F2,21 >5.67871241) = 0.01068, which is not
+significant at 1% level. Compared to previous results, blocking has helped reveal the effects
+of ‘education’ more significantly.
+To compare college-level technicians with those below college-level, consider the contrast
+L=
+1
+2 (µ+ τ1 + γj ) + (µ+ τ2 + γj )−(µ+ τ3 + γj ) = τ1 + τ2
+2−τ3 =
+τ1 + τ2
+.
+Estimate L by
+2
+ˆ
+τ1 +ˆ
+τ2
+ˆ
+L=
+2
+=¯
+y1··+¯
+y2··
+¯
+2−
+y3··
+=−6115.625,
+so that the 95% confidence interval for L is
+ˆ
+L ±se(ˆ
+L) t0.025,18 =−6115.625 ±1081.353(2.1009) = [−8387.464,−3843.786].
+9.4 Analysis of covariance (ANCOVA)
+ANCOVA combines features of both regression and classification models.
+In an ANCOVA model, additive effects of one or more additional quantitative extraneous vari-
+ables are introduced to augment a multiway classification model in order to reduce variation
+in the responses systematically. The added variables, usually known as concomitant variables
+or covariates, account for extraneous variation which may not be of our primary interest.
+Examples of concomitant variables:
+• Locations of experimental units measured by their altitude;
+• Time, age, years spent on education, IQ, weight, aptitude etc.;
+• Pre-study attitudes of respondents, pre-study sales etc.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+Analysis of covariance (ANCOVA) refers to the analysis of classification models in the pres-
+ence of one or more concomitant variables. In principle, ANCOVA models are linear models
+involving both qualitative (categorical) and quantitative explanatory variables.
+ONE-WAY ANCOVA
+An ANCOVA model with 1 factor of k levels and p concomitant variables X1, . . . , Xp may be
+expressed as
+yi j= µ+ τi + γ1 xi j ,1 +···+ γp xi j,p + εi j , εi j
+iid
+∼N (0, σ2), i= 1, . . . , k , j= 1, . . . , ni ,
+subject to τk = 0. Here xi j,m is the value of Xm associated with the response yi j.
+Alternatively, we may formulate the model as multiple linear regression on dummy variables
+D1, . . . , Dk−1 and concomitant variables X1, . . . , Xp :
+Y= µ+ τ1D1 +···+ τk−1Dk−1 + γ1X1 +···+ γp Xp + ε,
+which enables us to set up an n ×(k + p ) design matrix X , where n = n·
+=
+k
+i=1 ni.
+Least squares estimators of µ, τi , γj :
+ˆ
+ˆ
+ˆ
+ˆ
+ˆ
+µ,
+τ1, . . . ,
+τk−1,
+γ1, . . . ,
+γp = (X X )−1X Y .
+Test for treatment effects—
+To test for treatment effects, fit two models:
+• Full model Ω: regressing Y on all variables (factor + concomitant variables)
+−→error SS SSEΩ.
+• Reduced model ω: regressing Y on concomitant variables X1, . . . , Xp
+−→error SS SSEω.
+Setting SStr = SSEω−SSEΩ and SSRω= SST−SSEω, we have ANCOVA table:
+Source SS d. f. MS F -Ratio
+Regression fitting ω
+(i.e. concomitant variables) SSRω p
+Extra
+SStr
+(i.e. between treatments) SStr k−1 MStr =
+Ftr =
+MStr
+MSEΩ
+k−1
+SSEΩ
+Error SSEΩ n−p−k MSEΩ =
+n−p−k
+Total SST n−1
+Refer Ftr to the Fk−1, n−p−k distribution to test for treatment effects.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+TWO-WAY ANCOVA
+For two factors (A of I levels and B of J levels), ni j observations for treatment a i b j , and p
+concomitant variables (X1, X2, . . . , Xp ), we have
+yi j k= µ+ αi + βj + (αβ)i j + γ1 xi j k ,1 +···+ γp xi j k, p + εi j k,
+for i= 1, . . . , I , j= 1, . . . , J , k= 1, . . . , ni j , subject to the constraints imposed on a two-way
+model as shown in Chapter 8 (page 5). Here xi j k, m is the value of Xm associated with the
+response yi j k.
+The usual procedures for testing and analysis of treatment means can be extended to the
+above model.
+Remarks:
+1. 2. Alternatively, ANCOVA may be viewed as MLR on the p concomitant variables, with the
+intercept term varying over different treatments. For example, when p= 1, ANCOVA
+corresponds to fitting a set of parallel regression lines (response against concomitant)
+to the observations, each corresponding to a particular treatment group.
+An individual treatment mean no longer carries much sense in an ANCOVA model since
+it varies with concomitant observations. However, comparison of treatment means
+still makes sense, since any contrast of treatment means based on any specified set
+of concomitant observations, X1 = x1, . . . , Xp = xp say, does not depend on the val-
+ues x1, . . . , xp . For example, in one-way ANCOVA, a contrast of the treatment means
+at X1 = x1, . . . , Xp = xp has the formula
+k
+i=1
+ai µ+ τi + γ1 x1 +···+ γp xp =
+k
+i=1
+ai τi (since k
+i=1 ai = 0),
+which does not depend on the particular values x1, . . . , xp fixed for the concomitant vari-
+ables.
+9.5 Example: Car type data with mileage
+An additional variable ‘Mileage’ is appended to the dataset in Section 8.4.2. ‘Mileage’ is in-
+cluded in the two-way model as a concomitant variable.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+Make Table A: Data on 35 cars (including a concomitant variable Mileage (M ))
+Price Country Type M Make Price Country Type M
+Acura Legend Buick Century Chevrolet Beretta Chrysler Le Baron Chrysler Le Baron Coupe Dodge Daytona Dodge Grand Caravan Eagle Premier Eagle Summit Ford Aerostar Ford Escort Ford Probe Ford Tempo Ford Thunderbird Honda Accord Honda Civic Honda Civic CRX Honda Prelude 24760 Japan Medium 20 13150 USA Medium 21 10320 USA Compact 26 10945 USA Compact 25 12495 USA Medium 22 9745 USA Sporty 27 15395 USA Van 18 15350 USA Medium 22 8895 USA Small 33 12267 USA Van 18 7402 USA Small 33 11470 USA Sporty 30 9483 USA Compact 24 14980 USA Medium 23 12145 Japan Compact 26 6635 Japan Small 32 9410 Japan Sporty 33 13945 Japan Sporty 27
+Mazda 626 Mazda 929 Mazda MPV Mazda Protege Mitsubishi Galant Mitsubishi Sigma Nissan 240SX Nissan Maxima Nissan Sentra Nissan Stanza Pontiac Grand Am Subaru Legacy Subaru Loyale Toyota Camry Toyota Corolla Toyota Cressida Toyota Tercel 12459 Japan Compact 24
+23300 Japan Medium 21
+14944 Japan Van 19
+6599 Japan Small 32
+10989 Japan Compact 25
+17879 Japan Compact 21
+13249 Japan Sporty 24
+17899 Japan Medium 22
+7399 Japan Small 33
+11650 Japan Compact 21
+10565 USA Compact 23
+11499 Japan Compact 23
+9599 Japan Small 25
+11588 Japan Compact 27
+8748 Japan Small 29
+21498 Japan Medium 23
+6488 Japan Small 35
+Inclusion of ‘Mileage’ yields the ANCOVA table (for testing for interactions):
+Source SS d. f. MS F -Ratio
+Main effects + Mileage 525097020.9 6
+Interactions 78002526.7 4 19500631.7 6.6352
+Error 70535548.0 24 2938981.2
+Total 673635095.5 34
+The p -value for interactions is (F4,24 >6.6352) = 0.0009600, a highly significant result. It is
+not meaningful to test further for main effects of the factors.
+Compare this p -value with the p -value (= 0.005299) for interactions calculated in Section 8.4.2
+without the concomitant variable ‘Mileage’. The evidence for the existence of interactions
+between ‘Country’ and ‘Type’ is even stronger by including ‘Mileage’ in the model. ‘Mileage’
+serves to clarify better the effects of the two factors.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+Estimates of nonzero parameters are given below:
+Effect Country Type Estimate
+Intercept ˆ
+µ= 21020.2436
+Mileage ˆ
+γ=−399.402422
+Main (Country) Japan ˆ
+α1 = 1512.4024
+Main (Type) Compact
+Medium
+Small
+Sporty
+ˆ
+β1 =−906.6343
+ˆ
+β2 = 1760.3597
+ˆ
+β3 = 308.5363
+ˆ
+β4 = 970.2254
+Interaction Japan Compact (αβ)11 = 503.8746
+Japan Medium (αβ)12 = 6158.3964
+Japan Small (αβ)13 =−2881.7073
+Japan Sporty (αβ)14 =−118.2703
+Estimated treatment means (assuming Mileage= 0):
+Compact Medium Small Sporty Van
+Japan USA 22129.89 30451.40 19959.48 23384.60 22532.65
+20113.61 22780.60 21328.78 21990.47 21020.24
+Fitting a two-way model without ‘Mileage’, the estimated treatment means are simply given
+by ¯
+yi j·for treatment a i b j :
+Compact Medium Small Sporty Van
+Japan USA 12601.29 21864.25 7578.00 12201.33 14944.00
+10328.25 13993.75 8148.50 10607.50 13831.00
+The above two diagrams compare the estimated treatment means obtained under (a) the 2-
+way ANOVA model (without ‘Mileage’), and (b) the 2-way ANCOVA model at Mileage= 0. A
+comparison between (a) and (b) reveals the effect of introducing the concomitant variable
+‘Mileage’.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+The diagrams below show the fitted regression lines (against ‘Mileage’) corresponding to each
+of the 10 treatment groups under the 2-way ANCOVA model. The observed prices are labelled
+as “J” (Japan) and “U” (USA). Note that all the fitted lines have a constant slope ˆ
+γ=−399.40.
+Suppose comparisons between Japanese and U.S. cars are required for each car type, all hav-
+ing the same mileage. Interactions have been shown to be significant and the full two-way
+ANCOVA model is adopted.
+Let X be the 35 ×11 design matrix associated with the parameter vector [µ, γ, α1, . . .] under
+the two-way ANCOVA model. Tabulated below is the matrix (X X )−1:
+2.613 -0.117 -0.383 0.263 -0.031 1.261 0.732 0.307 0.324 0.148 0.324
+-0.117 0.007 -0.007 -0.042 -0.026 -0.098 -0.068 0.011 0.010 0.020 0.010
+-0.383 -0.007 1.507 0.542 0.526 0.598 0.568 -1.511 -1.510 -1.520 -1.510
+0.263 -0.042 0.542 1.026 0.670 1.136 0.945 -0.820 -0.564 -0.627 -0.564
+-0.031 -0.026 0.526 0.670 0.854 0.891 0.774 -0.543 -0.789 -0.578 -0.539
+1.261 -0.098 0.598 1.136 0.891 2.467 1.527 -0.661 -0.647 -1.293 -0.647
+0.732 -0.068 0.568 0.945 0.774 1.527 1.719 -0.612 -0.603 -0.705 -1.103
+0.307 0.011 -1.511 -0.820 -0.543 -0.661 -0.612 1.910 1.516 1.532 1.516
+0.324 0.010 -1.510 -0.564 -0.789 -0.647 -0.603 1.516 2.015 1.529 1.515
+0.148 0.020 -1.520 -0.627 -0.578 -1.293 -0.705 1.532 1.529 2.225 1.529
+0.324 0.010 -1.510 -0.564 -0.539 -0.647 -1.103 1.516 1.515 1.529 2.348
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 9 Extraneous Variation
+In general a 95% confidence interval for L= c β = [c1, . . . , c11][µ, γ, α1, . . .] can be calculated
+as
+ˆ
+L ±se(ˆ
+L) t0.025,35−11 = c [ˆ
+ˆ
+µ,
+γ,
+ˆ
+α1, . . .] ± 2938981.2 ×c (X X )−1c t0.025,24.
+In particular, a comparison between Japanese and U.S. cars of type j (at mileage x ) corre-
+sponds to setting
+L= µ+ α1 + βj + (αβ)1 j + γx− µ+ α2 + βj + (αβ)2 j + γx = α1 + (αβ)1 j.
+The following table summarises comparison results for each car type:
+Type j c Japan−US
+c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11
+ˆ
+L 95% interval
+compact medium small sporty 0 0 1 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 1 0−1369.30 0 0 1 0 0 0 0 0 0 0 1 2016.28 7670.80 1394.13 [−209.02, 4241.58]
+[5164.81, 10176.78]
+[−4314.23, 1575.62]
+[−1838.98, 4627.24]
+van 0 0 1 0 0 0 0 0 0 0 0 1512.40 [−2830.44, 5855.25]
+↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
+parameters µ γ α1 β1 β2 β3 β4 (αβ)11 (αβ)12 (αβ)13 (αβ)14
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11

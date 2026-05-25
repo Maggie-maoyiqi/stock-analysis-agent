@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown";
+import ChartRenderer from "./ChartRenderer";
 
 export default function ReportViewer({ task }) {
   return (
@@ -14,6 +15,7 @@ export default function ReportViewer({ task }) {
         <p className="muted-copy">任务正在处理中，前端会每 3 秒自动刷新一次状态。</p>
       ) : (
         <div className="report-content">
+          <ChartRenderer charts={task.charts || []} />
           {task.report_file ? (
             <div className="report-path">
               报告文件: <code>{task.report_file}</code>

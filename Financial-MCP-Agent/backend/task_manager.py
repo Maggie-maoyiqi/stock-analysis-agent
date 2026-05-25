@@ -1,20 +1,24 @@
-"""内存任务管理器。"""
+"""Persistent task manager with SSE subscriptions."""
+from __future__ import annotations
+
 import asyncio
+import json
 from datetime import datetime
-from typing import Dict
+from typing import Any, AsyncIterator, Dict
 from uuid import uuid4
 
+from backend.storage import create_task_record, get_task_record, update_task_record
 from src.services.analysis_service import build_initial_state, run_analysis_workflow
 
 
 class AnalysisTaskManager:
-    """管理分析任务的生命周期。"""
+    """Manage background analysis tasks and push updates to SSE subscribers."""
 
     def __init__(self):
-        self.tasks: Dict[str, dict] = {}
+        self.subscribers: Dict[str, set[asyncio.Queue[str]]] = {}
 
     def create_task(self, query: str) -> dict:
-        """创建后台分析任务。"""
+        """Create a background analysis task."""
         task_id = uuid4().hex
         state = build_initial_state(query)
         now = datetime.utcnow().isoformat()
@@ -57,33 +61,58 @@ class AnalysisTaskManager:
                 "forecast": "等待开始",
                 "summary": "等待开始",
             },
+            "charts": [],
             "created_at": now,
             "updated_at": now,
             "execution_time": None,
         }
-        self.tasks[task_id] = record
+        create_task_record(record)
         asyncio.create_task(self._run_task(task_id, query))
         return record
 
+    async def _publish(self, task_id: str, record: Dict[str, Any]) -> None:
+        payload = json.dumps(record, ensure_ascii=False)
+        for queue in list(self.subscribers.get(task_id, set())):
+            await queue.put(payload)
+
     async def _run_task(self, task_id: str, query: str):
-        """执行后台任务。"""
-        record = self.tasks[task_id]
-        record["status"] = "running"
-        record["progress_percent"] = 5.0
-        record["updated_at"] = datetime.utcnow().isoformat()
+        """Execute the background task."""
+        record = update_task_record(
+            task_id,
+            {
+                "status": "running",
+                "progress_percent": 5.0,
+                "updated_at": datetime.utcnow().isoformat(),
+            },
+        )
+        await self._publish(task_id, record)
         try:
+
             async def progress_callback(step: str, status: str, progress: float, message: str = ""):
-                if step in record["step_statuses"]:
-                    record["step_statuses"][step] = status
-                if step in record.get("step_progresses", {}):
-                    record["step_progresses"][step] = round(progress * 100, 1)
-                if step in record.get("step_messages", {}):
-                    record["step_messages"][step] = message or record["step_messages"][step]
-                record["progress_percent"] = round(progress * 100, 1)
-                record["updated_at"] = datetime.utcnow().isoformat()
+                current = get_task_record(task_id) or {}
+                if step in current.get("step_statuses", {}):
+                    current["step_statuses"][step] = status
+                if step in current.get("step_progresses", {}):
+                    current["step_progresses"][step] = round(progress * 100, 1)
+                if step in current.get("step_messages", {}):
+                    current["step_messages"][step] = message or current["step_messages"][step]
+                current["progress_percent"] = round(progress * 100, 1)
+                current["updated_at"] = datetime.utcnow().isoformat()
+                updated = update_task_record(
+                    task_id,
+                    {
+                        "step_statuses": current.get("step_statuses", {}),
+                        "step_progresses": current.get("step_progresses", {}),
+                        "step_messages": current.get("step_messages", {}),
+                        "progress_percent": current["progress_percent"],
+                        "updated_at": current["updated_at"],
+                    },
+                )
+                await self._publish(task_id, updated)
 
             final_state = await run_analysis_workflow(query, progress_callback=progress_callback)
-            record.update(
+            updated = update_task_record(
+                task_id,
                 {
                     "status": "completed",
                     "stock_code": final_state.get("stock_code"),
@@ -96,23 +125,46 @@ class AnalysisTaskManager:
                     "news_analysis": final_state.get("news_analysis"),
                     "forecast_analysis": final_state.get("forecast_analysis"),
                     "execution_time": final_state.get("execution_time"),
+                    "charts": final_state.get("charts", []),
                     "progress_percent": 100.0,
                     "updated_at": datetime.utcnow().isoformat(),
-                }
+                },
             )
+            await self._publish(task_id, updated)
         except Exception as exc:
-            record.update(
+            updated = update_task_record(
+                task_id,
                 {
                     "status": "failed",
                     "error": str(exc),
-                    "progress_percent": record.get("progress_percent", 0.0),
                     "updated_at": datetime.utcnow().isoformat(),
-                }
+                },
             )
+            await self._publish(task_id, updated)
 
     def get_task(self, task_id: str) -> dict | None:
-        """查询任务。"""
-        return self.tasks.get(task_id)
+        """Get a task by id."""
+        return get_task_record(task_id)
+
+    async def stream(self, task_id: str) -> AsyncIterator[str]:
+        """Yield task updates as SSE frames."""
+        queue: asyncio.Queue[str] = asyncio.Queue()
+        self.subscribers.setdefault(task_id, set()).add(queue)
+        initial = self.get_task(task_id)
+        if initial:
+            yield f"event: task\ndata: {json.dumps(initial, ensure_ascii=False)}\n\n"
+        try:
+            while True:
+                try:
+                    payload = await asyncio.wait_for(queue.get(), timeout=15)
+                    yield f"event: task\ndata: {payload}\n\n"
+                    record = json.loads(payload)
+                    if record.get("status") in {"completed", "failed"}:
+                        break
+                except asyncio.TimeoutError:
+                    yield "event: ping\ndata: keep-alive\n\n"
+        finally:
+            self.subscribers.get(task_id, set()).discard(queue)
 
 
 task_manager = AnalysisTaskManager()

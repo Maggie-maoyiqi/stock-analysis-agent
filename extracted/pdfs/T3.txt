@@ -1,0 +1,160 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 3 SLR Prediction and Confidence Region
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL
+SCIENCE
+STAT3600A Linear Statistical Analysis (2023-2024)
+Tutorial 3 SLR Prediction and Confidence Region
+1 Review of SLR
+1. Simple Linear Regression
+(a) When the data are of the form (x1, y1),
+···
+, (xn , yn ) (with one dependent and one indepen-
+dent variable only), the simplest form is the simple linear regression model (SLR) given
+Yi = β0 + β1 xi + εi , i= 1, 2, . . . , n
+(A1) (εi ) = 0 that implies (Y |X= xi ) = β0 + β1 xi (primary assumption);
+(A2) Var (εi ) = σ2 (constant variance);
+(A3) The εi ’s are uncorrelated (uncorrelatedness);
+(A4) The εi ’s are normally distributed (normality).
+Therefore,
+εi
+i.i.d
+∼ N 0, σ2 or ε =
+     
+ε1
+ε2
+.
+.
+.
+εn
+     ∼Nn 0, σ2I n
+(b) Solving for β0 and β1, we obtain the LS-estimator
+ˆ
+β0 =¯
+y−
+ˆ
+β1
+¯
+x
+ˆ
+β1 =
+n
+i=1 (xi−
+¯
+x ) yi−
+¯
+y
+n
+i=1 (xi−
+¯
+x )2
+SX Y
+=
+SX X
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 3 SLR Prediction and Confidence Region
+2. Some jargon
+(a) What is confidence interval/inference/ prediction?
+Click this link.
+(b) At least understanding the intuitions.
+3. Inference about σ2
+(a) Estimator for σ2
+.
+SS E
+M S E=
+ˆ
+σ2 =
+(n−2)
+Note 1: (n−2) because there are n observations and 2 parameters in the model.
+Note 2: When we are doing inference, what we are doing
+(b) Distribution for σ2
+(n−2)ˆ
+σ2
+=
+σ2
+SS E
+σ2
+∼χ2
+n−2
+What about model without intercept?
+4. Inference about β
+βj has a t-distribution with degree of freedom n-2
+ˆ
+βj−βj
+s e (βj )∼tn−2
+5. Prediction
+(a) Prediction of future mean response, the 100(1−α)% prediction interval for E[Y] is
+ˆ
+β0 +ˆ
+β1 x0 ±tα/2,n−2ˆ
+σ[ 1
+n + (x0−
+¯
+x )2
+sx x
+]1/2
+(b) Prediction of future individual response, the 100(1−α)% prediction interval for Y is
+ˆ
+β0 +ˆ
+β1 x0 ±tα/2,n−2ˆ
+σ[ 1
+n + (x0−
+¯
+x )2
+sx x
++ 1]1/2
+(c) Individual response has a wider confidence interval than mean confidence interval. Be-
+cause taking mean could reduce uncertainty.
+2 Exercise
+A research is conducted to investigate the relationship between the average number of hours people
+spent on using the internet per day and their age. n people were randomly chosen to take part in this
+study. The data are given as follows:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 3 SLR Prediction and Confidence Region
+Hours Age
+3.3 2.5 4.7 0.25 3.0 1.03 1.75 34
+47
+25
+56
+29
+62
+41
+8 24
+In the question, use Age as the explanatory variable and Hours as the response variable.
+¯
+(a) Find n,
+X ,
+¯
+Y , SXX, SXY and SYY;
+(b) Compute the least square estimate of β0 and β1.
+(c) Find an unbiased estimate for σ2
+.
+(d) Estimate σ2 with a 95% confidence interval.
+(e) Construct a 95% confidence interval for β0 and β1.
+(f) Test whether the variable age has significant contribution to explain the average daily number
+of hours spent on using the internet.
+3 Use R for SLR
+In this section, we will go through the following process using R:
+(1) Plot Y against X
+(2) Fit a simple linear regression model to the dataset
+1. Data Input
+x <- c(34,47,25,56,29,62,41,24)
+y <- c(3.3,2.5,4.7,0.25,3,1.03,1.75,8)
+2. X-Y Plotting
+plot(x, y, type, main, sub, xlab, ylab...)
+3. Fit a SLM
+model <- lm(y~x)
+4. Find useful information
+summary(model)
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3

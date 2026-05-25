@@ -1,0 +1,901 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 10 Model Diagnostic Checking
+10 Model Diagnostic Checking
+Model diagnostic checking follows the following three objectives:
+(O1) (O2) (O3) Check the validity of the model assumptions
+Identify any unusual observations (outliers and/or influential observations)
+Detect the existence of the problem of multicollinearity.
+10.1 Checking model assumptions (Regression diagnostics)
+The multiple linear regression is given by:
+yi = β0 + β1 xi 1 +···+ βk xi k + εi , εi
+i.i.d.
+∼ N (0, σ2)
+with the following assumptions which need to be checked as below:
+(A1) Linearity in X ’s
+(A2) Constant variance
+(A3) Independence
+(A4) Normality
+Linearity in (A1) and Constant Variance (A2)
+I. Effects
+If A1 is not satisfied, this means that some important X variables may be missing in the
+proposed model. In other words, the proposed model is underfitted. In this case,
+ˆ
+β will
+generally be biased.
+ˆ
+If A2 is not satisfied,
+II. Detection
+(a) Raw residual: ˆ
+ˆ
+εi = yi−
+yi
+Note that Var(εi ) = σ2 is a constant but it can be shown that the variance of the
+estimated residuals ˆ
+εi is given by Var(ˆ
+εi ) = (1−hi i )σ2 where hi i is the i th diagonal
+element of the hat matrix H which is not a constant. In matrix form, we have
+ˆ
+Y= X (X X ) X Y= H Y . The estimated residual is thus
+ˆ
+ε = Y−
+ˆ
+Y = (I−H )Y
+and hence Var(ˆ
+ε) = (I−H )σ2 [recall that (I−H )2 = I−H ] or more generally
+ˆ
+ε ∼N 0, σ2 (I−H ).
+β is still unbiased but is no longer optimal (i.e. not BLUE).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+(b) Standardized residual:
+ri =
+ˆ
+εi
+MSE(1−hi i ).
+When n is large, ri
+approx.
+∼ N (0, 1).
+(c) Residual plots:
+(i) plot ri (or ˆ
+εi ) vs ˆ
+yi (check linearity and constant variance)
+(ii) plot ri (or ˆ
+εi ) vs xi j (check linearity and constant variance)
+(iii) plot rt (or ˆ
+εi ) vs t (for time series data only)
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+ˆ
+If the model assumptions are all satisfied, then we have ˆ
+ε = (I−H )Y and
+Y= H Y being
+uncorrelated. Thus, there should be no structure when we plot the residuals against
+fitted values. A useful diagnostic check using ˆ
+ε (or r ) is to plot ˆ
+εi (or ri ) against ˆ
+yi . An
+adequate model should result in no apparent correlation between the two variables.
+Any noticeable departure from a random pattern indicates possible inadequacies in
+the postulated regression function. Reformulation of the regression function may be
+necessary in this case.
+A residual plot against fitted responses can also be used to examine the assumption of
+a constant error variance σ2. For example, residuals plot like that in (b), (g) and (h) of
+the above figure suggests the possibility that Var(εi ) increases as (Yi ) increases. In this
+case we may need a variance-stabilizing transformation of Yi before further fitting a re-
+gression model. While residuals plot like those suggested by (e), (f), (g) and (h) suggests
+that Yi may not be linear in Xi.
+In general, a residual plot against explanatory variables already in the model hints at
+whether any transformation of the explanatory variables is necessary. On the other
+hand, one should also try some residual plots against explanatory variables not in the
+model. Suppose we have a number of explanatory variables at hand, say X1, X2, X3, X4,
+and have fitted a linear model based on only X1, X2, X3. Should we include X4 as well?
+To check this we may plot the residuals based on the first three explanatory variables
+against the values of the fourth one. A significant trend indicates possible dependence
+on X4. The time plot is in fact a special case of this problem where X4 represents the
+time variable.
+III. Possible Remedies
+(a) nonlinearity: transform Xi or add some higher order terms such as X 2
+i , X 3
+i , etc.
+(b) nonconstant variance: transform Y by one of the following methods:
+Use variance stablizing transformation:
+Given Var(Y ) ∝g ( (Y )). Then it can be shown that the transformation T= h(Y )
+where
+1
+g (µ) d µ
+is found to have Var(T ) ≈constant.
+h(µ) ∝
+Common variance stabilizers:
+Type of variable Y Situation Transformation
+Counts (Poisson) Var(yi ) ∝ (yi ) Y
+Binomial proportion Var(yi ) ∝ (yi )(1− (yi )) sin−1( Y )
+Range of Y is very broad Var(yi ) ∝ (yi )2 log(Y )
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+Independence (A3)
+I. Effects
+ˆ
+If (A3) is not satisfied,
+β is still unbiased but is no longer optimal (i.e. not BLUE).
+Examples of correlated structures:
+(a) Clustered data (data are taken within clusters over several clusters)
+(b) Random effect (data are drawn from several populations)
+(c) Time series (data are taken over time)
+(d) Spatial data (data are taken over several locations).
+II. Detection (for time series data only)
+(a) Residual plot: plot ˆ
+εt or rt vs t (detect time trend and serial correlation)
+(b) Durbin-Watson Test (detect serial correlation)
+H0 : εt are not autocorrelated
+H1 : εt are 1st order autocorrelated (i.e. εt−1 and εt are correlated)
+Test statistic:
+DW=
+n
+t =2(ˆ
+ˆ
+εt−
+εt−1)2
+n
+ˆ
+ε2
+t =1
+t
+It is used to detect 1st order autocorrelation. Three cases:
+Strongly positive autocorrelation Strongly negative autocorrelation DW ≈0
+DW ≈4
+Independence DW ≈2
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+Two-sided test at significance level α:
+(i) if DW <dL,α/2 or 4−DW <dL,α/2, then reject H0
+(ii) if DW >dU ,α/2 and 4−DW >dU ,α/2, then accept H0
+(iii) otherwise inconclusive.
+III. Possible Remedy: Modelling autocorrelation by using time series models.
+Normality (A4)
+I. Effects
+ˆ
+If (A4) is not satisfied,
+β is still BLUE. (A4) is not necessary for the estimation of β , but
+(A4) is a necessary condition for valid statistical inference like tests of hypotheses and
+construction of confidence intervals.
+II. Detection
+(a) Normal probability plot for ˆ
+εi (or ri ).
+The normality assumption on the error terms in a linear model is usually, at least
+approximately, met. However, major departures from this assumption may create
+serious problems.
+To check for normality we usually look at the residuals, raw or standardized, to
+see if they correspond to a random sample from a normal distribution with zero
+mean. Two possible ways are:
+(i) plot a histogram of the residuals, which is only helpful for large n−p,
+(ii) look at the empirical (cumulative) distribution function (cdf) of the residuals.
+We shall focus on method (ii) above. The empirical distribution function of the
+raw residuals {ˆ
+εi }is defined as
+Fn (x ) = 1
+n
+n
+i=1
+I {ˆ
+εi ≤x },
+where I {E }denotes the indicator function of the event E .
+By definition, Fn (x ) monotonically increases as x increases and 0 ≤Fn (x ) ≤1. Let
+e1 ≤···≤en be the ordered values of the residuals. Then Fn (x ) is a step function
+which goes up by 1
+n at each ei . See Figure below.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+If the errors constitute a random sample from N (0, σ2) then we should find Fn (x ) ≈
+Φ(x /σ), where Φ denotes the standard normal distribution function. However,
+without a change of scale, it is hard to tell from a plot of Fn (x ) how good this ap-
+proximation is. Thus we make a simple transformation by inverting Φ, hence giv-
+ing
+x
+Φ−1(Fn (x )) ≈
+,
+σ
+i.e. Φ−1(Fn (x )) should be approximately linear in x and pass through the origin if
+the normality assumption is correct.
+Note that
+n
+Fn (x ) =
+          
+0, x <e1,
+1
+, e1 ≤x <e2,
+.
+.
+.
+.
+.
+.
+1, x ≥en.
+To avoid calculating the infinite value and Φ−1(1), some authors suggest to plot the
+points
+ei against Φ−1 i
+n + 1 , i= 1, . . . , n
+known as the quantile-quantile (QQ) plot, in practice. Essentially, QQ plot plots
+the observed quantile (ei ) against the expected quantile Φ−1(1/(n + 1)) , apart from
+a constant scale factor, under normality.
+A plot that is nearly linear suggests agreement with normality, whereas a plot that
+departs substantially from linearity suggests that the error distribution is not nor-
+mal.
+Note that the residuals constitute a random sample from N (0, σ2) is not strictly
+true: e.g. Var(ˆ
+ε) = σ2(I−H ). However, we may usually assume that the correlation
+between the ˆ
+εi is negligible in graphical procedures except whenn−p
+p is small.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+(b) Tests on ˆ
+εi or ri :
+Shapiro-Wilk W , Kolmogorov-Smirnov D , Anderson-Darling A2 and Cramer-von
+Mises W 2 tests for normality of ˆ
+εi or ri.
+Note that violations of A1, A2 or A3 can often lead to a non-normal error. It is
+usually a good idea to check for validity of A1-A3 before attempting to check for
+normality.
+III. Possible Remedies
+(i) detect for nonlinearity, unequal variances and correlated errors and make reme-
+dies if necessary.
+(ii) use Box-Cox transformation: transform Yi such that
+Y {λ}
+i =
+  
+Y λ
+i−1
+λ˙
+Y λ−1 , if λ̸= 0, i= 1, . . . , n,
+˙
+Y ln(Yi ), if otherwise, i= 1, . . . , n
+according to ladder of powers:
+Power (λ) meaning
+3 cubic
+2 square
+1 no transform
+0.5 square-root
+0 ln(Y )
+−0.5 inverse of square root
+−1 inverse
+−2 inverse of square
+−3 inverse of cubic
+˙
+Y=
+n
+i=1
+Yi
+1/n
+.
+where
+˙
+Y is the geometric mean of the original responses Yi , i.e.
+Y {λ}
+i , i= 1, . . . , n are the new responses.
+ˆ
+The value of λis chosen to be λ=
+λso that the resulting transformation gives the
+minimum error sum of squares SSE or error mean squares MSE. It is more conve-
+nient to use one of the standard power transformations using λ= 3, 2, 1, 0.5, 0, -0.5,
+ˆ
+-1, -2 and -3, in the vicinity of
+λ. Note that we are not considering the power trans-
+formation Y λ
+i in choosing the optimal λbecause the magnitude of SSE is highly
+affected by the power. After the optimal λ(= λ0, say) has been choosen, one may
+use Y λ0
+i (when λ0
+̸= 0) or ln(Yi ) (when λ0 = 0) as the new response variable.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+10.1.1 Example (Environmental Data)
+• (A1) Linearity and (A2) Constant Variance
+To check the linearity, we shall plot the standardized residuals ri against the fitted re-
+sponse values ˆ
+yi and the independent variables xi j and detect whether there are any
+curvy patterns. Similarly, to check whether the assumption of constant variance holds,
+we shall detect whether megaphone patterns occur in the same plots.
+The standardized residuals ri is given by
+r =
+            
+ˆ
+y1−
+y1
+ˆ
+σ2(1−h1,1)
+ˆ
+y2−
+y2
+ˆ
+σ2(1−h2,2)
+.
+.
+.
+ˆ
+y30−
+y30
+ˆ
+σ2(1−h30,30)
+            
+=
+            
+3.45−2.8024
+0.3490(1−0.0909)
+3.30−2.9197
+0.3490(1−0.0966)
+.
+.
+.
+3.33−2.7828
+0.3490(1−0.2695)
+            
+1.1498
+0.6773
+=
+          
+          
+.
+.
+.
+.
+1.0837
+The plot ri against the fitted response values ˆ
+yi is given by:
+No obvious non-linear or megaphone pattern can be detected by this plot. Subsequently,
+the plot ri against the regressor "radiation" will be checked:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+There are no obvious non-linear pattern or megaphone patterns in this plot. Then the
+plot ri against the regressor "temperature" will be checked:
+No obvious non-linear pattern or megaphone can be detected by this plot. Eventually,
+the plot ri against the regressor "wind" will be checked:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+Obviously, wind and ozone values have no non-linear relationship.
+• (A3) Independence
+To check the independence, we plot ˆ
+εi against the i -th observation and see whether
+there are systematic patterns.
+Since no systematic patterns can be found in this plot, we conclude that the indepen-
+dence assumption holds.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+• (A4) Normality
+The QQ-plot is an appropriate tool for checking normality of the residuals:
+On the other hand, we can also perform a Shapiro-Wilk test based on the standardized
+residuals if the null hypothesis is formulated as:
+H0 : The errors are normally distributed vs. H1 : H0 is not true.
+ShapiroResult(statistic=0.9830412268638611,
+pvalue=0.8993414044380188)
+Since the p-value is greater than 0.05, we do not reject H0 at the 5% level of significance
+and conclude that the residuals are normally distributed.
+Below we try the Box-Cox transformation for illustration purpose only.
+lambda RMSE lambda RMSE
+-2 1.5034 -1.5 1.1323 -1 0.8888 -0.5 0.7343 0 0.6432 0.5 0.5988
+1 0.5908
+1.5 0.6131
+2 0.6636
+2.5 0.7430
+3 0.8543
+Since λ= 1 has the smallest root mean squared error RMSE, no transformation is needed.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+The following plots the log-likelihood (equivalent to RMSE) against λ.
+10.1.2 Example (Market Data)
+• The data give the Market rate (Y ) and the account rate (X ) for 54 cases.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12
+--- PAGE 13 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+•
+ˆ
+y= 0.848 + 0.610x , R 2 = 0.259
+• Normal Q-Q plot
+The scatters do not fall on the diagonal line.
+10.1.3 Example (Polyamine Data)
+• Data on age (X ) and plasma level of a polyamine (Y ) for 25 healthy children
+i X Y
+1 0 13.44
+2 0 12.84
+3 0 11.91
+4 0 20.09
+5 0 15.60
+6 1.0 10.11
+7 1.0 11.38
+8 1.0 10.28
+9 1.0 8.96
+.
+.
+.
+.
+.
+.
+.
+.
+.
+• Distinct nonlinear regression relationship (nonlinearity)
+Greater variability for younger children than for older ones (non constant variabnce)
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+13
+--- PAGE 14 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+• Consider Box-Cox transformation for selected values of λranging from−1.0 to 1.0
+λ SS E
+1.0 78.0
+0.8 63.7
+0.6 52.8
+0.4 44.6
+0.2 38.6
+0.0 34.5
+−0.2 31.9
+−0.4 30.7
+−0.5 30.6
+−0.6 30.7
+−0.8 31.8
+−1.0 33.9
+A power value of λ=−0.5 is identified. SS E as a function of λis fairly stable in the
+range from 0 to−1.0. Choice of the logarithmic transformation is not unreasonable.
+Logarithmic transformation is easy for interpretation and may be preferred.
+• Consider logarithmic transformation
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+14
+--- PAGE 15 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+• Fit the simple linear regression model to the transformed Y data. The fitted model is
+ln(Y )= 2.613−0.2355X , with R 2 = 0.8535. Residual plot against X and normal QQ-plot
+supports the appropriateness of regression model for the transformed Y data.
+10.2 Identifying unusual observations
+Outlying observations
+Outlier is an observation that is well separated from the rest of the data. Outliers are sam-
+ple observations which have unusual values for the response variable Y . More specifically, if
+ˆ
+the response Yi deviates considerably more from its fitted value
+Yi than other sample values
+deviate from their fitted values, we say that sample observation i is an outlier.
+It is important to spot outliers among the data and determine whether they are simply
+there by chance. If the answer is no, then it is of the experimenter’s interest to check whether
+the outliers result from a mistake or other extraneous effects, and hence should be discarded.
+A major reason for discarding them is that under the least squares method, a fitted line may
+be pulled disproportionately toward an outlying observation and could cause a misleading
+fit.
+Outliers may also arise from atypical values of explanatory variables for which the model
+does not give an adequate representation. Here the model should be reexamined to deter-
+mine the range of values of explanatory variables for which it is adequate. Observations out-
+side this range may be analyzed separately, or a better model should be constructed.
+1. Outliers (with respect to y values)
+Definition
+Recall: we assume (εi ) = 0, i= 1,···
+, n. Hence, we expect that all residuals are scat-
+tered around zero. Therefore, it is unusual to have an observation whose residual is very
+large. An observation having a very large residual is called an outlier (with respect to y
+values).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+15
+--- PAGE 16 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+Detection based on studentized residual
+Define di ≡yi−
+ˆ
+y(i ) =
+ˆ
+εi
+1−hi i
+, where ˆ
+y(i ) is the predicted value of yi based on the model
+without the i th observation. We know that the estimated variance of di is given by
+MSE(i )
+,
+Var(di ) = MSE(i ) 1 + x i (X (i ) X (i ))−1x i =
+1−hi i
+where X (i ) is an (n−1) ×(p + 1) matrix without observation i . Define studentized
+residual by
+di
+r(i ) ≡
+se(di )
+=
+ˆ
+εi
+MSE(i )(1−hi i ),
+where MSE(i ) =
+ˆ
+σ2
+(i ) is the MSE of the regression which is run after deleting the i -th
+observation. In fact, it can be shown that
+(n−p−2) MSE(i ) = (n−p−1) MSE−
+ˆ
+ε2
+i (1−hi i )−1
+.
+A large value of r(i ) (in magnitude) provides a signal that an unusually large error in fit
+has occurred at the i th observation (data point). Since r(i )∼tn−p−2 ≈N (0, 1) for large
+n, we have the following guideline:
+(i) (ii) (iii) the i -th observation is not an outlier if |r(i )|<2,
+the i -th observation is possibly an outlier if 2 ≤|r(i )|≤3,
+the i -th observation is an outlier if |r(i )|>3.
+Most that r(i )’s can also be used for residual plots and test for normality.
+2. Outliers with respect to x values
+Definition
+If the x i measured in the i -th observation is far away from the other x ’s, then the i -th
+observation is called an outlier with respect to x values.
+Detection based on leverage (H )
+Define leverage by the i -th diagonal element of the hat matrix H= X (X X )−1X ,
+hi i = x i (X X )−1x i , i= 1, . . . , n
+where x T
+i is the i th row of X . It is a measure of the remoteness of the i -th observation
+from the remaining n−1 observations in the space of explanatory variables. This is best
+exemplified in the simple regression model where
+1
+hi i =
++ (xi−
+n
+(x j−
+j=1
+¯
+x )2
+¯
+x )2
+, i= 1, . . . , n.
+n
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+16
+--- PAGE 17 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+If hi i is large, the i -th observation is outlying with respect to its x values. Since
+tr(H ) = p + 1, we have the following guideline:
+the i th observation is outlying w.r.t. its x values if
+2(p + 1)
+3(p + 1)
+hi i >
+o r
+n
+i=1
+hi i =
+n
+n.
+3. Influential observations
+Definition
+An observation is influential if it is omitted, it will cause a great change in the fitted
+regression model.
+Detection based on Cook’s Distance (COOKD)
+Define difference in β by
+(X X )−1x iˆ
+εi
+,
+ˆ
+ˆ
+β−
+β (i ) =
+1−hi i
+where
+ˆ
+β (i ) is the LS estimate of β after deleting the i th observation.
+Define Cook’s Distance by the distance between
+ˆ
+β and
+ˆ
+β (i ) after ‘standardization’, i.e.,
+(ˆ
+ˆ
+β−
+β (i )) X X (ˆ
+ˆ
+β−
+β (i ))
+Di ≡
+(p + 1) MSE=
+ˆ
+ε2
+i
+(p + 1) MSE·
+hi i
+(1−hi i )2.
+Cook’s distance is an overall measure of the impact of the i -th observation on all esti-
+mated regression coefficients.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+17
+--- PAGE 18 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+The distribution of Di : given the following independent distributions,
+ˆ
+β∼Np +1(β, σ2(X X )−1) and (n−p−1) MSE∼σ2χ2
+n−p−1,
+we have
+(ˆ
+β−β )T X X (ˆ
+β−β )
+(p + 1) MSE∼Fp +1,n−p−1.
+Although Di does not follow the above F distribution, practical experience has sug-
+gested that
+(i) (ii) (iii) the i th observation is not influential if Di <F0.8,p +1,n−p−1,
+the i th observation is possibly influential if F0.8,p +1,n−p−1 ≤Di ≤F0.5,p +1,n−p−1,
+the i th observation is influential if Di >F0.5,p +1,n−p−1.
+A simpler way for detecting influential observation is to check whether Di >4/n or 1.
+Handling outliers and influential observations
+There are many reasons that a particular observation is found to be an outlier or influ-
+ential observation. For example, recording error or the working model is incorrect. It is
+recommended to recheck the data first.
+If outlying or influential observations are obtained in some exceptional rare events which
+will be very unlikely to occur in the future, then dropping these observations may be ap-
+propriate. For example, HSI in October, 1987 (1987 stock market crash).
+If no explanation can be found for the occurrence of outliers or influential observations,
+there are some methods to deal with this problem:
+(a) use other models with other transformations on Y or X ,
+(b) (c) add dummy variables to remove the effect due to these observations,
+drop these observations if the above two methods do not help,
+(d) robust methods.
+On the other hand, outliers may convey significant information if, for example, they are
+caused by the interaction with an omitted explanatory variable.
+It is recommended to discard an outlier only if there is direct evidence that it represents
+an error in recording, a miscalculation, a malfunctioning of equipment, or a similar type
+of circumstances.
+10.2.1 Example (Environmental Data)
+• Outliers w.r.t. x values
+To check whether there are outliers with respect to the x values. If the leverage hi i =
+x i (X X )−1x i is greater than 2(p + 1)/n = 2 ×4/30= 0.267, then we conclude that the x i
+is an outlier w.r.t. x values or a leverage point.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+18
+--- PAGE 19 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+hi i = x i (X X )−1x i ,
+Observation Dependent Predicted hi i Outlier
+Number Variable Value w.r.t. x
+1 3.45 2.8024 0.0909
+2 3.3 2.9197 0.0966
+7 2 1.9518 0.2768 *
+.
+.
+.
+.
+.
+.
+29 2.76 3.0509 0.0948
+30 3.33 2.7828 0.2695 *
+By checking the leverage, we discover that observations 7 and 30 are outlier w.r.t. the x
+values.
+• Outliers (w.r.t. y values)
+To detect outliers in the responses, we check the studentized residual r(i ):
+di
+r(i ) ≡
+=
+se(di )
+ˆ
+εi
+MSE(i )(1−hi i ).
+Suppose we would like to calculate MSE(1). We can either first fit the model
+ozone = β0 + β1radiation + β2temperature + β3wind + ε,
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+19
+--- PAGE 20 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+without the first observation and subsequently calculate MSE(1) of this fitted model, or
+we apply the relationship: (n−p−2) MSE(i ) = (n−p−1) MSE−
+ˆ
+ε2
+i (1−hi i )−1:
+MSE(1) =
+1
+30−3−2 (30−3−1)0.3490−0.652 1
+1−0.0909= 0.3445.
+Hence, the studentized residuals of the other observations become:
+Observation Dependent Predicted r(i ) Outlier
+Number Variable Value
+1 3.45 2.8024 1.1572
+2 3.3 2.9197 0.6701
+17 1 2.1358 -2.2456 *
+23 4.86 3.4401 2.9871 *
+.
+.
+.
+.
+.
+.
+.
+.
+.
+29 2.76 3.0509 -0.5102
+30 3.33 2.7828 1.0875
+where possible outliers (2 ≤|r(i )|≤3) are marked with * and outliers (|r(i )|>3) are
+marked with **.
+Hence, we conclude that observations 17 and 23 are possibly outliers w.r.t. the y values.
+• Influential observations
+To identify influential observations, we determine the Cook’s Distance which is defined
+as:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+20
+--- PAGE 21 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+Di =
+ˆ
+ε2
+i
+(p + 1) MSE·
+hi i
+(1−hi i )2.
+For example, for the first observation, D1 would become:
+D1 =
+0.652
+(3 + 1)0.35·
+0.09
+= 0.0330.
+(1−0.09)2
+4
+By comparing the Cook’s Distance with the criterion of
+= 0.1333.
+n
+Observation Dependent Predicted Di Influential
+Number Variable Value Observation
+1 3.45 2.8024 0.0330
+2 3.3 2.9197 0.0123
+17 1 2.1358 0.1970 *
+23 4.86 3.4401 0.3141 *
+.
+.
+.
+.
+.
+.
+.
+.
+.
+29 2.76 3.0509 0.0070
+30 3.33 2.7828 0.1083
+we conclude that the observations 17 and 23, which are possibly outliers (w.r.t. the y
+values), are identified as influential observations according to the Cook’s distance.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+21
+--- PAGE 22 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+10.3 Detection of Multicollinearity
+Definition
+If there exists constants c0, c1,
+···
+, cp , not all zero, such that
+c0 + c1X1 +···+ cp Xp ≈0,
+we say that collinearity or multicollinearity exists.
+Effects
+Suppose we wish to fit the model Y= X β + ε. Then the least squares estimator for β has
+shown to be
+ˆ
+β = (X X )−1X Y ,
+provided that X X is nonsingular.
+If multicollinearity exists, then
+= ⇒ c0 + c1 xi 1 +···+ cp xi p ≈0, for i= 1,···
+= ⇒ X is nearly not of full rank
+, n
+= ⇒ X X is nearly singular and |X X |≈0
+ˆ
+= ⇒ (a)
+β becomes very unstable.
+(b) since Var(ˆ
+β ) = σ2(X X )−1, some of the
+hence becomes insignificant. Therefore, we by ˆ
+βj ’s might have high standard errors and
+might eliminate some important variables
+mistakes.
+Symptoms
+• some beta coefficients have wrong sign, based on prior knowledge;
+• beta coefficients of some important independent variables are insignificant;
+• correlations between some pairs of independent variables are extremely high.
+Detection
+Define tolerance TOLj by TOLj= 1−R 2
+j , j= 1,···
+, p where R 2
+j is the sample coefficient of
+determination R 2 of X j on the remaining independent variables.
+TOLj is close to 1 if X j is not closely related to other independent variables.
+Note that Var(ˆ
+βj ) = σ2
+n
+i=1(xi j−
+¯
+x j )2TOLj
+It is natural to consider a measure — variance inflation factor, VIFj , defined as
+VIFj ≡
+1
+TOLj
+, j= 1,···
+, p.
+1−R 2
+j
+.
+1
+=
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+22
+--- PAGE 23 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 10 Model Diagnostic Checking
+If there is a near-singularity involving X j and the other independent variables, R 2
+j will be
+near 1 and VIFj will be large.
+If X j is orthogonal to the other independent variables, R 2
+j will be 0 and VIFj will be 1.
+It has been suggested, as a rule of thumb, that values of VIFj greater than 10.0 may be
+considered as large enough for us to suspect serious multicollinearity.
+10.3.1 Example (Environmental Data)
+To detect multicollinearity, we shall either check whether Tolerance is
+TOLj= 1−R 2
+j <0.1.
+Another possibility is to check whether the variance inflation factor, V I Fj , which is the
+reciprocal of TOLj ,
+1
+1
+VIFj=
+=
+>10, j= 1, . . . , p.
+TOLj
+1−R 2
+j
+For example, to determine the tolerance of the variable radiation, we need to estimate the
+regression given by
+radiation= β(1)
+0 + β(1)
+1 temperature + β(1)
+2 wind + ε,
+which gives the coefficient of determination of R 2
+radiation = 0.1859. Hence the tolerance is
+TOLradiation = 1−R 2
+radiation = 0.8141,
+and the corresponding variance inflation factor is
+1
+VIFradiation =
+TOLradiation
+= 1.2283.
+Similarly, we can determine TOLtemperature, VIFtemperature as well as TOLwind and TOLwind.
+The results is given by
+Variable Tolerance Variance Inflation
+Radiation 0.8141 1.2283
+Temperature 0.8020 1.2468
+Wind 0.9818 1.0185
+Hence, we conclude that multicollinearity does not exist in the model.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+23

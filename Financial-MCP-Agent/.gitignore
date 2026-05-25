@@ -13,3 +13,5 @@ logs/*.json
 reports/*.md
 frontend/node_modules/
 frontend/dist/
+data/*.db
+frontend/vite.config.js.timestamp-*.mjs

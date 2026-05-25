@@ -6,6 +6,7 @@ from typing import Any, Dict
 from ..tools.analysis_helpers import llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
+from ..utils.progress import run_with_heartbeat
 from ..utils.state_definition import AgentState
 
 logger = setup_logger(__name__)
@@ -39,10 +40,17 @@ async def news_agent(
 
     try:
         query = f"{state.get('stock_name', '')} {state.get('stock_code', '')}".strip()
-        await notify("准备新闻检索关键词", 0.1)
-        await notify("查询新闻与舆情数据", 0.35)
-        tool_payload = await run_tools([("crawl_news", {"query": query, "top_k": 10, "stock_code": state.get("stock_code", "")})])
-        await notify("生成新闻舆情分析", 0.72)
+        await notify("准备新闻检索关键词", 0.05)
+        tool_payload = await run_with_heartbeat(
+            run_tools(
+                [("crawl_news", {"query": query, "top_k": 10, "stock_code": state.get("stock_code", "")})]
+            ),
+            notify,
+            message="查询新闻与舆情数据",
+            start=0.05,
+            end=0.45,
+            expected_seconds=12.0,
+        )
         prompt = f"""请分析 {state.get("stock_name", "")}({state.get("stock_code", "")}) 的新闻舆情。
 当前日期: {state.get("current_date", "")}
 
@@ -50,8 +58,15 @@ async def news_agent(
 
 {tool_payload}
 """
-        analysis = await llm_generate_analysis(NEWS_SYSTEM_PROMPT, prompt)
-        await notify("整理新闻结论", 0.92)
+        analysis = await run_with_heartbeat(
+            llm_generate_analysis(NEWS_SYSTEM_PROMPT, prompt),
+            notify,
+            message="生成新闻舆情分析",
+            start=0.45,
+            end=0.92,
+            expected_seconds=15.0,
+        )
+        await notify("整理新闻结论", 0.95)
         await notify("新闻分析完成", 1.0)
         logger.info("%s 新闻分析完成", SUCCESS_ICON)
         return {"news_analysis": analysis}

@@ -8,15 +8,13 @@ import {
   addPositionItem,
   addWatchlistItem,
   createAnalysisTask,
-  fetchAnalysisTask,
   fetchProfile,
   generateBrief,
+  openAnalysisStream,
   removePositionItem,
   removeWatchlistItem,
   updateProfileSettings,
 } from "./lib/api";
-
-const POLL_INTERVAL_MS = 3000;
 
 export default function App() {
   const [task, setTask] = useState(null);
@@ -26,7 +24,7 @@ export default function App() {
   const [profileLoading, setProfileLoading] = useState(true);
   const [brief, setBrief] = useState(null);
   const [briefLoading, setBriefLoading] = useState(false);
-  const pollRef = useRef(null);
+  const streamRef = useRef(null);
 
   useEffect(() => {
     const loadInitialProfile = async () => {
@@ -43,39 +41,39 @@ export default function App() {
     loadInitialProfile();
 
     return () => {
-      if (pollRef.current) {
-        window.clearInterval(pollRef.current);
+      if (streamRef.current) {
+        streamRef.current.close();
       }
     };
   }, []);
 
-  const stopPolling = () => {
-    if (pollRef.current) {
-      window.clearInterval(pollRef.current);
-      pollRef.current = null;
+  const stopStreaming = () => {
+    if (streamRef.current) {
+      streamRef.current.close();
+      streamRef.current = null;
     }
   };
 
-  const startPolling = (taskId) => {
-    stopPolling();
-    pollRef.current = window.setInterval(async () => {
-      try {
-        const nextTask = await fetchAnalysisTask(taskId);
+  const startStreaming = (taskId) => {
+    stopStreaming();
+    streamRef.current = openAnalysisStream(taskId, {
+      onTask: (nextTask) => {
         setTask(nextTask);
         if (nextTask.status === "completed" || nextTask.status === "failed") {
-          stopPolling();
+          stopStreaming();
         }
-      } catch (pollError) {
-        setError(pollError.message || "轮询任务状态失败");
-        stopPolling();
-      }
-    }, POLL_INTERVAL_MS);
+      },
+      onError: () => {
+        setError("实时任务流连接中断");
+        stopStreaming();
+      },
+    });
   };
 
   const handleSubmit = async (query) => {
     setSubmitting(true);
     setError("");
-    stopPolling();
+    stopStreaming();
 
     try {
       const created = await createAnalysisTask(query);
@@ -94,6 +92,7 @@ export default function App() {
         forecast_analysis: null,
         error: null,
         progress_percent: 0,
+        charts: [],
         step_statuses: {
           fundamental: "pending",
           technical: "pending",
@@ -123,7 +122,7 @@ export default function App() {
         execution_time: null,
       };
       setTask(initialTask);
-      startPolling(created.task_id);
+      startStreaming(created.task_id);
     } catch (submitError) {
       setError(submitError.message || "创建任务失败");
     } finally {

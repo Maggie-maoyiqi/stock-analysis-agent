@@ -1,0 +1,53 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 1 Matrix and Distribution Theory
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600A Linear Statistical Analysis
+Tutorial 1 Matrix and Distribution Theory
+1. Given
+A=
+3 4−1 5
+7−2 2 1
+, B=
+     
+3−1
+5
+2
+−3−2
+4
+0
+     
+(a) What are the dimensions of A and B respectively?
+(b) Does (A + B ) exist?
+(c) Calculate AB and (AB ).
+(d) Calculate B A
+(e) Are there any relationship between the results of (c) and (d)? What does it imply?
+(f ) Do A−1 and B−1 exist?
+(g) Calculate (AB )−1
+.
+2. Given
+C=
+       
+1 9 4
+1 1−3
+1 7 9
+1 4−7
+1 8−1
+       , D=
+       
+3
+5
+1
+2
+3
+       
+(a) What is the rank of C ?
+(b) Calculate C C and (C C )−1
+.
+(c) Calculate C D .
+(d) Calculate (C C )−1 C D .
+(e) What is the trace of (C C )−1?
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1

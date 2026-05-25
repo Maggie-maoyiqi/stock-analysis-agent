@@ -30,6 +30,21 @@ export async function fetchAnalysisTask(taskId) {
   return handleResponse(response);
 }
 
+export function openAnalysisStream(taskId, { onTask, onError }) {
+  const eventSource = new EventSource(`${API_BASE_URL}/api/analysis/${encodeURIComponent(taskId)}/stream`);
+  eventSource.addEventListener("task", (event) => {
+    try {
+      onTask?.(JSON.parse(event.data));
+    } catch (error) {
+      onError?.(error);
+    }
+  });
+  eventSource.onerror = (error) => {
+    onError?.(error);
+  };
+  return eventSource;
+}
+
 export async function fetchProfile() {
   const response = await fetch(`${API_BASE_URL}/api/profile`);
   return handleResponse(response);

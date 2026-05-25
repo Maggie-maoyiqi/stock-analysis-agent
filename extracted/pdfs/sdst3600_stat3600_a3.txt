@@ -1,0 +1,264 @@
+--- PAGE 1 ---
+SDST3600/STAT3600
+Assignment 3 (submit Q7d, Q10a-e, Q10g, Q11a-f, Q11i)
+Deadline: 16 Apr, 2026
+Note: (1) Numeric values should be presented in 4 decimal places. (2) Show the intermediate steps
+for Q7, Q10 and Q11.
+1. A personal officer in a governmental agency administered four newly developed aptitude tests
+to each of 25 applicants for entry-level clerical positions in the agency. For purposes of the
+study, all 25 applicants were accepted for positions irrespective of their test scores. After a
+probationary period, each applicant was rated for proficiency on the job. In order, the job
+proficiency score (y) and the scores on the four tests (x1, x2, x3, x4) for the 25 employees were
+stored in ‘job.txt’.
+a. Fit a regression model for 4 predictor variables to the data. Write down the fitted
+regression model. State clearly the assumptions.
+b. Construct the ANOVA table and hence test whether there is a regression relation. Use α =
+0.05.
+c. d. Find the 99% confidence interval for each of the regression coefficients.
+Test whether x2 can be dropped from the regression model given that x1, x3 and x4 are
+retained. Use the F test statistic and α = 0.05. State the hypotheses and conclusion.
+e. Determine the subset of variables that is selected by the forward selection method, based
+on the entry level α = 5%. Show your steps. Report the fitted final selected model.
+f. Determine the subset of variables that is selected by the backward elimination method,
+based on the removal level α = 5%. Show your steps.
+g. Find the values of R2 and Cp for the full model and the selected model in (e). Comment on
+the results.
+2. A research laboratory was developing a new compound for the relief of severe cases of hay
+fever. In an experiment with 36 volunteers, the amounts of the two active ingredients (factor A
+and B) in the compound were varied at three levels each (1 = low, 2 = medium, 3 = high).
+Randomizations was used in assigning four volunteers to each of the nine treatments. The data
+on hours of relief are stored in ‘hayfever.txt’. Assume that a two-way classification model is
+appropriate for the above data.
+a. Compile a two-way ANOVA table to test whether the effects of the two factors are
+additive or not, using a 5% significance level.
+b. Test whether or not main effect for each ingredient is present, using a 5% significance
+level.
+c. Given your answer to (a), is it meaningful to test for main factor effects? Explain.
+d. Construct a 95% confidence interval for the pairwise comparison in hours of relief between
+the low and the medium levels of ingredient A. When setting up the contrast, you may
+average over the three levels of factor B using equal weights.
+3. The staff of a service center for electronic equipment includes three technicians who specialize
+in repairing three widely used makes of disk drives for desktop computers. It was desired to
+study the effects of technician (factor A) and make (factor B) on the service time.
+‘diskdrive.txt’ stores the data showing the number of minutes required to complete the repair
+job in a study where each technician was randomly assigned to five jobs on each make of disk
+drive.
+a. Formulate a two-way classification model for the above observed data.
+b. Test at the 5% level whether there are significant interactions between “technician” and
+“make”.
+1
+--- PAGE 2 ---
+SDST3600/STAT3600
+4. 5. 6. 7. c. According to your findings in (b), will it be meaningful to compare the difference among
+the technician WITHOUT specifying the “make" of the disk drives?
+d. Calculate the sample mean of the 10 observations for each technician.
+e. Show that the variance of the difference between the any two sample means considered
+in (d) is 2σ2/15, where σ2 is the common variance assumed for the number of minutes
+for each repair job.
+f. Calculate an estimate of σ based on the two-way classification model specified
+in (a).
+g. Derive from (d), (e) and (f) a 95% confidence interval for a contrast in number of minutes
+for repair jobs between the technicians 1 and 3.
+For the cell means model, show that the least squares estimators of the parameters 𝜇 are
+maximum likelihood estimators for the normal error, 𝜖 ~𝑁 0, 𝜎.
+For a 1-way ANOVA model show that
+a. 𝑆𝑆𝑇 ∑ ∑ 𝑌..
+b. 𝑆𝑆𝐸 ∑ ∑ 𝑌 ∑ .
+c. 𝑆𝑆𝑅 ∑ . ..
+For a 1-way ANOVA model, show that
+𝐸 𝑀𝑆𝑅 𝜎 ∑ . where 𝜇.
+∑
+Consider a regression analysis of Y on X1 – X4 for 60 observations. The SSE for various sub-
+models are given below.
+None 173.8385 X1, X2 94.3016 X1, X2, X3 93.0149
+X1 172.0857 X1, X3 168.8508 X1, X2, X4 50.1196
+X2 94.3081 X1, X4 148.8978 X1, X3, X4 147.2592
+X3 170.8197 X2, X3 93.0152 X2, X3, X4 50.0693
+X4 151.6323 X2, X4 50.1507 X1, X2, X3, X4 50.0328
+X3, X4 a. b. c. d. e. f. 150.1505
+Apply simple linear regression model with one regressor at a time. Select regressors whose
+effects are significant at the 10% level of significance. Report SSR, MSR, MSE, F-value
+and conclusion.
+Apply multiple regression model using all the selected regressors in (a). Test the
+significance of the regression coefficients at the 5% level of significance. Report the
+ANOVA table, F-values and conclusions.
+Determine the subset of variables that is selected by the backward elimination method,
+based on the removal level F = 4. Show your steps. Report SSR, MSE and F-value at each
+step. Report the selected regressors.
+Determine the subset of variables that is selected by the forward selection method, based
+on the entry level F = 4. Show your steps. Report SSR, MSE and F-value at each step.
+Report the selected regressors.
+Determine the subset of variables that is selected by the stepwise method, based on the
+entry level F = 4 and removal level F = 3. Show your steps. Report SSR, MSE and F-value
+at each step. Report the selected regressors.
+Determine the subset of variables that is selected by adjusted R2. Show your steps. Report
+the fitted final selected model.
+2
+--- PAGE 3 ---
+SDST3600/STAT3600
+8. 9. g. h. i. Determine the subset of variables that is selected by Cp. Show your steps. Report the fitted
+final selected model.
+Determine the subset of variables that is selected by AIC. Show your steps. Report the
+fitted final selected model.
+Determine the subset of variables that is selected by BIC. Show your steps. Report the
+fitted final selected model.
+You are given the following matrices computed for a polynomial regression analysis
+𝑌 𝛽 𝛽 𝑋 𝛽 𝑋 𝜀.
+𝑿 𝑿
+15 28 74
+28 74 220
+74 220 698
+, 𝑿 𝒀
+117
+325
+1003
+𝑿 𝑿
+1
+4002
+1626 1632 342
+1632 2497 614
+342 614 163
+, 𝒀 𝒀 1473
+The matrices are properly ordered according to the regression function given above.
+a. b. Calculate the LSE of the regression coefficients.
+Construct an ANOVA table and thus test at the 5% level of significance whether there is a
+regression of Y on X and X2
+.
+c. d. Test at the 5% level of significance whether the quadratic term is necessary.
+Estimate the mean for Y when X = 0.5. Construct a 95% confidence interval for the
+estimation.
+You are given the following matrices computed for a regression analysis with interaction
+𝑌 𝛽 𝛽 𝑋 𝛽 𝑋 𝛽 𝑋 𝑋 𝜀.
+25 21 7 9
+21 47 9 29
+𝑿 𝑿
+9 29 33 77
+, 𝑿 𝒀
+7 9 35 33
+2.6
+44.2
+65.7
+16.8
+1
+202794
+14259 7278 3345 2508
+7278 9425 2646 3833
+3345 2646 10662 5175
+2508 3833 5175 6002
+, 𝒀 𝒀 110
+The matrices are properly ordered according to the regression function given above.
+a. b. Calculate the LSE of the regression coefficients.
+Construct an ANOVA table and thus test at the 5% level of significance whether there is a
+regression of Y on X1, X2 and the interaction term.
+c. d. e. Construct a 95% confidence interval for each of the regression coefficients.
+Test at the 5% level of significance whether there is an interaction effect.
+Predict the value of Y for an individual whose X1 = 1 and X2 = -1 Construct a 95%
+prediction interval for the individual.
+Six observations of a dependent variable X and a factor A are given as follows.
+𝑿 𝑿
+10. A 1 1 2 2 3 3
+X 3 2 1 3 7 6
+Consider a one-way classification model.
+a. Write down a cell-means model for the analysis.
+b. Estimate the parameters in (a).
+c. Obtain the fitted values for X.
+d. Compile the ANOVA table.
+3
+--- PAGE 4 ---
+SDST3600/STAT3600
+e. Conduct a size 0.05 test to determine whether or not the means for X for the three levels of
+A differ.
+f. Construct a 95% confidence interval for the mean for X for each level of A.
+g. By the Bonferroni’s method, construct the simultaneous 95% confidence intervals for the
+pairwise comparisons among the three levels. Comment on the comparison. A Student’s t
+table is given as
+2-tailed 
+df 0.05 0.025 0.0167 0.0083
+2 4.30 6.21 7.65 10.89
+3 3.18 4.18 4.86 6.23
+4 2.78 3.50 3.96 4.85
+5 2.57 3.16 3.53 4.22
+h. Estimate the weighted average of the level means as 𝜃 𝜃 𝜃 . Constructure a
+95% confidence interval.
+11. The following data of X are given for three levels of factor A and 2 levels of factor B. There
+are two observations for each treatment.
+A
+1 2 3
+B 1 2
+3
+1
+1
+7
+4
+2 0
+0
+3
+1
+8
+4
+a. Calculate and plot the means for X for the six treatments. Does it appear interaction effects
+between factors A and B? Explain.
+b. Write down a factor-effects model for the 2-way classification model with interaction.
+c. Estimate the main effects of factors A and B and the effects of interaction, respectively.
+d. Compile the ANOVA table.
+e. Test the interaction effects at the 5% level of significance. State null and alterative
+hypothesis, decision rule and conclusion.
+f. Test the main effects for factor A at the 5% significance level. Write down the null and
+alterative hypothesis, decision rule and conclusion.
+g. Test the main effects for factor B at the 5% significance level. Write down the null and
+alterative hypothesis, decision rule and conclusion.
+h. Given your answer to (e), is it meaningful to test for main factor effects? Explain.
+i. Consider the 3 pairwise comparisons of the 3 levels of factor within each level of factor B.
+Construct Bonferroni’s simultaneous 95% confidence intervals for all six pairwise
+comparisons simultaneously. Comment on the comparisons. A student’s t table is given as,
+2-tailed 
+df 0.05 0.025 0.0083 0.0042
+4 2.78 3.50 4.85 5.89
+5 2.57 3.16 4.22 4.98
+6 2.45 2.97 3.86 4.49
+7 2.36 2.84 3.64 4.17
+8 2.31 2.75 3.48 3.96
+j. Assume there is no interaction between the two factors. Compile the ANOVA table. Test
+whether or not main effects for factor A and B, respectively, using a 5% significance level.
+4
+--- PAGE 5 ---
+SDST3600/STAT3600
+12. 13. This study is to establish the suitable correlation model for describing the relationship between
+strain and hardness during cold rolling forming process of complex profiles. The hardness and
+the strain data are stored in ‘material’.
+a. Consider a simple linear regression model where hardness is the response variable and
+strain as the independent variable.
+i. Report the fitted model.
+ii. Test at the 5% level of significance where strain has an effect on hardness.
+iii. Report the R2 and thus, comment on the fitness.
+b. Produce a scatter plot hardness against strain. Is there a linear relationship?
+c. Consider a 4-th order polynomial regression.
+i. Report the LSE of the regression coefficients.
+ii. Test at the 5% level of significance for each of the regression coefficients.
+iii. Test at the 5% level of significance where the non-linear terms of strain have some
+effects on hardness or not. State the null and alternative hypothesis, decision rule and
+conclusion.
+iv. Estimate the mean of hardness when strain = 0.8. Construct a 95% confidence interval
+for the estimate.
+This study aims to verify the additive role of lung CT-Volumetry in testing the efficacy of three
+widely distributed COVID-19 vaccinations; namely the "Sinopharm", "Oxford-AstraZeneca",
+and "Pfizer-BioNTech" vaccinations. The CT-Severity scores and the vaccinations used for a
+number of patients are stored in ‘vaccine.csv’. The variables are given as follows.
+Variable Description
+CTscore CT-score
+Vaccine Vaccination
+1 = Non Immunized, 2 = Sinopharm, 3 = Oxford-AstraZeneca,
+4 = Pfizer-BioNTech
+Consider a one-way classification model.
+a. Compile the ANOVA table.
+b. Conduct a size 0.05 test to determine whether or not the mean CT-scores are difference
+among the four vaccinations. State the null and alternative hypothesis, decision rule and
+conclusion.
+c. Calculate the mean CT-score for each vaccination. Construct a 95% confidence interval for
+each of the means.
+d. By the Bonferroni’s method, construct the simultaneous 95% confidence intervals for the
+pairwise comparisons among the four vaccinations. Comment on the comparisons.
+e. Estimate the difference between the mean CT-score of non-immunized patients and the the
+average of the mean CT-scores of the three vaccinations. Constructure a 95% confidence
+interval and hence, comment on the difference.
+5

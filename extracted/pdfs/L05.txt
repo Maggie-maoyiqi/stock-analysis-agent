@@ -1,0 +1,937 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 5 Analysis of Variance
+5 Analysis of Variance
+5.1 Sum of Squares
+Recall that the fitted (predicted) value of a regression model is given by:
+ˆ
+Y= Xˆ
+β= H Y
+with residuals
+ˆ
+ε= Y−
+ˆ
+Y= (I−H ) Y .
+In the following, different types of sum of squares are defined:
+SSE=
+ˆ
+εˆ
+ε=
+n
+i=1
+yi−
+ˆ
+yi
+2 (error sum of squares or residual sum of squares)
+SST= SYY =
+n
+i=1
+yi−
+¯
+y
+2 (corrected total sum of squares)
+The error sum of squares (SSE) is the variation around the regression line. Use SLR as illustra-
+tion. Graphically,
+The regression model would have a good fit if the residuals ˆ
+εi ’s are small. Thus, SSE provides a
+measure of the goodness of fit of the model. If we had ignored the explanatary variables in the
+regression model and fitted a fixed constant to the response (i.e. assumed that the responses
+constitute an i.i.d. constant sample), then the residual sum of square becomes SY Y (= SST).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+Evidently, SST ≥SSE. It can be shown that their difference, namely SST−SSE= SSR, where
+SSR can also be expressed as sum of squares,
+SSR=
+n
+i=1
+ˆ
+yi−
+2
+¯
+y
+,
+which is called regression sum of squares.
+This difference measures how effective X (the p explanatory or predictor variables) is to ex-
+plain the variation in the response Y and that a large value in SSR corresponds to significant
+predictors of the response variable Y .
+An analysis of variance is a formal method for determining whether SSR is large enough for
+concluding that the fitted regression model is useful in explaining the variation in the re-
+sponse Y . This method is based on the fact that the total variability of response is the sum of
+the variability explained by model and the unexplained variability:
+SST= SSR + SSE
+The above stated definitions can be summarized by the so called ANOVA (ANalysis Of VAriance)
+table below. Proofs will be provided in Section 5.2.
+Source of Variation SS d. f. MS F -Ratio
+Regression SSR p MSR= SSR /p F= MSR /MSE
+Error SSE n−p−1 MSE= SSE /(n−p−1)
+Total SST n−1
+Features of ANOVA table:
+• bottom item= sum of items above;
+• each sum of squares (SS) accounts for a source of variation in Y ;
+• each SS is associated with a degree of freedom (d. f.);
+• mean square (MS) = SS /d. f.;
+• The ratio of Regression Mean Square and Error Mean Square, the so called F -ratio.
+5.2 F Test for Regression Relation
+To test whether there is a regression relation between the dependent variable Y and the set
+of X variables, set the hypotheses as
+H0 : β1 = β2 =
+. . .
+= βp = 0 vs. H1 : not all βj equal to zero.
+Recall that the hat matrix is defined as
+H= X (X X )−1 X .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+Let
+1 = (1, . . . , 1), A= n−111 , A1 = I−H , A2 = H−A, A3 = A.
+Hence, we have
+I= A1 + A2 + A3.
+It can be shown that A j for j= 1, 2, 3 are idempotent, i.e. A2
+j= A j . Also
+tr (A1) = tr (I )−tr (H ) = n−tr (X X )−1 X X= n− p + 1
+and
+tr (A2) = tr (H )−tr (A) = p.
+Under the general hypothesis H1 that not all βj equal to 0:
+Y−X β= ε∼Nn (0, σ2I ).
+Recall the properties of the hat matrix that H X= X and (I−H )2 = I−H , so
+SSE= Y−Xˆ
+β Y−Xˆ
+β
+= [(I−H ) Y ] [(I−H ) Y ]
+= (I−H ) Y−(I−H ) X β (I−H ) Y−(I−H ) X β
+since (I−H ) X β= X β−H X β= X β−X β= 0
+= (I−H ) Y−X β (I−H ) Y−X β
+= [(I−H ) ε] [(I−H ) ε] = ε (I−H )2 ε= ε (I−H ) ε
+= ε A1ε
+∼σ2χ2
+n−p−1, by Cochran’s Theorem.
+Also note the following expansion:
+Y (I−A) Y= Y Y−Y n−111 Y
+= Y Y−n−1Y 1·1 Y
+=
+=
+n
+i=1
+n
+i=1
+y 2
+i−n−1
+n
+i=1
+yi·
+n
+i=1
+yi
+y 2
+i−n¯
+y 2
+=
+n
+i=1
+yi−
+2
+¯
+y
+Thus, SST can be written in matrix notation as
+SST= Y (I− A) Y
+= Y (A 1 + A 2) Y .
+←SST
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+Hence, SSR becomes
+SSR= SST−SSE
+= Y (A 1 + A 2) Y−Y A 1Y
+= Y A2Y
+= X β+ ε A2 X β+ ε
+= ε A2ε+ X β A2 X β + 2 X β A2ε
+∼σ2χ2
+p + Z
+where Z is a normal random variable with mean µZ = X β A2 X β >0 and variance σ2
+Z =
+4µZ σ2
+.
+If H0 is true, it can be shown that the normal variable Z becomes zero. By Cochran’s Theorem,
+SSE= ε A1ε∼σ2χ2
+n−p−1 and SSR= ε A2ε∼σ2χ2
+p
+are independent. As a result, the test statistic is the F -ratio as given in the ANOVA table:
+SSR /p
+MSR
+F=
+=
+SSE /(n−p−1)
+MSE
+is Fp,n−p−1 distributed under H0. We reject the null hypothesis H0 iff F >Fα,p,n−p−1 for 100 (α) %
+level of significance.
+A large value of the F-ratio is the result of a large value in SSR that contributes much to
+SST, that means X (the p explanatory variables) is effective in explaining the variation in Y .
+On the other hand, a small F -ratio is the result of a small value of SSR that contributes little
+to SST , that implies X is not very effective in explaining the variation in Y .
+Physical interpretation of H0 and H1:
+For H0, it means {X1, . . . , Xp }collectively is NOT effective in explaining the response (Y ′s )
+variation.
+For H1, it means {X1, . . . , Xp }collectively is effective in explaining the response (Y ′s ) vari-
+ation.
+The test assesses only “collective” effects of {X1, . . . , Xp }as a group, but not as individual
+factors.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+5.3 Coefficient of Determination
+Definition: The coeffcient of determination, R 2, is defined to be
+R 2 =
+SSR
+SST= 1−
+SSE
+SST
+where 0 ≤R 2 ≤1.
+If p= 1, i.e. in the simple linear regression case, it can be shown that R 2 = |ˆ
+ρX Y |, the
+ˆ
+absolute value of the sample correlation coefficient, and it can be shown easily that
+βand
+ˆ
+ρX Y have the same sign.
+R (R ≥0) is called the coefficient of multiple correlation. The coefficient of determination
+(R 2) is simply the proportion of the total variation of Y that is explained by the model. In
+other words, a large value of R 2 (i.e., the closer it gets to 1) implies that the model has a good
+ˆ
+fit. R 2 = 0 implies that
+βj= 0, for all j= 1, . . . , p . And when R 2 = 1, all responses y1, . . . , yn fall
+directly on the fitted response surface, i.e. the residuals are all zeros.
+Note that R 2 never decreases if more regressor variables are added to the model. R 2 high
+MSE
+does not necessarily imply that you have chosen a useful/‘correct’ model. The following def-
+inition adjusts R 2 to the number of regressors p.
+Definition: The adjusted R 2 is defined to be
+SSE / n−p−1
+R 2
+= 1−
+= 1−
+.
+a
+SST /(n−1)
+MST
+The coefficient is adjusted by dividing each sum of squares by its degrees of freedom. Note
+that when SSE does not change, then R 2
+a decreases with increasing p . In other words, p , the
+number of regressor variables, serves as a kind of penalty in calculating R 2
+a.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+5.3.1 Example (Environmental Data)
+Model
+yi = β0 + β1 xi 1 + β2 xi 2 + β3 xi 3 + εi , i= 1, . . . , n.
+Test
+H0 : β1 = β2 = β3 = 0 vs H1 : H0 is not true.
+The regression sum of squares (SSR) is given by:
+SSR= (2.8024−2.7947)2 +. . . + (2.9233−2.7947)2
+= 7.6685.
+Based on the model estimated in section 4.4.2 and SSE= 9.0738, we obtain the following
+ANOVA table:
+Source of Variation SS d. f. MS F -Ratio
+Regression 7.6685 3 2.5562 7.3244
+Error 9.0738 26 0.3490
+Total 16.7423 29
+For a size α= 0.05 test, we read the critical value from standard statistical tables or computer
+software which is 2.9752. Hence, F >F0.05,3,26 and we should reject H0 at 5% significance level.
+We can also calculating the p-value using the computer:
+P F3,26 >7.3244= 0.001026.
+The result indicates that the multiple linear regression is highly significant.
+The model fitness can be measured by the coefficient of determination:
+9.0738
+R 2 = 1−
+16.7423= 0.4580.
+The results show that the multiple linear regression is only moderately effective in explaining
+the variation in ozone concentration, even though it is highly significant.
+5.3.2 Example (Westwood Data)
+The model is yi = β0 + β1 xi + εi , i= 1, . . . , n, and we would like to test H0 : β1 = 0 vs H1 : β1
+As given in Section 3.7.1, we have SSE= 60. Furthermore, let
+̸= 0.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+A2 = H−A
+= X (X X )−1 X−n−111
+=
+     
+=
+     
+0.2176 0.2765 . . . 0.0412
+0.2765 0.3647 . . . 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118 . . . 0.1294
+     −
+     
+0.118 0.176 . . .−0.059
+0.176 0.265 . . .−0.088
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.059−0.088 . . . 0.029
+     
+0.1 0.1 . . . 0.1
+0.1 0.1 . . . 0.1
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.1 0.1 . . . 0.1
+     
+SSR= Y A2Y
+= (73, 50, . . . , 132)
+     
+0.118 0.176 . . .−0.059
+0.176 0.265 . . .−0.088
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.059−0.088 . . . 0.029
+       
+   
+73
+50
+.
+.
+.
+132
+     = 13600.
+Based on these results, the ANOVA table is computed as follows:
+Source of Variation SS d. f. MS F -Ratio
+Regression 13600 1 13600 1813.3333
+Error 60 8 7.5
+Total 13660 9
+Furthermore, we would like to check the model significance by the F-test at 5% significance
+level. The F -ratio is given by:
+F=
+MSR
+MSE=
+13600
+= 1813.3333
+7.5
+which is greater than F0.05,1,8 = 5.3177. The p-value of the F-ratio is:
+P F1,8 >1813.3333= 1.0196 ×10−10
+.
+Since it is smaller than α= 0.05, both results indicate that H0 should be rejected at 5% signif-
+icance level and the linear regression model is therefore highly significant. Comparing this
+result with R 2 and R 2
+a , which are
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+R 2 = 1−
+60
+13660= 0.9956 R 2
+a
+= 1−
+60/8
+13660/9= 0.9951.
+The results show that the single linear regression indeed gives a very good fit.
+5.4 Model Selection
+5.4.1 Extra Sum of Squares Principle (ESSP)
+Objective in this section is to investigate whether a subset of explanatory variables should be
+added to or deleted from an existing multiple linear regression model. Let us consider two
+models:
+Reduced model based on X1, . . . , Xq ;
+ω(has to be a sub-model of the full model): Multiple linear regression model
+Y= β0 + β1X1 +···+ βq Xq + ε
+Full model Ω: Multiple linear regression model based on X1, . . . , Xq , Xq +1, . . . , Xp ,
+Y= β0 + β1X1 +···+ βq Xq + βq +1Xq +1 +···+ βp Xp + ε
+Suppose p >q , the full model contains p explanatory variables while the reduced model is
+explained by the first q regressor variables. Hence, we would like to know whether the reduced
+model is adequate to explain the variation in Y or we should prefer the full model. In other
+words, we would like to check the explanatory power of the (p−q ) variables Xq +1, . . . , Xp . We
+are testing
+H0 : βq +1 =
+. . .
+(1a)
+(More formally, the set of hypotheses should be
+H0 : βq +1 =
+. . .
+(1b)
+= βp = 0 vs. H1 : H0 is not true. = βp = 0 vs. H1 : β′s unrestricted, or
+H0 : reduced model ω vs. H1 : full model Ω. (1c)
+In this course, we regard the two sets of hypotheses (1a) and (1b) as "equivalent").
+If we obtain an insignificant result from testing a reduced model ωagainst a full model Ω,
+• it does NOT necessarily imply that the additional variables Xq +1, . . . , Xp are useless in
+explaining the variation in Y , BUT
+• it implies that the variables Xq +1, . . . , Xp do not contribute much to explain the response
+variation given that X1, . . . , Xq have already been included in the model.
+Thus, if we remove X1, . . . , Xq from the model and include only Xq +1, . . . , Xp , the latter set of
+variables might become very useful in explaining the variation in Y despite their insignifi-
+cance in the “reduced vs full” test.
+Let SSEω and SSEΩ be the error sum of squares obtained under the reduced model and the
+full model, respectively.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+Since Ω ⊃ω, SSEΩ ≤SSEωis always true. The size of the difference
+SSEXT= SSEω−SSEΩ, (2)
+measures the “extra” contribution made (i.e. extra sum of squares explained) by the additional
+variables Xq +1, . . . , Xp . Recall, for every model
+SST= SSR + SSE .
+Thus, based on the partition
+SST= SSRω+ SSEω= SSRω+ SSEXT + SSEΩ, an ANOVA table for comparing the reduced and full model is given below:
+(3)
+Source of Variation SS d. f. MS F -Ratio
+Regression fitting ω SSRω q
+(due to X1, . . . Xq ) = SST−SSEω
+Extra SSEXT p−q MSEXT=
+(due to Xq +1, . . . , Xp , given
+or in addition to X1, . . . , Xq )
+p−q
+SSEΩ
+Error fitting Ω SSEΩ n−p−1 MSEΩ =
+SSEXT
+F=
+MSEXT
+MSEΩ
+n−p−1
+Total SST n−1
+The F-ratio computed by the ANOVA table can be used as the test statistic for the above stated
+hypothesis:
+MSEXT
+SSEXT /(p−q )
+F=
+=
+=
+MSEΩ
+SSEΩ /(n−p−1)
+(SSEω−SSEΩ)/(p−q )
+SSEΩ /(n−p−1) . (4)
+We reject H0 iff the p-value P Fp−q,n−p−1 >F is smaller than αor equivalently, iff F >Fα,p−q,n−p−1.
+Theoretical justification of the above test is similar to that given in Section 5.2. The fact
+that the reduced model is a subset of the full model ensures that the matrix defining SSEXT
+satisfies the conditions of Cochran’s Theorem. For proof, see Section 5.6.
+Note the F test statistic for hypotheses in (1a) can explicitly be written as
+F=
+SSEX1,...,Xq
+−SSEX1,...,Xq ,Xq +1,...,Xp / p−q
+SSEX1,...,Xq ,Xq +1,...,Xp /(n−p−1)
+, (5)
+where SSEX1,...,Xq is the sum of squared errors of the reduced model SSEω, and SSEX1,...,Xq ,Xq +1,...,Xp
+corresponds to the sum of squared errors of the full model SSEΩ.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+5.4.2 Example (Environmental Data)
+Suppose we have regressed ozone concentration (Y ) on temperature (X2) by SLR and we would
+like to check whether the variable radiation (X1) and wind (X3) should be included to improve
+upon our model. Formally, our hypothesis is formulated as follows:
+H0 : β1 = β3 = 0 vs. H1 : β’s unrestricted.
+The sums of squares for the reduced model (Y on X2) were obtained as SSEω = 9.8808 and
+SSRω= 6.8615. In section 5.3.1, the sums of squares for the full model (Y on X1, X2 and X3)
+were given as SSEΩ = 9.0738 and SSRΩ = 7.6685. All these sums of squares are summarized
+below:
+Explanatory variables SSE SSR
+Reduced Model ω temperature (X2) SSEω= 9.8808 SSRω= 6.8615
+Full Model Ω temperature, radiation, wind SSEΩ = 9.0738 SSRΩ = 7.6685
+The extra sum of squares becomes
+Hence, the ANOVA table becomes:
+SSEXT= SSEω−SSEΩ = 9.8808−9.0738= 0.8070.
+Source of Variation SS d. f. MS F -Ratio
+Regression fitting ω(due to X2) 6.8615 1
+Extra (due to X1, X3) 0.8070 2 0.4035 1.1562
+Error fitting Ω 9.0738 26 0.3490
+Total 16.7423 29
+The F -ratio is given by:
+MSEXT
+F=
+=
+MSEΩ
+0.4035
+0.3490= 1.1562.
+For a size α= 0.05 test, we read the critical values from standard statistical tables or computer
+software which is 3.37. Hence, F <F0.05,2,26 and we should not reject H0 at 5% significance
+level.
+We can also calculate the p-value using the computer:
+P F2,26 >1.1562= 0.3303.
+The result indicates that “radiation (X1)” and “wind (X3)” does not contribute extra explana-
+tion to the variation of the “ozone concentration (Y )” if “temperature (X2)” is included in the
+regression model.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+5.5 General Linear Hypothesis
+5.5.1 General Linear Hypothesis
+A more general testing is the following
+H0 : C β= ℓ0 vs. H1 : C β̸= ℓ0 (or β’s unrestricted), (6)
+where C is of dimension r ×(p +1) with rank r and ℓ0 is of dimension r ×1, i.e. ℓ0 = ℓ01 , ℓ02 , . . . , ℓ0r ,
+a r -vector of hypothesized values. The least square estimator of βunder H0 is
+˜
+β=
+ˆ
+β+ (X X )−1 C C (X X )−1 C−1 ℓ0−Cˆ
+β , (7)
+ˆ
+where
+βis the least square estimator of the βunder the full model. The F test statistic be-
+comes [c.f. Equation (4)]
+(SSEω−SSEΩ) /r
+F=
+MSEΩ
+=
+Cˆ
+β−ℓ0 C (X X )−1 C−1 Cˆ
+β−ℓ0 /r
+. (8)
+MSEΩ
+We reject H0, iff F >Fα,r,n−p−1 at 100 ×(α) % significance level.
+Note that this test can be applied to test for the significance of individual regression co-
+efficients. For example, in testing H0 : β1 = β3 = 0 vs H1 : H0 is not true in the environmental
+data example, we define
+C=
+0 1 0 0
+0 0 0 1
+and ℓ0 =
+0
+0
+.
+General linear hypothesis gives the following formulation:
+ℓ= C β=
+0 1 0 0
+0 0 0 1
+    
+β0
+β1
+β2
+β3
+    =
+β1
+β3
+=
+0
+0
+.
+The F value can then be computed based on Equation (8). Equivalently, the value can also be
+obtained using Equation (4).
+5.5.2 Example (Environmental Data I)
+For illustration, suppose we would like to test whether “temperature (X2)” and “wind (X3)”
+have the same contribution to the model. Then the testing hypothesis is given by
+H0 : β2 = β3 vs. H1 : β2
+̸= β3.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+We can re-express H0 by the general linear hypothesis by defining
+C= (0, 0, 1,−1), ℓ= C β= (0, 0, 1,−1)
+    
+β0
+β1
+β2
+β3
+    = β2−β3, ℓ0 = 0.
+Since
+C (X X )−1 C= (0, 0, 1,−1)
+  = 0.00286,
+ˆ
+ℓ−ℓ0 = Cˆ
+β−ℓ0 = (0, 0, 1,−1)
+    
+2.8559226 0.0006173−0.0353507−0.0409097
+0.0006173 0.0000033−0.0000181 0.0000000
+−0.0353507−0.0000181 0.0005339 0.0001439
+−0.0409097 0.0000000 0.0001439 0.0026139
+    
+    
+0
+0
+1
+−1
+    
+  
+−0.2953
+0.0013
+0.0456
+−0.0278
+    −0= It follows that the value of the test statistic is
+0.0734.
+F=
+Cˆ
+β−ℓ0 C (X X )−1 C−1 Cˆ
+β−ℓ0 /r
+MSEΩ
+=
+0.0734 ×0.00286−1 ×0.0734 /1
+= 5.405.
+0.3490
+Note that r = 1 corresponds to the number of rows of C . We reject H0 at 5% significance level
+since F >F0.05,1,26 = 4.2252 or P F1,26 >5.398= 0.0282 and conclude that the temperature
+and wind do not have the same contribution to the model.
+5.5.3 Example (Environmental Data II)
+If we would like to test whether "temperature (X2)" and "wind (X3)" have the same contribu-
+tion to the model and the sum of the coefficients is 0.5. Then the testing hypothesis is given
+by
+H0 : β2 = β3 and β1 + β2 + β3 = 0.5 vs. H1 : H0 is not true
+We can re-express H0 by the general linear hypothesis by defining
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12
+--- PAGE 13 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+C=
+0 0 1−1
+0 1 1 1
+, ℓ= C β=
+0 0 1−1
+0 1 1 1
+    
+β0
+β1
+β2
+β3
+    =
+β2−β3
+β1 + β2 + β3
+,
+ℓ0 =
+0
+0.5
+.
+Since
+C (X X )−1 C=
+=
+ˆ
+ℓ−ℓ0 = Cˆ
+β−ℓ0 =
+0 0 1−1
+0 1 1 1
+    
+2.8559226 0.0006173−0.0353507−0.0409097
+0.0006173 0.0000033−0.0000181 0.0000000
+−0.0353507−0.0000181 0.0005339 0.0001439
+−0.0409097 0.0000000 0.0001439 0.0026139
+0.0029−0.0021
+−0.0021 0.0034
+,
+    
+    
+0 0
+0 1
+1 1
+−1 1
+    
+0 0 1−1
+0 1 1 1
+    
+−0.2953
+0.0013
+0.0456
+−0.0278
+    −
+0
+0.5=
+0.0734
+−0.4809
+.
+It follows that the value of the test statistic is
+F=
+Cˆ
+β−ℓ0 C (X X )−1 C−1 Cˆ
+β−ℓ0 /r
+MSEΩ
+ 0.0734−0.4809
+0.0029−0.0021
+−0.0021 0.0034
+−1
+0.0734
+−0.4809
+ /2
+=
+= 142.9076.
+0.3490
+Note that r = 2 corresponds to the number of rows of C . We reject H0 at 5% significance level
+since F >F0.05,2,26 = 3.3690 or P F2,26 >142.9076= 9.4186 ×10−15
+.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+13
+--- PAGE 14 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+5.6 Proof of F test for ESSP in Section 5.4.1
+In Section 5.4, we consider Reduced Model ω
+Y= β0 + β1X1 +···+ βq Xq + ε
+and Full Model Ω
+Y= β0 + β1X1 +···+ βq Xq + βq +1Xq +1 +···+ βp Xp + ε.
+The corresponding ωand Ω may be written as
+(Reduced) ω: βq +1 = ······= βp = 0 ←−H0
+(Full) Ω : no restrictions on β′s ←−H1 (9)
+The F test for the null hypothesis H0 has been provided in (4) (and (5)). The reduced model
+can also be formulated as the general linear hypothesis in Section 5.5.1 (See Equation (6)), i.e.
+H0 : C β= ℓ0, for a suitably chosen C (p−q )×(p +1) and ℓ0(p−q )×1
+= 0(p−q )×1.
+Here we consider a more general reduced model ωand full model Ω.
+Reduced model ω– general linear model under constraints Aβ= a and B β= b.
+Full model Ω – general linear model under constraints Aβ= a.
+constraints constrained lse Error s.s.
+(reduced) ω:
+A A A
+B B B β β β=
+a a a
+b b b
+˜
+β β βω (full) Ω: A A Aβ β β= a a a˜
+β β βΩ SS Eω= ∥Y Y Y−X X X˜
+β β βω∥2 (fitting ω)
+SS EΩ = ∥Y Y Y−X X X˜
+β β βΩ∥2 (fitting Ω)
+For simplicity, we write d= p + 1. Dimensions of vectors and matrices are:
+A A A
+B B B
+of rank
+s ×d
+s ≤d , At ×d of rank t <s , B (s−t )×d , βd ×1, a t ×1, b (s−t )×1, Y n×1, X n×d . Note for the special ω
+and Ω in (9), t = 0 and s = p−q.
+From Equation (7), we have
+˜
+β β βω
+ˆ
+=
+β β β+ (X X X X X X )−1[A A A ,B B B ]
+A A A
+B B B (X X X X X X )−1[A A A ,B B B ]
+−1
+a a a
+b b b−
+A A A
+B B B
+ˆ
+β β β,
+˜
+ˆ
+β β βΩ =
+β β β+ (X X X X X X )−1A A A {A A A(X X X X X X )−1A A A }−1(a a a−A A Aˆ
+β β β).
+Since Ω ⊃ω, SS EΩ ≤SS Eωalways. The size of the difference
+(extra s.s.) SS E X T= SS Eω−SS EΩ,
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+14
+--- PAGE 15 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+measures the “extra” reduction in SSE obtained by removing the constraints B B Bβ β β= b b b.
+Based on the partition
+SST= SS EΩ + SS E X T + (SST−SS Eω),
+ANOVA provides an F test of ωagainst Ω:
+H0 : A A Aβ β β= a a a & B B Bβ β β= b b b against H1 : A A Aβ β β= a a a.
+Define F test statistic
+SS E X T /(s−t )
+F=
+SS EΩ/(n−d + t ).
+F test (of size α):
+reject H0 iff the p-value (Fs−t , n−d +t >F ) is smaller than α,
+or equivalently,
+iff F >F (α)
+s−t , n−d +t.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Note: Theoretical justification of F test:
+Let H H H= X X X (X X X X X X )−1X X X ,
+G G G Ω = X X X (X X X X X X )−1A A A A A A(X X X X X X )−1A A A−1 A A A(X X X X X X )−1X X X (set G G G Ω = 0 0 0n×n if t = 0)
+and
+G G G ω= X X X (X X X X X X )−1[A A A , B B B ]
+A A A
+B B B (X X X X X X )−1[A A A , B B B ]
+−1
+A A A
+B B B (X X X X X X )−1X X X .
+It is clear that G G G Ω and G G G ωare symmetric, trG G G Ω = trI I I t = t , trG G G ω= trI I I s = s and
+G G G 2
+Ω = G G G Ω, G G G 2
+ω
+= G G G ω, H H H G G G Ω = G G G ΩH H H= G G G Ω, H H H G G G ω= G G G ωH H H= G G G ω.
+Noting that
+−1
+A A A(X X X X X X )−1[A A A , B B B ]
+A A A
+B B B (X X X X X X )−1[A A A , B B B ]
+= [I I I t , 0 0 0t ×(s−t )],
+we have
+G G G ΩG G G ω= X X X (X X X X X X )−1A A A A A A(X X X X X X )−1A A A−1 [I I I t , 0 0 0t ×(s−t )]
+A A A
+B B B (X X X X X X )−1X X X= G G G Ω.
+It follows also that G G G ωG G G Ω = G G G ω G G G Ω = G G G Ω = G G G Ω. Thus,
+I I I n = (I I I n−H H H + G G G Ω) + (G G G ω−G G G Ω) + (H H H−G G G ω)
+with
+(I I I n−H H H + G G G Ω)2
+= I I I n−H H H + G G G Ω, (G G G ω−G G G Ω)2
+= G G G ω−G G G Ω, (H H H−G G G ω)2
+= H H H−G G G ω
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+15
+--- PAGE 16 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+and
+tr (I I I n−H H H + G G G Ω) = n−d + t , tr (G G G ω−G G G Ω) = s−t , tr (H H H−G G G ω) = d−s.
+Under the general linear model and by Cochran’s Theorem,
+ε ε ε (I I I n−H H H + G G G Ω)ε ε ε∼σ2χ2
+n−d +t and ε ε ε (G G G ω−G G G Ω)ε ε ε∼σ2χ2
+s−t
+are independent.
+ˆ
+Writing Y Y Y= X X X β β β+ ε ε εand
+β β β= β β β+ (X X X X X X )−1X X X ε ε ε, we have
+SS EΩ = ∥ε ε ε−X X X (˜
+β β βΩ−β β β)∥2
+= ε ε ε−X X X (X X X X X X )−1X X X ε ε ε
+−X X X (X X X X X X )−1A A A {A A A(X X X X X X )−1A A A }−1 a a a−A A Aβ β β−A A A(X X X X X X )−1X X X ε ε ε
+2
+= (I I I n−H H H + G G G Ω)ε ε ε−X X X (X X X X X X )−1A A A {A A A(X X X X X X )−1A A A }−1(a a a−A A Aβ β β) 2
+= ε ε ε (I I I n−H H H + G G G Ω)ε ε ε
+−(a a a−A A Aβ β β) {A A A(X X X X X X )−1A A A }−1 2A A A(X X X X X X )−1X X X ε ε ε−a a a + A A Aβ β β
+and, similarly,
+SS Eω = ε ε ε (I I I n−H H H + G G G ω)ε ε ε−
+a a a−A A Aβ β β
+b b b−B B Bβ β β
+−1
+A A A
+B B B (X X X X X X )−1[A A A , B B B ]
+· 2
+A A A
+B B B (X X X X X X )−1X X X ε ε ε−
+a a a−A A Aβ β β
+b b b−B B Bβ β β.
+Under the full model Ω where A A Aβ β β= a a a , we have
+SS EΩ = ε ε ε (I I I n−H H H + G G G Ω)ε ε ε∼σ2χ2
+n−d +t.
+On the other hand,
+SS E X T= SS Eω−SS EΩ
+= ε ε ε (G G G ω−G G G Ω)ε ε ε−
+0 0 0q
+b b b−B B Bβ β β
+−1
+A A A
+B B B (X X X X X X )−1[A A A , B B B ]
+· 2
+A A A
+B B B (X X X X X X )−1X X X ε ε ε−
+0 0 0q
+b b b−B B Bβ β β
+∼ σ2χ2
+s−t + Z ,
+where Z∼N ν2, 4σ2ν2 and ν2
+=
+0 0 0q
+b b b−B B Bβ β β
+A A A
+B B B (X X X X X X )−1[A A A , B B B ]
+−1
+0 0 0q
+b b b−B B Bβ β β.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+16
+--- PAGE 17 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 5 Analysis of Variance
+If H0 is correct so that B B Bβ β β= b b b and hence ν= 0, then SS E X T∼σ2χ2
+s−t and is independent
+of SS EΩ ∼σ2χ2
+n−d +t . Thus F∼Fs−t ,n−d +t ; otherwise SS E X T∼σ2χ2
+s−t + Z tends to have a
+bigger value than a pure σ2χ2
+s−t random variable (since Z has a strictly positive mean ν2 >0).
+We would therefore expect to have a big value for F compared to the Fs−t ,n−d +t distribution.
+The above results suggest that a big value of F with reference to the Fs−t ,n−d +t distribution
+can be interpreted as evidence against H0.
+Consider an MLR model
+Y= β0 + β1X1 +···+ βp Xp + ε, ε∼N (0, σ2).
+To assess the effects of the explanatory variables Xk +1, . . . , Xp , we wish to test
+H0 : βq +1 = ···= βp = 0 vs H1 : βj ’s unrestricted.
+This corresponds to setting
+full model Ω : β β βunrestricted,
+reduced model ω: [0 0 0(p−q )×(q +1),I I I p−q ]β β β= [βq +1, . . . , βp ] = 0 0 0p−q.
+˜
+ˆ
+Quoting general formulae for constrained lse’s, we have
+β β βΩ =
+β β βand
+˜
+β β βω
+−1
+ˆ
+=
+β β β−(X X X X X X )−1 0 0 0(q +1)×(p−q )
+I I I p−q
+[0 0 0(p−q )×(q +1),I I I p−q ](X X X X X X )−1 0 0 0(q +1)×(p−q )
+I I I p−q
+·[0 0 0(p−q )×(q +1),I I I p−q ]ˆ
+β β β.
+Write X X X = [X X X ω, X X X E X T ], where X X X ω has q + 1 columns and is the design matrix for reduced
+˜
+model ω. Then the general formula for
+β β βωreduces to
+˜
+β β βω
+=
+(X X X ω X X X ω)−1X X X ω Y Y Y
+0 0 0p−q
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+17

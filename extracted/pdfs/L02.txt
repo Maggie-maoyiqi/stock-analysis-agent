@@ -1,0 +1,632 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 2 Matrix and Distribution Theory
+2 Matrix
+A matrix is a rectangular array of numbers. A is an n ×m matrix if it contains n rows and m
+columns of elements, where ai j represents the element of A at the i -th row and j -th column
+(i ∈{1, . . . , n}, j ∈{1, . . . , m}). Mathematically, we denote
+A= ai j=
+.
+.
+  a11. . . a1m
+.
+. ai j
+.
+.
+an1. . . anm
+  
+When n = 1, A is a 1 ×m matrix or a row vector. When m = 1, A is an n ×1 or a column
+vector. When m = n = 1, A is just a scalar.
+2.1 Basic Matrix Operation
+1. Matrix Addition:
+Let A and B be both n ×m matrices. C= A+B is an n ×m matrix with elements C= ci j
+where ci j= ai j +bi j . Similarly, D= A−B is also an n ×m matrix with elements D= di j
+where di j= ai j−bi j.
+Example:
+A=
+C= A + B=
+D= A−B=
+1 2−3
+4−6 7 , B=
+0 2 1
+1 2 3 ,
+1 + 0 2 + 2−3 + 1
+4 + 1−6 + 2 7 + 3=
+1−0 2−2−3−1
+4−1−6−2 7−3=
+1 4−2
+5−4 10 ,
+1 0−4
+3−8 4
+.
+2. Matrix Multiplication:
+Suppose A is an n ×m matrix and B is an m ×p matrix. Then C= AB is an n ×p matrix
+with elements C= ci j where
+ci j=
+m
+k=1
+ai k bk j.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+Note that AB
+element D= di j , di j= k ai j.
+̸= B A. Moreover let k be a scalar, then D= k A is an n ×m matrix with
+Example:
+A=
+1 2−3
+2 3
+4−6 7 , B=  0 2
+4−2
+ , k= 2,
+C= AB=
+1 ×0 + 2 ×2 + (−3) ×4 1 ×2 + 2 ×3 + (−3) ×(−2)
+4 ×0 + (−6) ×2 + 7 ×4 4 ×2 + (−6) ×3 + 7 ×(−2)
+=−8 12
+16−24 ,
+D= k A= 2 ×
+1 2−3
+4−6 7=
+2 ×1 2 ×2 2 ×(−3)
+2 ×4 2 ×(−6) 2 ×7
+=
+2 4−6
+8−12 14
+.
+2.2 Some Matrix Definition
+1. Transpose:
+Let A be an n ×m matrix, an m ×n matrix B= A (or A′) is called the transpose of A
+with elements B= bi j where bi j= a j i.
+Example:
+A=
+1 2−3
+4−6 7 , B= A=  1 4
+2−6
+−3 7
+ 
+It is also easy to see that (A ) = A and (AB ) = B A .
+2. Square Matrix:
+A is a square matrix when n = m.
+Example:
+A=
+1 2
+4−6
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+3. Symmetric:
+A= A .
+A is symmetric when A is square and ai j= a j i for all i and j . For a symmetric matrix,
+Example:
+A=
+1−2
+−2 1
+4. Idempotent:
+A is idempotent when A2 = A.
+Example:
+−1 3 4
+A2 = A=  2−2−4
+1−2−3
+−1 3 4
+A=  2−2−4
+1−2−3
+−1 3 4
+  2−2−4
+1−2−3
+ ,
+−1 3 4
+ =  2−2−4
+1−2−3
+ 
+5. Identity Matrix:
+A is an identity matrix, denoted by I n or I , when ai i = 1 for all i and ai j= 0 for all i
+̸= j.
+Example (n = 3):
+0 1 0
+I 3 = I=  1 0 0
+0 0 1
+ 
+6. Rank:
+Let A be an n ×m matrix. The rank of A, denoted by rank (A), is defined as the maximum
+number of linearly independent column (or row) vectors of A. A is of full ranked if
+rank (A) = min (n, m). Moreover we have
+rank (A) = rank (A ) ≤min (n, m)
+Example:
+A=
+1 2 3
+2 4
+2 4 5 , rank (A) = 2. B=  1 2
+3 6
+ , rank (B ) = 1
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+7. Inverse Matrix:
+Let A be an n ×n matrix. If there exists an n ×n matrix B such that AB= I , then B is
+the inverse of A, and is denoted by B= A−1
+.
+Example:
+A=
+AB= A A−1 =
+1 0
+1 1 , B= A−1 =
+1 0
+−1 1 ,
+1 0
+1 1
+1 0
+−1 1
+=
+1 0
+0 1
+.
+Some properties about the inverse of a matrix are listed below:
+• AB= I →B A= I .
+• If A−1 exists, then A is called a non-singular or invertible matrix.
+• A square matrix A has an inverse if and only if it is of full ranked.
+• The inverse is unique if it exists.
+• A−1−1
+• (A )−1
+• (AB )−1
+• (k A)−1
+= A.
+= A−1
+.
+1
+k A−1 for some scalar k.
+= B−1 A−1. (Note: A and B are square matrices)
+=
+Inversion of 2 ×2 matrices:
+A−1
+=
+−1
+a b
+c d
+=
+1
+a d−b c
+d−b
+−c a
+Inversion of 3 ×3 matrices:
+A−1
+=  a b c
+d e f
+g h k
+1
+ −1
+=
+det (A)
+ e k−f h f g−d k a k−c g c d−a f
+d h−e g g b−a h a e−b d
+c h−b k b f−c e
+ ,
+where det (A) = a e k−f h−b k d−f g + c d h−e g.
+8. Trace
+For an n ×n matrix A, the trace is defined as the sum of its diagonal elements
+tr (A) =
+n
+ai i
+i=1
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+Example:
+A=
+1 2
+3 4 , tr (A) = 1 + 4 = 5.
+Moreover, we have tr (AB ) = tr (B A).
+9. Quadratic form
+Let W be a function of n variables Y1, . . . , Yn where
+W=
+n
+j=1
+n
+i=1
+ai j Yi Yj
+where ai j is a given set of numbers. The above form can be written as W= Y AY where
+A is an n ×n matrix with elements A= ai j , Y = (Y1, . . . , Yn ) is a n ×1 column vector,
+and W is defined to be a quadratic form in the n variables Yi.
+10. Nonnegative and positive definite
+An n ×n matrix A is said to be nonnegative definite (or positive semi-definite) if it is
+symmetric and Y AY ≥0 for any n ×1 vector Y .
+It is positive definite if Y AY >0 for any nonzero n ×1 vector Y .
+2.3 Statistical Expression in Matrix Form
+1. Random vector
+Let Y be a random vector. The elements of Y are random variables:
+Y=
+.
+  Y1
+.
+.
+Yn
+  
+Note that Y1, . . . , Yn can be dependent or independent. For example, Yi s are n random
+variables from the same subject, say Y1 = height, Y2 = weight, Y3 = age and so on; or Yi s
+are n independent observations, say monthly expenditure of n independent persons.
+2. Mean vector
+The elements of the vector are the expected value of the elements of the random vector
+µ= (Y ) =
+  
+(Y1)
+.
+.
+.
+(Yn )
+  
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+3. Covariance matrix and variance-covariance matrix
+Let X be an m ×1 random vector and Y an n ×1 random vector. The covariance matrix
+of X and Y is defined as
+Cov X , Y= X−µX Y−µY
+= (X Y )− (X ) (Y )
+.
+=
+  Cov (X1, Y1) . . Cov Xi , Yj
+Cov (Xm , Y1) . . . . . . .
+Cov (X1, Yn )
+.
+.
+Cov (Xm , Yn )
+  
+Mathematically, Cov (X , Y ) = σi j where σi j= Cov xi , yj . In general, Cov (X , Y )m×n
+̸=
+Cov (Y , X )n×m , but Cov (X , Y ) = [Cov (Y , X )].
+The variance-covariance matrix (or covariance matrix, or variance) of Y is denoted by
+Σ= Var (Y ) given by
+Var Y= Σ= Y−µY Y−µY
+= (Y Y )− (Y ) (Y )
+.
+=
+  Cov (Y1, Y1) . . Cov (Yi , Yi ).
+Cov (Yn , Y1) . . . . . . Cov (Yn , Yn )
+Cov (Y1, Yn )
+.
+.
+.
+=
+  Var (Y1) . . Var (Yi ).
+Cov (Yn , Y1) . . . . . . Cov (Y1, Yn )
+.
+.
+Var (Yn )
+  
+  
+The variance-covariance matrix Σ is symmetric and nonnegative definite:
+t Σt = t Y−µ Y−µ t
+= t Y−µ Y−µ t
+= Y−µ t Y−µ t
+≥0,
+where t is a column vector with n entries. Since Y−µ is a row vector with n entries
+as well, Y−µ t is a scalar, say d . Hence, Y−µ t Y−µ t = d 2 ≥0.
+4. Linear Combinations
+Let A and B are constant matrices, b and c are constant vectors and X and Y are two
+n ×1 random vectors with Var (Y ) = Σ, then
+• (AY + B X + b ) = A (Y ) + B (X ) + b
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+• Cov (AY + b , B Y + c ) = Cov(AY , B Y ) = AΣB
+• Var(AY + b ) = Var(AY ) = AΣA
+• Var(X + Y ) = Var(X ) + Var(Y ) + Cov(X , Y ) + Cov(Y , X )
+• Var(X + Y ) = Var(X ) + Var(Y ) if X and Y are independent or uncorrelated
+5. Trace-Variance Formula
+Let Q be an n ×n constant matrix and Y be an n ×1 random vector, then
+(Y Q Y ) = [tr (Y Q Y )]
+= [tr ((Q Y ) Y )]
+= tr [Q (Y Y )]
+= tr [Q (Var (Y ) + (Y ) (Y ) )]
+= tr [Q Var (Y )] + tr [Q (Y ) (Y ) ]
+= tr [Q Var (Y )] + tr [ (Y ) Q (Y )]
+so (Y Q Y ) = tr [Q Var (Y )] + (Y ) Q (Y ).
+2.4 Multivariate Normal Distribution
+Let Y be a p -dimensional normally distributed random vector: Y∼Np µ, Σ , where µ= (Y )
+is the mean vector and Σ= Var (Y ) = σi j the covariance matrix. The probability density
+function of Y is defined as:
+f y= (2π)p /2 det Σ−1
+exp−
+1
+2 y−µ Σ−1 y−µ.
+Note that (Yi ) = µi , Var (Yi ) = σ2
+i , Cov Yi , Yj= σi j and Yi ∼N µi , σ2
+i where σ2
+i = σi i.
+The following are two special cases of the multivariate normal distribution:
+1. p= 1: Univariate Normal Distribution
+Let Y be a normally distributed random variable: Y∼N µ, σ2 . The probability den-
+sity function of Y is defined as:
+f y=
+1
+2πσ2 exp  −
+y−µ
+2
+ .
+2σ2
+2. p= 2: Bivariate Normal Distribution
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+Var (Y1) Cov (Y1, Y2)
+Cov (Y2, Y1) Var (Y2).
+Let Y= (Y1, Y2) be a bivariate normally distributed random vector with mean vector
+and covariance matrix given as:
+µ=
+(Y1)
+(Y2), Σ=
+The probability density function is given by
+f y1, y2 =
+1
+2πσ1σ2 1−ρ2 exp−
+1
+2 1−ρ2
+U 2 + V 2
+−2ρU V
+where U=
+y1−µ1
+σ1
+, V=
+y2−µ2
+σ2
+and ρ= Corr(Y1, Y2).
+The following are some important properties of the multivariate normal distribution:
+1. Marginal Distributions
+Suppose p= 3, we have
+ Y1
+Y2
+Y3
+ ∼N3   µ1
+µ2
+µ3
+ ,
+ σ2
+1 σ12 σ13
+σ21 σ2
+2 σ23
+σ31 σ32 σ2
+3
+  
+then we have Y1 ∼N µ1, σ2
+1 , and
+Y2
+Y3
+∼N2
+µ2
+µ3
+,
+σ2
+2 σ23
+σ32 σ2
+3
+More generally, suppose a partition of a p -variate normal random variable Y is given
+Y p ×1 =
+Y 1
+Y 2
+q ×1
+(p−q )×1
+Σ11 Σ12
+Σ21 Σ22
+by
+∼Np
+µ1
+µ2
+,
+then
+Y 1 ∼Nq µ1, Σ11 and Y 2 ∼Np−q µ2, Σ22
+2. Conditional Distributions
+Suppose Y 1 and Y 2 are partitions of a p -dimensional random vector with mean vector
+and covariance matrix defined as
+µ=
+µ1
+µ2
+q ×1
+(p−q )×1
+, Σ=
+Σ11 Σ12
+Σ21 Σ22
+.
+It can be shown that the conditional distribution of Y 1 |Y 2 = y 2 is given by
+Y 1 |Y 2 = y 2 ∼Nq µ1 + Σ12Σ−1
+22 y 2−µ2 , Σ11−Σ12Σ−1
+22 Σ21.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+3. Linear Combination of Y
+Suppose A is a k ×p dimensional constant matrix and Y a p ×1 dimensional random
+vector, and let W= AY , then
+W=
+    
+a11Y1 + a12Y2 +. . . + a1p Yp
+a21Y1 + a22Y2 +. . . + a2p Yp
+.
+.
+.
+ak 1Y1 + ak 2Y2 +. . . + ak p Yp
+    
+are k linear combinations of the Yi s. If Y∼Np µ, Σ , then W= AY∼Nk Aµ, AΣA .
+4. Independence
+From the marginal and conditional distribution properties of the multivariate normal
+distribution, it can be seen that Y 1 and Y 2 are independent if and only if Σ12 = 0 that
+has every element equals to zero. Moreover, if
+    
+Y1
+Y2
+.
+.
+.
+Yp
+    ∼Np
+      
+  
+µ1
+µ2
+.
+.
+.
+µp
+    , σ2I
+    
+where I is the identity matrix, then Yi ∼N µi , σ2 and Yi and Yj are independent for
+i
+̸= j.
+Theorem 2.1: Let Y∼Nn µ, Σ and suppose that A is a k ×n matrix and b is a k ×1 vector;
+then
+AY + b∼Nk Aµ + b , AΣA .
+Theorem 2.2: (Call it “Independence Theorem” for simplicity) If Y∼Nn µ, Σ and A is a
+constant n ×n positive semi-definite and symmetric matrix, and B is a constant d ×n matrix,
+then Y AY is independent of B Y if AΣB= 0.
+Theorem 2.3a (Cochran Theorem: Particular Form) Let Y∼Nn 0, σ2I and A is a n ×n
+symmetric matrix such that A2 = A, then
+Y AY∼σ2χ2
+r
+where r = tr (A).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+Theorem 2.3 (Cochran Theorem): Let Y∼Nn 0, σ2I , and A1, . . . , Am are n ×n symmetric
+matrices such that
+(i)
+m
+Ai = I , and
+i=1
+(ii) A2
+i = Ai for all i ,
+then Y A1Y , . . . , Y Am Y are independent variables with
+Y Ai Y∼σ2χ2
+ri , i= 1, ..., m,
+where ri = tr (Ai ).
+2.5 Sampling Distributions Related to Normal Distribution
+1. Chi-Square χ2 distribution
+If Z∼N (0, 1), then the distribution of Z 2 is χ2
+1 and if Z1, . . . , Zk are independently and
+identically distributed (i.i.d.) according to a N (0, 1) distribution, then
+U= Z 2
+1 +···+ Z 2
+k ∼χ2
+k.
+Note (U ) = k , Var(U ) = 2k . Also, sum of independent χ2-variates has a χ2-distribution.
+Mathematically, suppose U1 ∼χ2
+k1 independent of U2 ∼χ2
+k2 , then we have U1 + U2 ∼
+χ2
+k1+k2.
+2. Student’s t-distribution
+If Z∼N (0, 1) and U∼χ2
+k with Z and U being independent, then
+T=
+Z
+U /k∼tk.
+3. F -distribution
+If U1 ∼χ2
+k1 independent of U2 ∼χ2
+k2 , then
+U1/k1
+∼Fk1,k2.
+U2/k2
+Moreover, if T∼tk , then one can show that T 2 ∼F1,k.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+2.6 Proofs of Theorems 2.2 and 2.3
+1. Proof of Theorem 2.2
+Since A A A is positive semidefinite and symmetric, there exists an n ×n symmetric matrix
+Q Q Q such that A A A= Q Q Q Q Q Q . Note that
+A A AΣ Σ ΣB B B= 0 0 0n×d ⇒ x x x B B BΣ Σ ΣQ Q Q Q Q QΣ Σ ΣB B B x x x = (Q Q QΣ Σ ΣB B B x x x ) (Q Q QΣ Σ ΣB B B x x x ) = 0 ∀x x x
+⇒ Q Q QΣ Σ ΣB B B x x x = 0 0 0n ∀x x x
+⇒ Q Q QΣ Σ ΣB B B= 0 0 0n×d ,
+which implies
+Q Q Q Y Y Y
+B B B Y Y Y=
+Q Q Q
+B B B
+Y Y Y∼Nn+d
+Q Q Q
+B B B µ µ µ,
+Q Q Q
+B B B
+Σ Σ Σ Q Q Q
+B B B
+≡Nn+d
+Q Q Qµ µ µ
+B B Bµ µ µ,
+Q Q QΣ Σ ΣQ Q Q 0 0 0n×d
+0 0 0d ×n B B BΣ Σ ΣB B B ,
+so that B B B Y Y Y is independent of Q Q Q Y Y Y , and hence of Y Y Y A A AY Y Y = (Q Q Q Y Y Y ) (Q Q Q Y Y Y ).
+2. Proof of Theorem 2.3
+Let λbe an eigenvalue of A A Ai and v v v be a corresponding eigenvector. Then
+A A Ai v v v = λv v v ⇒ λv v v = A A Ai (A A Ai v v v ) = A A Ai (λv v v ) = λA A Ai v v v = λ2v v v
+⇒ λ= 0 or 1.
+Note that tr(A A Ai ) = ri = sum of eigenvalues of A A Ai . It follows that A A Ai has as eigenvalues ri
+1’s and n−ri 0’s. Then there exists an ri ×n matrix Q Q Q i such that
+A A Ai = Q Q Q i Q Q Q i and Q Q Q iQ Q Q i = I I I ri.
+Let Z Z Z i = Q Q Q i Y Y Y . Then
+Z Z Z i ∼Nri (0 0 0ri , σ2I I I ri ) ⇒ Y Y Y A A Ai Y Y Y= Z Z Z i Z Z Z i ∼σ2χ2
+ri.
+Noting that
+m
+A A Ai = I I I n ⇒
+i=1
+m
+tr(A A Ai ) =
+i=1
+m
+i=1
+ri = tr(I I I n ) = n,
+the matrix
+Q Q Q=
+  
+Q Q Q 1
+.
+.
+.
+Q Q Q m
+  
+is a square matrix with dimension n ×n and satisfies
+Q Q Q Q Q Q=
+m
+Q Q Q i Q Q Q i =
+i=1
+m
+A A Ai = I I I n ⇒ Q Q Q= Q Q Q−1 ⇒ Q Q QQ Q Q= I I I n.
+i=1
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 2 Matrix and Distribution Theory
+Now
+  Z .
+.
+.
+Z Z Z m
+Z Z 1
+  = Q Q Q Y Y Y∼Nn (0 0 0n , σ2Q Q QQ Q Q ) ≡Nn (0 0 0n , σ2I I I n )
+⇒ Z Z Z 1, . . . ,Z Z Z m independent
+⇒ Z Z Z 1Z Z Z 1 = Y Y Y A A A1Y Y Y , . . . , Z Z Z m Z Z Z m = Y Y Y A A Am Y Y Y independent.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12

@@ -1,24 +1,10 @@
 """用户档案读写服务。"""
 from __future__ import annotations
 
-import json
 from copy import deepcopy
-from pathlib import Path
 from typing import Any, Dict
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATA_DIR = PROJECT_ROOT / "data"
-PROFILE_PATH = DATA_DIR / "user_profile.json"
-
-DEFAULT_PROFILE: Dict[str, Any] = {
-    "risk_preference": "稳健",
-    "recommendation_count": 5,
-    "primary_market": "cn",
-    "active_markets": ["cn", "hk", "us"],
-    "delivery_schedule": {"morning": "09:00", "evening": "21:00"},
-    "watchlist": [],
-    "positions": [],
-}
+from backend.storage import DEFAULT_PROFILE, load_profile as load_profile_from_db, save_profile as save_profile_to_db
 
 
 def _detect_market(stock_code: str) -> str:
@@ -30,23 +16,16 @@ def _detect_market(stock_code: str) -> str:
     return "us"
 
 
-def _ensure_profile_file():
-    DATA_DIR.mkdir(exist_ok=True)
-    if not PROFILE_PATH.exists():
-        PROFILE_PATH.write_text(json.dumps(DEFAULT_PROFILE, ensure_ascii=False, indent=2), encoding="utf-8")
-
-
 def load_profile() -> Dict[str, Any]:
-    """读取用户档案，不存在时自动创建默认档案。"""
-    _ensure_profile_file()
-    return json.loads(PROFILE_PATH.read_text(encoding="utf-8"))
+    """读取用户档案。"""
+    return load_profile_from_db()
 
 
 def save_profile(profile: Dict[str, Any]) -> Dict[str, Any]:
     """保存用户档案。"""
-    DATA_DIR.mkdir(exist_ok=True)
-    PROFILE_PATH.write_text(json.dumps(profile, ensure_ascii=False, indent=2), encoding="utf-8")
-    return profile
+    normalized = deepcopy(DEFAULT_PROFILE)
+    normalized.update(profile)
+    return save_profile_to_db(normalized)
 
 
 def update_profile(partial: Dict[str, Any]) -> Dict[str, Any]:

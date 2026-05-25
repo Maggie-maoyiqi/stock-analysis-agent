@@ -6,6 +6,7 @@ from typing import Any, Dict
 from ..tools.analysis_helpers import llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
+from ..utils.progress import run_with_heartbeat
 from ..utils.state_definition import AgentState
 
 logger = setup_logger(__name__)
@@ -38,25 +39,30 @@ async def forecast_agent(
                 await result
 
     try:
-        await notify("准备预测输入数据", 0.1)
-        await notify("查询预测与历史行情", 0.35)
-        tool_payload = await run_tools(
-            [
-                ("price_forecast", {"stock_code": state.get("stock_code", "")}),
-                (
-                    "historical_k_data",
-                    {
-                        "stock_code": state.get("stock_code", ""),
-                        "start_date": f"{int(state.get('current_date', '2025-01-01')[:4]) - 1}-01-01",
-                        "end_date": state.get("current_date", ""),
-                        "frequency": "d",
-                        "adjustflag": "2",
-                    },
-                ),
-            ]
+        await notify("准备预测输入数据", 0.05)
+        tool_payload = await run_with_heartbeat(
+            run_tools(
+                [
+                    ("price_forecast", {"stock_code": state.get("stock_code", "")}),
+                    (
+                        "historical_k_data",
+                        {
+                            "stock_code": state.get("stock_code", ""),
+                            "start_date": f"{int(state.get('current_date', '2025-01-01')[:4]) - 1}-01-01",
+                            "end_date": state.get("current_date", ""),
+                            "frequency": "d",
+                            "adjustflag": "2",
+                        },
+                    ),
+                ]
+            ),
+            notify,
+            message="查询预测与历史行情",
+            start=0.05,
+            end=0.45,
+            expected_seconds=10.0,
         )
 
-        await notify("生成走势预测解读", 0.72)
         prompt = f"""请分析股票 {state.get("stock_name", "")}({state.get("stock_code", "")}) 的短期走势预测。
 当前日期: {state.get("current_date", "")}
 
@@ -64,8 +70,15 @@ async def forecast_agent(
 
 {tool_payload}
 """
-        analysis = await llm_generate_analysis(FORECAST_SYSTEM_PROMPT, prompt)
-        await notify("整理预测结论", 0.92)
+        analysis = await run_with_heartbeat(
+            llm_generate_analysis(FORECAST_SYSTEM_PROMPT, prompt),
+            notify,
+            message="生成走势预测解读",
+            start=0.45,
+            end=0.92,
+            expected_seconds=15.0,
+        )
+        await notify("整理预测结论", 0.95)
         await notify("预测分析完成", 1.0)
         logger.info("%s 走势预测分析完成", SUCCESS_ICON)
         return {"forecast_analysis": analysis}

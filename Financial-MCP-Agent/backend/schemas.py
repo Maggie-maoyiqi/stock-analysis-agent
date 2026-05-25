@@ -38,6 +38,7 @@ class AnalysisTaskResponse(BaseModel):
     step_statuses: Dict[str, str] = Field(default_factory=dict)
     step_progresses: Dict[str, float] = Field(default_factory=dict)
     step_messages: Dict[str, str] = Field(default_factory=dict)
+    charts: List[Dict[str, Any]] = Field(default_factory=list)
     created_at: str
     updated_at: str
     execution_time: Optional[float] = None
@@ -102,6 +103,7 @@ class BriefGenerateResponse(BaseModel):
     markdown: str
     markdown_file: str
     docx_file: str
+    charts: List[Dict[str, Any]] = Field(default_factory=list)
     watchlist_reviews: List[Dict[str, Any]]
     position_reviews: List[Dict[str, Any]]
     recommendations: List[Dict[str, Any]]

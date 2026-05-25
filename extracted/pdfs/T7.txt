@@ -1,0 +1,114 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 7 Variable Selection, Polynomial and Interaction Regression
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis
+Tutorial 7 Variable Selection, Polynomial and Interaction Regression
+1 Variable Selection
+1. Motivation of variable selection
+2. The objective is to investigate whether a subset of explanatory variables should be excluded in
+an existing full model. Not all variables are useful to predict response variable. Regression aims
+to find a mode which is easy to interpret and with smaller SSE.
+Different criteria for selecting best model
+Given a total of k explanatory variables, there could be a total of 2k
+− 1 models for explaining
+the response variable. So we have to propose several criteria for comparison of these models.
+There are four popular criteria for model selection which are summarized in the following table.
+Method
+Criteria
+Meaning
+Remarks
+Coefficient of R 2 largest
+largest
+Better Fit R 2 ↔
+given
+Determination p
+Better Prediction
+̸= smallest SSE
+R 2 = SS Rp /SS T p ↑→R 2 ↑
+0 ≤R 2 ≤1
+Adjusted R 2
+largest
+Better Fit R 2
+a largest
+↔
+a
+Coefficient of
+(with adjustment
+smallest MSE
+Determination R 2
+for the number of
+a can be negative.
+R 2
+a
+= 1−[(1−R 2)(n−1)/(n−p−1)] explanatory variables) penalty for more variables.
+and
+smallest bias in
+Mallow’s Cp small Cp Full model:
+Statistic Cp ≈p + predicted value
+1 Cp
+= k + 1
+Cp
+= SS Ep /M S Ek−(n−2p−2) penalty for more variables.
+small Cp more important than close to p + 1
+AIC information
+BIC information
+AI C=−2l n L + 2r B I C=−2l n L + r l n (n ) minimize AIC
+minimze BIC
+Maximize the likelihood,
+with penalty for more
+explanatory variables.
+no strict rule on the choice
+between AIC and BIC.
+penalty for more variables.
+works with likelihood approach.
+3. Sequential methods
+(a) Forward selection method
+Start with model with no independent variables(intercept included). Add the most signifi-
+cant variables based on criterion until no variables added.
+(b) Backward elimination method
+Start with full model. Remove the most insignificant variable based on criterion until no
+variables removed.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 7 Variable Selection, Polynomial and Interaction Regression
+(c) Stepwise method
+Start with model with no independent variables. Add the most significant variable based
+on entry criterion Then remove the most insignificant variable based on removal criterion.
+Until neither criterion is met.
+Note: Entry criterion should be more strict than removal criterion.
+2 Polynomial and Interaction regression
+1. Polynomial regression
+Yi = β0 + β1Xi + β2X 2
+i +... + βp X p
+i + εi
+2. Interaction regression
+Y = β0 + β1X1 + ... + βp Xp + β12X1X2 + ... + βp−1,p Xp−1Xp + ε
+Solve it by constructing a new X from original data.
+3 Exercise
+Aerobic fitness (measured by the ability to consume oxygen) is fit to some simple exercise tests. The
+goal is to develop an equation to predict fitness based on the exercise tests rather than on expensive
+and cumbersome oxygen consumption measurements. Seven measurements were made on men in-
+volved in a physical fitness course at N.C. State University. They are age (years, X1), weight (kg, X2),
+oxygen intake rate (ml per kg body weight per minute, Y ), time to run 1.5 miles (minutes, X3), heart
+rate while resting (X4), heart rate while running (same time oxygen rate measured, X5), and maximum
+heart rate recorded while running (X6).
+Y = oxygen intake rate (ml per kg body weight per minute)
+X1 = age (years)
+X2 = weight (in kg)
+X3 = time to run 1.5 miles (in minutes)
+X4 = heart rate while resting
+X5 = heart rate while running
+X6 = maximum heart rate recorded while running
+(1) (2) (3) (4) Fit a multiple linear regression model on the oxygen intake rate.
+Are the variables as a whole effective in explaining the variation in Y ?
+Formulate a reduced model by excluding the insignificant explanatory variable(s) and produce
+an ANOVA table for comparing the full model and the reduced model.
+Perform a F test for the reduced model against the full model. What is your conclusion?
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2

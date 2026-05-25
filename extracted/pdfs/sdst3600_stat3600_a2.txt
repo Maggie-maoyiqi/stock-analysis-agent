@@ -1,0 +1,131 @@
+--- PAGE 1 ---
+SDST3600/STAT3600
+Assignment 2 (submit Q5, Q7a – Q7i, Q8a – Q8i)
+Deadline: Mar 25, 2026
+Note: (1) Numeric values should be presented in 4 decimal places. (2) Show the intermediate steps
+for Q5 and Q7. (3) Use R for Q8.
+1. A psychiatrist wants to know whether the level of pathology (Y) in psychotic patients 6 months
+after treatment can be predicted with reasonable accuracy from knowledge of pretreatment
+symptom ratings of thinking disturbance (X1) and hostile suspiciousness (X2). The data collected
+on 15 patients are stored in ‘pathology.dat’. Consider a multiple linear regression model with Y
+as the dependent variable and X1 and X2 as the independent variables.
+a. Write down the regression model. State clearly the assumptions.
+b. Find the least squares estimates of the regression coefficients. Interpret the results.
+c. Construct the ANOVA table and hence test whether there is a regression of Y on X1 and X2
+at the 5% level of significance.
+d. Estimate the covariance matrix of the estimates.
+e. Find a 95% confidence interval for each partial regression coefficient.
+f. Test whether  1 = 32 or not at the 5% level of significance.
+g. Test whether  2 = -10 or not at the 5% level of significance.
+h. Calculate the R2
+.
+i. Considering a case with x1 = 3 and x2 = 6, find the predicted level of pathology and the
+confidence interval for the mean response and the prediction interval with 95% confidence
+level.
+2. Consider a general linear hypotheses
+𝐻 : 𝑪𝜷 𝒅 vs. 𝐻 : 𝑪𝜷 𝒅
+C is of dimensions r × p with rank r and d is of dimensions r × 1. Prove that
+a. under the reduced model, the least squares estimator is
+𝜷 𝜷 𝑿 𝑿 𝑪 𝑪 𝑿 𝑿 𝑪 𝑪𝜷 𝒅
+b. the difference 𝑆𝑆𝐸 𝑆𝑆𝐸 can be expressed as
+𝑆𝑆𝐸 𝑆𝑆𝐸 𝑪𝜷 𝒅 𝑪 𝑿 𝑿 𝑪 𝑪𝜷 𝒅
+3. Consider a multiple linear regression model
+𝑦 𝛽 𝛽 𝑥 ⋯ 𝛽 𝑥 𝜀
+where xij are constant,  j are parameters,  i are iid 𝑁0, and i = 1, …, n. A weighted least
+square estimator for  j is obtained by minimizing
+𝑆𝑆𝐸 ∑ 𝑤 𝑦 𝛽 𝛽 𝑥 ⋯ 𝛽 𝑥 ,
+where wi are some predefined known constant values and ∑ 𝑤 1. Prove that the estimators
+of the regression coefficients are given as
+𝜷 𝐗 𝐖𝐗 𝐗 𝐖𝐘
+and the variance-covariance matrix of the estimator is
+𝑐𝑜𝑣𝜷 𝜎 𝐗 𝐖𝐗
+W is a diagonal matrix of w1, …, wn.
+1
+--- PAGE 2 ---
+4. In the multiple linear regression model, show that ∑ 𝑝, where 𝑦 𝑥 is the fitted
+mean response of the ith observation, and p is the number of regressor variables.
+5. Show that the multiple coefficient of determination in a multiple regression model is the square
+of the coefficient of correlation between 𝑌 and 𝑌 .
+6. Consider the model
+𝒀 𝑿𝜷 𝜺, 𝜺~𝑁 𝟎, 𝜎 𝑰
+Let 𝜷 𝑿 𝑿 𝑿 𝒀, 𝒀 𝑯𝒀, and 𝝐 𝑰 𝑯 𝒀 where 𝑯 𝑿 𝑿 𝑿 𝑿 . Show that 𝒀 and
+𝝐 are statistically independent.
+7. 𝑿 𝑿
+You are given the following matrices computed for a regression analysis
+𝑌 𝛽 𝛽 𝑋 𝛽 𝑋 𝜀.
+𝑿 𝑿
+20 7 7
+7 15 0
+7 0 15
+, 𝑿 𝒀
+14
+22
+19
+1
+3030
+225 105 105
+105 251 49
+105 49 251
+, 𝒀 𝒀 70
+The matrices are properly ordered according to the regression function given above.
+a. Calculate the LSE of the regression coefficients. Describe the effects of the regressors on the
+response variable quantitatively.
+b. Calculate SSE and MSE.
+c. d. e. f. Estimate the covariance matrix of the estimates.
+Calculate the standard error of the estimates.
+Calculate a 95% confidence interval for 𝛽 and 𝛽 , respectively.
+Construct an ANOVA table. Test whether there is a regression of Y on X1 and X2 at the 5%
+level of significance.
+g. Calculate R2. Comment on the fitness of the model.
+h. Test at the 5% level of significance whether 𝛽 𝛽 0 and 𝛽 𝛽 1, simultaneously.
+i. Estimate the means of Y for two cases where 𝑋 , 𝑋 1,1 and 𝑋 , 𝑋
+1, 1 . Construct (i) a 90% simultaneous interval based on Bonferroni’s method and (ii)
+95% simultaneous interval based on Scheffe’s method.
+j. Calculate the maximum log-likelihood.
+k. Calculate adjusted R2.
+l. Test at the 5% level of significance whether each of X1 and X2 is effective, respectively.
+m. Test at the 5% level of significance whether 𝛽 𝛽 1.
+n. Estimate the mean of Y when 𝑋 , 𝑋 1,2 . Construct a 95% confidence interval for the
+estimate.
+2
+--- PAGE 3 ---
+8. Effective pain management remains a global nursing challenge, requiring awareness of
+influencing factors. This cross-sectional study examined such factors among nurses in
+hospitals. The data are stored in ‘pain.csv’ and the variables are given as follows.
+Variable Description
+y Pain management practice scale, 12 – 60
+x1 Collaboration with physicians scale, 7 – 49
+x2 Pain management knowledge scale, 0 – 100
+x3 Perspective-taking scale, 10 – 70
+x4 Compassionate care scale, 8 – 56
+x5 Walking in patient’s shoes scale, 2 – 14
+a. b. c. d. e. f. g. h. Formulate a multiple linear regression model for the dataset, using ‘Pain management
+practice’ as the response and the remaining variables as regressors.
+Calculate the LSE’s for the regression coefficients and their respective standard errors.
+Test the significance of each regression coefficient at the 5% level of significance.
+Construct an ANOVA table and test whether there is a regression of ‘Pain management
+practice’ on the regressors at the 5% level of significance.
+Calculate the R2 statistic for the model. Do you think the model is adequate to explain the
+variation of total distance among the subjects under study?
+Describe the effects of the significant regressors on Pain management practice scale
+quantitatively.
+Test at the 5% level of significance whether both the coefficients of Pain management
+knowledge and Compassionate care are zero.
+Predict the value of total distance for an individual with the following values. Construct a
+95% prediction interval.
+Collaboration knowledge Perspective Compassionate Walking
+40 80 30 30 10
+i. Estimate the means of total distance for the subjects with the following values. Construct a
+at least 95% confidence interval by the (A) Bonferroni’s method and (B) Scheffe’s method.
+Collaboration knowledge Perspective Compassionate Walking
+40 80 30 30 10
+20 50 60 40 12
+j. k. l. Construct 90% confidence intervals for the regression coefficients.
+Test at the 5% level of significance whether the coefficients of knowledge is -1 by an F test.
+Test at the 5% level of significance whether the coefficients of Perspective and Walking are
+the same by an F test
+m. Estimate the mean of Pain management practice for the subjects with the following values.
+Construct a 95% confidence interval.
+Collaboration knowledge Perspective Compassionate Walking
+35 90 55 45 12
+3

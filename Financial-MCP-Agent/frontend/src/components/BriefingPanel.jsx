@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import ChartRenderer from "./ChartRenderer";
 
 function defaultPositionDraft(item) {
   const today = new Date().toISOString().slice(0, 10);
@@ -86,6 +87,7 @@ export default function BriefingPanel({ brief, loading, onGenerate, onAddToWatch
         <p className="muted-copy">生成后会在这里展示最新简报摘要、推荐股票与持仓体检结果。</p>
       ) : (
         <div className="brief-layout">
+          <ChartRenderer charts={brief.charts || []} />
           <div className="brief-meta-grid">
             <div className="brief-stat">
               <strong>简报类型</strong>

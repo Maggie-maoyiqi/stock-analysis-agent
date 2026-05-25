@@ -1,0 +1,495 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and Interaction Regression
+6 Variable Selection, Polynomial and Interaction Regression
+6.1 Variable Selection
+Consider the general regression model (full model with k independent variables)
+y= β0 + β1 x1 +···+ βk xk + ε.
+In some studies, it is not necessarily that all of the k independent variables are useful to
+predict Y . One main objective of statistical analysis is to obtain a parsimonious statistical
+model so that interpretations of the model can be made simple.
+Aim of this section is to introduce some statistical methodologies or techniques to reduce
+the number of independent variables so that the final model is reasonably simple and hope-
+fully, easy to make appropriate interpretations.
+6.1.1 Best Subset Selection method
+Suppose we have 3 independent variables X1, X2 and X3. Then 7 possible regression models
+can be fitted to the data with the following combinations :
+p= 1 p= 2 p= 3
+X1 X1, X2 X1, X2, X3
+X2 X1, X3
+X3 X2, X3
+In general, when there are k independent variables, we have a total of 2k
+The idea of best subset selection method is to fit all 2k
+model according to one of the following criteria:
+1. Coefficient of determination (Multiple), R 2:
+R 2 =
+SSRp
+SST= 1−
+SST
+where SSRp and SSEp are regression sum of squares and error sum of squares for the
+working model with p (≤k ) independent variables.
+−1 possible models.
+−1 possible models and select the best
+SSEp
+↗R 2
+= ⇒↗proportion of the total variation explained by the model
+= ⇒ better fit
+not
+= ⇒ better prediction
+not
+= ⇒ better model
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+Remarks
+2. (a) 0 ≤R 2 ≤1.
+(b) choosing the largest R 2 ⇐⇒choosing the smallest SSE.
+(c) R 2 increases as the number of independent variables increases and so the full
+model (p= k ) will always be selected according to this criterion. Thus, this criterion
+should be taken by considering the magnitude of increase in R 2 when more vari-
+ables are added.
+Adjusted coefficient of determination, R 2
+a (adjusted R 2):
+R 2
+a tries to rescale R 2 by degrees of freedom so that it involves a ratio of mean squares
+rather than sums of squares:
+R 2
+a
+= 1−(1−R 2) n−1
+n−p−1
+= 1−
+SSEp /(n−p−1)
+SST /(n−1)
+= 1−
+MSEp
+SST /(n−1)
+where MSEp is the error mean squares for the model with p (≤k ) independent variables.
+Remarks
+(a) R 2
+a gives a measure of goodness of fit which takes into account the number of vari-
+ables. It provides penalty for adding explanatory variables.
+(b) Choosing the largest R 2
+a ⇐⇒Choosing the smallest MSE.
+(c) R 2
+a can be negative.
+3. Mallows’ Cp statistic:
+Cp =
+SSEp
+MSEk
+−(n−2p−2).
+Remarks
+(a) Mallows (1973) showed that if the true model has p independent variables, its Cp ≈
+p + 1 (i.e. (Cp ) ≈p + 1). Mallows suggests that all subset models with a small Cp
+and is close to p + 1 should be considered for further study. Cp provides penalty
+for adding explanatory variables.
+(b) Under the full model (p= k ), Cp = p + 1 = k + 1.
+(c) Mallows’ Cp may be regarded as an estimate of the standardized total mean squared
+ˆ
+prediction error if the fitted model
+β0 +ˆ
+β1 x1 +···+ˆ
+βp xp is used to estimate the ex-
+pected value of the corresponding Y value. Some authors recommend selection
+of models for which Cp is small (more important) and Cp is close to p + 1.
+4. Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC):
+Two popular measures that provide penalities for adding explanatory variables are
+Akaike Information Criterion (AIC) and Schwarz’s Bayesian Information Criterion (BIC),
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+and they can be used for variable selection. The AIC and BIC of a model with r param-
+eters are defined as
+where
+ˆ
+AIC=−2 ln
+BIC=−2 ln
+ˆ
+L + 2r (1)
+ˆ
+L + r ln(n ), (2)
+L is the maximized value of the likelihood function for the model. We search for
+the model that minimizes the AIC value or the BIC value. For a regression model with
+p explanatory variables, we have
+AICp = n + n ln(2π) + n ln(SSEp /n ) + 2(p + 2)
+BICp = n + n ln(2π) + n ln(SSEp /n ) + ln(n )(p + 2).
+Remarks
+(a) (b) There is no strict rule on the choice between AIC and BIC. It seems that researchers
+may prefer AIC if the sample size is small to medium, say a few hundred or less,
+and BIC if otherwise. Generally AIC appears to be more popular.
+The AIC and BIC criteria (Equations (1) and (2)) can be used for variable selection
+not only in the multiple regression model but also in other models such as time
+series model etc, provided that the likelihood approach is employed.
+COMMENT:
+R 2 and R 2
+a are generally not good criteria for model selection.
+6.1.2 Example: Environmental Data
+Recall that the ozone concentration may be explained by the regressors radiation, temperature
+and wind. The sample size is n = 30. The following table summarizes the goodness of fits of
+all possible models:
+Regressors p SSEp Cp R 2 R 2
+a AICp BICp
+None 0 16.7423 – – – – –
+Radiation (X1) 1 13.59541 12.9561 0.1880 0.1590 67.3924 71.5960
+Temperature (X2) 1 9.88085 2.3124 0.4098 0.3888 57.8183 62.0219
+Wind (X3) 1 15.94492 19.6883 0.0476 0.0136 72.1746 76.3782
+X1, X2 2 9.37042 2.8498 0.4403 0.3989 58.2271 63.8319
+X1, X3 2 12.96981 13.1635 0.2253 0.1679 67.9791 73.5839
+X2, X3 2 9.58414 3.4622 0.4276 0.3851 58.9037 64.5085
+X1, X2, X3 3 9.07383 4 0.4580 0.3955 59.2622 66.2682
+By using the Cp criterion, we conclude
+• The Cp value of the model with Temperature is the smallest (2.3124) and close to p +1 =
+2.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+If using the information criteria, then
+• The model with Temperature is chosen since its AICp and BICp are the smallest.
+Note R 2 and R 2
+a may not be be good criteria, and so are not considered.
+“Conclusion”: Temperature (X2) may be selected as the only explanatory variable. Also note
+that in Section 5.4.2, the null hypothesis H0 : β1 = β3 = 0 is not rejected, with an associated
+p -value of 0.3303.
+6.1.3 Sequential methods
+When the number of independent variables k is very large, evaluating all (2k
+−1) possible sub-
+sets regression models may not be feasible. The idea of sequential method is to sequentially
+include and/or drop one variable at a time.
+1. Forward selection method:
+(F1) (F2) (F3) Starting with the model with no independent variable (intercept only).
+Add the MOST SIGNIFICANT variable into the model based on a criterion (e.g. if
+the F statistic is greater than the entry level, e.g. 4; or if the p -value is smaller than
+the entry value, e.g. 0.05).
+Repeat (F2) until no non-selected variable can be added by satisfying the criterion.
+2. Backward elimination method:
+(B1) Starting with the full model (include all k independent variables and the inter-
+cept).
+(B2) Remove the MOST INSIGNIFICANT variable in the model based on a criterion (e.g.
+if the F statistic is smaller than the removal level, e.g. 4; or if the p -value is greater
+than the removal level, e.g. 0.05).
+(B3) Repeat (B2) until no variable in the model can be eliminated by the criterion in
+(B2).
+3. Stepwise method:
+(F1) (F2) (B2) (S3) Start with model with no independent variable (intercept only).
+Add the MOST SIGNIFICANT variable into the model based on a criterion (e.g. if
+the F statistics is greater than the entry level, e.g. 4; or if the p -value is smaller than
+the entry value, e.g. 0.05).
+Remove the MOST INSIGNIFICANT variable in the model based on a criterion (e.g.
+if the F statistics is smaller than the removal level, e.g. 4; or if the p -value is greater
+than the removal level, e.g. 0.05). Note that the entry level should never be smaller
+than the removal level; otherwise cycling is possible.
+Repeat (F2) and (B2) until no non-selected variable can be added and no variable
+in the model can be eliminated.
+Changing the criteria in (F2) and (B2) may result in a different final model.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+6.1.4 Example: Environmental Data I
+Another possibility to choose the best model is the sequential method. If we decide on the
+forward selection, we follow the following step:
+• First we determine the entry level. Suppose αentry = 0.05, then the entry level for step 1
+is Fentry = F0.05,1,28 = 4.1960.
+• Step 1: The model should become Y= β0 + βj X j + ε, j= 1, 2, 3
+Additional Variable F value
+Radiation (X1) 6.48
+Temperature (X2) 19.44
+Wind (X3) 1.40
+The F values of Radiation and Temperature exceed the entry level. Temperature (X2)
+has the largest R 2 and F -value and is hence added.
+To illustrate the calculation, we consider X2 as an example.
+F=
+(SSENone−SSEX2 )/1
+SSEX2 /(30−1−1)
+=
+(16.7423−9.88085)/1
+9.88085/28= 19.44.
+In fact, you don’t need to calculate the other F values since X2 has the largest reduction
+in SSE if one variable is fitted.
+• Step 2: The model should become Y= β0 + βj X j + β2X2 + ε, j= 1, 3
+Additional Variable F value
+Radiation (X1) 1.47
+Wind (X3) 0.84
+No F-value exceed F0.05,1,27 = 4.21 and hence, no more regressor variable to be added.
+Try to obtain the F values for X1 and for X3 given X2 is included in the model.
+• The final selected model is
+ˆ
+Y=−0.9724 + 0.0542X2.
+Source SS d. f. MS
+Regression 6.8615 1 6.8615
+Error 9.8809 28 0.3529
+Total 16.7424 29
+The model has significant explanatory power since F= 6.8615/0.3529= 19.4432 >
+4.1960= F0.05,1,28.
+• Significant linear regression at 5% level of significance:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+Variable Estimate S.E. t value
+Intercept -0.9724 0.86116 -1.13
+Temperature (X2) 0.0542 0.01229 4.41
+ˆ
+Since t0.025,28 = 2.0484,
+β2 is significantly different from zero at 5% level of significance.
+Therefore we conclude that Temperature has effects on the Ozone Concentration.
+6.1.5 Example: Environmental Data II
+If we decide on the backward selection, we follow the following step:
+• First we determine the removal level. Suppose αout = 0.10, then the removal level for
+step 1 is Fout = F0.10,1,26 = 2.9091.
+• Step 1: The model to be checked is Y= β0 + β1X1 + β2X2 + β3X3 + ε
+Variable to be removed F value
+Radiation (X1) 1.46
+Temperature (X2) 11.16
+Wind (X3) 0.85
+The F values of Radiation and Wind are smaller than the removal level. Since Wind (X3)
+has the smallest F -value, it will be removed.
+As seen from the last 4 rows of the table on p3, Wind (X3) is the most ineffective among
+the 3 variables. Thus, the F values corresponding to X1 and X2 may not need to be
+calculated.
+• Step 2: The model should become Y= β0 + β1X1 + β2X2 + ε
+Variable to be removed F value
+Radiation (X1) 1.47
+Temperature (X2) 12.17
+We use X1 for illustration (note X3 is already eliminated in step 1).
+F=
+(SSEX2−SSEX1,X2 )/1
+SSEX1,X2 /(30−2−1)
+=
+(9.88085−9.37042)/1
+9.37042/27= 1.47.
+Only the F-value of Radiation is smaller than F0.10,1,27 = 2.90 and hence X1 is removed.
+• Step 3: The model should become Y= β0 + β2X2 + ε
+Variable to be removed F value
+Temperature (X2) 19.44
+The F value= 19.44 >2.893= F0.1,1,28 and hence X2 is not removed.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+ˆ
+• Since the final selected model
+Y=−0.9724 + 0.0542X2 is the same as the forward selec-
+tion, the statistical inference of β0, β2 and the ANOVA table are identical to the results
+given in 6.1.4.
+6.1.6 Example: Environmental Data III
+The stepwise selection is a mixture of the forward selection and backward elimination, we
+follow the following step:
+• First we determine the entry and removal level. Let the entry level simply be Fentry = 3
+(a fixed value in this case, not a percentile of the F distribution) and the removal level
+be Fout = 2.
+• Step 1: Add a variable so that the model becomes Y= β0 + βj X j + ε, j= 1, 2, 3
+Additional Variable F value
+Radiation (X1) 6.48
+Temperature (X2) 19.44
+Wind (X3) 1.40
+The F values of Radiation and Temperature exceed the entry level. Temperature (X2)
+has the largest R 2 and F -value and is hence added.
+• Step 2: Remove a variable from the model Y= β0 + β2X2 + ε
+Variable to be removed F value
+Temperature (X2) 19.44
+Since the F value exceeds the removal level, no regressor will be removed.
+• Step 3: Add a variable to the model Y= β0 + β2X2 + ε
+Additional Variable F value
+Radiation (X1) 1.47
+Wind (X3) 0.84
+No F -value exceeds 3 and hence, no more regressor variable to be added.
+ˆ
+• Since the final selected model
+Y=−0.9724 + 0.0542X2 is the same as both the forward
+and backward selection, the statistical inference of β0, β2 and the ANOVA table are iden-
+tical to the results given in 6.1.4.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+6.2 Polynomial regression
+Sometimes, we may need to consider higher order terms of the explanatory variables. The
+p -order model with one independent variable is defined as
+Yi = β0 + β1Xi + β2X 2
+i +. . . + βp X p
+i + εi
+i.i.d.
+where εi
+∼ N (0, σ2). This is known as a polynomial regression model. Certainly, the model
+can also have two or more independent variables with each independent variable can be
+present in various powers. Note that polynomial regression usually fits data well within their
+range but could perform poorly once it comes to extrapolation.
+Typically we would like to investigate whether the degree of polynomial can be reduced,
+to q say, in order to simplify the model. This can be done by testing
+H0 : βq +1 = ···= βp = 0 vs. H1 : β′s unrestricted
+Techniques described in Section 5.4 are applied straightforwardly here.
+6.2.1 Example (Cholesterol Data)
+Suppose we wish to investigate whether a cubic polynomial can give a better fit than a linear
+function in age (X ) to the cholesterol level (Y ) data.
+Reduced model ω: Full model Ω: Y∼N (β0 + β1X , σ2)−→ SSEω= 2.4548
+Y∼N (β0 + β1X + β2X 2 + β3X 3
+, σ2)−→ SSEΩ = 2.1532
+ANOVA table:
+Source SS d.f. MS F -Ratio
+Regression fitting ω 11.4648 1
+Extra (due to β2 and β3) 0.3016 2 0.1508 1.4009
+Error fitting Ω 2.1532 20 0.1077
+Total 13.9196 23
+The p-value= P (F2,20 >1.4009) = 0.2695, which shows that the SLR model (i.e. Reduced
+model ω) is quite adequate and the inclusion of the quadratic and cubic terms does not make
+much improvement. The following figure compares the SLR and the cubic polynomial fittings
+to the data.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+4.5
+fitted cubic polynomial model
+cholesterol level
+3.5
+2.5
+fitted SLR model
+1.5
+20 30 40 50
+age
+6.2.2 Example (Coffee Data)
+• To investigate the relation between the number of self-service coffee dispensers (X) in
+a cafeteria line and sales of coffee (Y).
+• 14 cafeterias that are similar in terms of volume of business, type of clientele, and loca-
+tion were chosen for the experiment.
+• Number of self-service dispensers placed in the test cafeterias varied from 0 to 6 and
+assigned randomly to each cafeteria.
+• The relation between sales and number of self-service dispensers is believed to be quadratic
+(in the range of observations).
+– Sales should increase as the number of dispensers is greater.
+– But if the space is cluttered with dispensers, this increase becomes retarded.
+The quadratic regression model is given by
+Yi = β0 + β1Xi + β2X 2
+i + εi.
+The data are given by:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+ID Dispenser (X ) Sales (Y ) X 2
+1 0 508.1 0
+2 0 498.4 0
+3 1 568.2 1
+.
+.
+.
+13 6 841.4 36
+14 6 831.8 36
+Reduced model ω: Full model Ω: The ANOVA table is given by:
+Y∼N (β0 + β1X , σ2)−→ SSEω= 3712
+Y∼N (β0 + β1X + β2X 2
+, σ2)−→ SSEΩ = 679
+Source SS d. f. MS F -Ratio
+Regression fitting ω 168741 1
+Extra (due to β2) 3033 1 3033 49.1
+Error fitting Ω 679 11 61.7
+Total 172453 13
+Since F= 49.1 >4.84= F0.05,1,11, the quadratic term is significant at 5% level of significance.
+ˆ
+ˆ
+ˆ
+The significance of
+β0,
+β1 and
+β2 can be checked by the t -test.
+Coefficient Estimate se t -value
+β0 502.56 4.85 103.62
+β1 80.39 3.79 21.23
+β2 -4.25 0.61 -7.01
+Since all |t |>2.201= t0.025,11, all parameters are significantly different from 0 at 5% level
+of significance.
+The fitted regression function is therefore
+ˆ
+Yi = 502.56 + 80.39Xi−4.25X 2
+i.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+The coefficient of multiple determination is given by
+R 2 =
+SSR
+SST=
+171773
+172453= 0.996.
+Thus, the variation in coffee sales is reduced by 99.6% when the quadratic relation to the
+number of dispensing machines is utilized.
+,
+6.3 Interaction regression
+Let Y be response variable and X1, . . . , Xp be explanatory variables. Under the MLR model,
+Y∼N β0 + β1X1 + β2X2 +···+ βp Xp , σ2
+the effects of X1, . . . , Xp on Y are said to be additive.
+We may consider a more general model by adding interaction terms βi j Xi X j , for i
+the MLR function:
+̸= j , to
+Y∼N β0 + β1X1 +···+ βp Xp + β12X1X2 +···+ βp−1,p Xp−1Xp , σ2
+,
+so that our model for E (Y ) takes into account the interaction effects of the explanatory vari-
+ables.
+To investigate whether the effects of X1, . . . , Xp are additive or interact with each other, we
+may consider testing
+H0 : βi j= 0 ∀i , j vs H1 : βi j ’s unrestricted.
+Techniques described in Section 5.4 apply straightforwardly here.
+6.3.1 Example (Environmental Data)
+To assess significance of the interaction effects between the three explanatory variables (ra-
+diation, temperature, wind speed), consider:
+Reduced model ω: Y∼N (β0 + β1X1 + β2X2 + β3X3, σ2)
+−→ SSEω= 9.073832709
+Full model Ω: Y∼N (β0 + β1X1 + β2X2 + β3X3 + β12X1X2 + β13X1X3 + β23X2X3, σ2)
+−→ SSEΩ = 8.670256716
+ANOVA table:
+Source SS d.f. MS F -Ratio
+Regression fitting ω 7.668513958 3 2.556171319
+Extra (due to βi j ’s) 0.403575993 3 0.13452533 0.356861707
+Error fitting Ω 8.670256716 23 0.376967683
+Total 16.74234667 29
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 6 Variable Selection, Polynomial and
+Interaction Regression
+The p-value= P (F3,23 >0.356861707) = 0.784641008, which shows that the interaction
+effects are insignificant.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12

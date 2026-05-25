@@ -1,0 +1,113 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 4 Multiple Linear Regression
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 4 Multiple Linear Regression
+1. Model Formulation and Assumption
+(a) Matrix Formulation
+Assume a sample of n observations is observed. Y is the response variable. X1, X2...Xp are
+the p explanatory variables (covariates). The multiple linear regression has the matrix form
+as shown
+y1
+y2
+Y=
+       
+.
+.
+yn
+       , Y = X β + ε, ε ∼ N (0, σ2I )
+X=
+       
+1 x11. . x1p
+1 x21. . x2p
+.
+.
+1 xn 1. . xn p
+       , Note that Xis a n ∗(p + 1) matrix. β=
+       
+β0
+β1
+.
+.
+βp
+       , ϵ=
+       
+ε1
+ε2
+.
+.
+εn
+       
+xi j is the jth explanatory variable for ith observation
+2. Model Fitting by Least Square Method and Maximum Likelihood Method
+(a) Least Square Method
+The squared sum of square is given by
+||Y−X β||2 = (Y−X β) (Y−X β)
+The minimum is attained when
+||Y−X β||2
+ˆ
+β= (X X )−1(X Y )
+The result is the same as simple linear regression but the dimension has changed.
+(b) Maximum Likelihood Method
+l n L (β0, ..., βp , σ2) =−
+n
+2 l n (2πσ2)−
+ˆ
+β= (X X )−1(X Y )
+ˆ
+σ2 = SS E /n
+ˆ
+Note that Maximum likelihood
+βis the same as Least Square method.
+2σ2
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 4 Multiple Linear Regression
+3. Some properties of regression parameters
+(a) SS E∼σ2χ2
+n−p−1
+(b)
+ˆ
+σ2 = SS E /(n−p−1) = M S E
+This is an unbiased estimator for σ2. Note the formula for degree of freedom.
+(c)
+ˆ
+β= (X X )−1X Y∼Np +1(β, σ2(X X )−1)
+(d)
+ˆ
+βand ˆ
+σ2 are independent
+4. Multiple Prediction
+Given a = [a1, ..., am ] a constant vector. We are going to predict a linear combination of y.
+l=
+m
+j=1 a j y ( j )
+ˆ
+ˆ
+l= a X0
+β
+The 100(1−α)%confidence interval for l is
+ˆ
+l ±tα/2,n−p−1s e (ˆ
+l−l )
+s e (ˆ
+l−l ) =ˆ
+σ2(a X0(X X )−1X0 a + a a )
+5. A studio boss in Hollywood studied the box office results of 10 selected movies of 2011. He would
+like to find out the relationship of the box office receipts (Y ) and the total production costs (X 1),
+promotion costs (X 2) and book sales (X 3) (all data in millions). Furthermore, he would like
+to predict the box office receipt of a new blockbuster based on a bestseller (15 millions sales
+turnover worldwide) which his studio spent 80 millions on the production and 45 millions on
+the promotion. The data can be found in cinema.csv.
+(a) Fit a regression line of Y on X1, X2 and X3. What are the values of the estimated slopes and
+intercept?
+(b) Obtain a 99% confidence interval for each of the parameters.
+(c) What’s the box office receipt should the new blockbuster expect?
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2

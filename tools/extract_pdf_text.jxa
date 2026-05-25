@@ -1,0 +1,21 @@
+ObjC.import('Foundation')
+ObjC.import('PDFKit')
+
+function run(argv) {
+  const path = argv[0]
+  const url = $.NSURL.fileURLWithPath(path)
+  const pdf = $.PDFDocument.alloc.initWithURL(url)
+  if (!pdf) {
+    throw new Error('Failed to open PDF: ' + path)
+  }
+
+  const out = []
+  const count = Number(pdf.pageCount)
+  for (let i = 0; i < count; i++) {
+    const page = pdf.pageAtIndex(i)
+    const text = ObjC.unwrap(page.string || '')
+    out.push(`--- PAGE ${i + 1} ---`)
+    out.push(text)
+  }
+  return out.join('\n')
+}

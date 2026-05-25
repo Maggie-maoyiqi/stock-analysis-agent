@@ -1,0 +1,150 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis
+Tutorial 8: Two-way Classification Model
+1 Review
+1. Two-way classification model is defined as
+yi j = θi j + εi j k = µ + αi + βj + (αβ )i j + εi j k , i = 1, . . . , I , j = 1, . . . , J , k = 1, · · ·
+)
+The model is subject to the following constraints:
+Tutorial 8: Two-way Classification Model
+, r εi j ∼ N (0, σ2
+αi =
+βj = 0,
+(αβ)i j = 0, ∀j,
+(αβ)i j = 0, ∀i.
+i
+j
+i
+j
+2. Subject to different constraints, the LS estimator for µand τi would be different:
+Parameter
+LS Estimator
+µˆ
+µ=¯
+y...
+αi
+ˆ
+αi =¯
+yi..
+−
+ˆ
+µ
+βj
+ˆ
+βj =¯
+y. j.
+−
+ˆ
+µ
+(αβ)i j
+ˆ
+(αβ)i j =¯
+yi j.
+ˆ
+−
+µ−
+ˆ
+αi−
+ˆ
+βj
+3. Test for interaction and main effects: Two-way ANOVA:
+The ANOVA table is
+Source F -ratio
+S. S.
+d. f.
+M. S.
+Main effect A SSA I−1 M SA =
+Main effect B SSB J−1 M SB =
+SS
+Interaction AB(I−1)( J−1)MSAB =
+SSE
+Error I J (r−1) MSE=
+Total SYY I J r−1
+SSA
+I−1 FA = M SA /MSE
+SSB
+J−1 FB = M SB /MSE
+SSAB
+(I−1)( J−1) FAB =
+MSAB
+MSE
+SSE
+I J (r−1)
+Two-way ANOVA begins with a test for interactions. Tests for main effects are usually performed
+when the test for interactions reveals an insignificant result.
+4. Analysis of treatment effects
+ˆ
+L=
+I
+i=1
+J
+¯
+j=1 ai j
+yi j.
+L is estimated by:
+is an an unbiased estimator of L=
+I
+i=1
+J
+j=1 ai j θi j.
+se
+ˆ
+L=
+. The standard error of
+ˆ
+σ2
+I
+i=1
+J
+j=1
+a 2
+i j
+,
+r
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 8: Two-way Classification Model
+An 100 (1−α) % confidence interval of L is
+hypotheses:
+ˆ
+L ±se(ˆ
+L)tα/2,I J (r−1). To perform a size αt -teston the
+H0 : L= L0 vs. H1 : L
+̸= L0
+The test statistic is T=
+ˆ
+L−L0 /se(ˆ
+L). We reject H0 if and only if |T |>Tα/2,I j (r−1).
+2 Exercise
+1. Consider the following dataset which shows the average costs of U.S. electric power sources for
+three different years. The energy sources are classified as either traditional (coal, gas) or alterna-
+tive (solar, wind). All figures are given in constant 1993 cents per kilowatt-hour. The figures for
+the year 2000 are obtained by projection and may be treated as genuine figures.
+Traditional Alternative
+Year
+Gas
+Solar
+Wind
+Coal
+1985 9.0 11.5 19.5 11.5
+1993 5.5 4.5 9.0 6.0
+2000 4.5 3.5 5.5 4.5
+(a) Using time (of 3 levels: 1985, 1993, 2000) and type of sources (of 2 levels: traditional, al-
+ternative) as factors, set up a two-way ANOVA table to test at 5% significance level for any
+interaction effects. Explain your findings by means of a visual display.
+(b) After testing for interaction effects, test for the two main effects.
+(c) Based on the given dataset, Newsweek has drawn the following remark,
+"the sun and the wind may be powering our cars and heating our homes sooner than we
+think, as the costs of such alternative-energy sources approach those of gas and coal."
+Comment.
+Hint: Contrast traditional with alternative sources for each year; and then make pairwise
+comparisons of such contrasts between 1985 and 1993, and between 1993 and 2000 .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2

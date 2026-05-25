@@ -1,0 +1,251 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 10 General Linear Model
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis
+Tutorial 10 General Linear Model
+1 Review
+1. One-way classification model formulated as a general linear model (GLM):
+y = X β + ε = µ + τ1V1 + · · · + τk−1Vk−1 + ε
+=
+0 1 0 1
+0 1 0 1
+          
+1 1
+0
+. . . 0
+1 1
+0
+. . . 0
+1 0
+1
+. . . 0
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+. . .
+. . .
+            
+      
+µ
+τ1
+τ2
+.
+.
+.
+        +
+          
+ε1
+ε2
+ε3
+.
+.
+.
+εn−1
+τk−1
+εn
+          
+where the factor has k levels coded into k−1 dummy variables V1, . . . , Vk−1 with n observations.
+The parameters τ1, . . . , τk−1 can be estimated by the LS-estimator (X X )−1X Y .
+Note that the estimates of the treatment mean response and the treatment effect of the i th group,
+θi and τi , respectively, are subject to the constraint τk = 0 and hence µ= θk.
+2. Two-way classification model with n observations formulated as a general linear model:
+y= µ + α1A1 +···+ αI−1AI−1 + β1B1 +···+ βJ−1BJ−1
++ (αβ )11A1B1 +···+ (αβ )1,J−1A1BJ−1 + (αβ )21A2B1 +···+ (αβ )I−1,J−1AI−1BJ−1 + ε,
+where the factor A has I levels coded into I−1 dummy variables A1, . . . , AI−1 (the matrix denoted
+by A) and factor B has J levels coded into J−1 dummy variables B1, . . . , BJ−1 (the matrix de-
+noted by B ). The interactions A1B1, . . . , AI−1BJ−1 are dummy coded as well (the matrix denoted
+by AB ). The parameters α1, . . . , αI−1, β1, . . . , βJ−1, (αβ )11, . . . , (αβ )(I−1)( J−1) can be estimated by the
+LS-estimator (X X )−1X Y where X is a composition of X= (A |B |AB ).
+Note that X is an n ∗I J matrix with 1 as the first column. I J= 1 + (I−1) + ( J−1) + (I−1)( J−1)
+(a) Test for interaction
+The anova table is on Page 6.
+(b) Test for main effects
+i. Under full model
+The anova table is on Page 7.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 10 General Linear Model
+ii. Under additive model
+The anova table is on Page 8.
+2 Exercise
+1. The data of a research conducted to investigate the spending behaviour of citizens from 3 differ-
+ent regions (North, Central and Others) are given by:
+Spending
+Region
+Spending
+Region
+3346
+3114
+4669
+4888
+3547
+3782
+4247
+3982
+3568
+3155
+2967
+3285
+North
+North
+North
+North
+North
+North
+North
+North
+North
+North
+North
+North
+4517
+4349
+3731
+2853
+2533
+2305
+3124
+3429
+3402
+2297
+2932
+4123
+Central
+Central
+Central
+Central
+Central
+Central
+Central
+Central
+Others
+Others
+Others
+Others
+(a) (b) (c) Write down the general linear model and state clearly the assumptions.
+Recode the factor levels to dummy variables.
+Estimate the treatment mean response by means of the parameter estimates of the general
+linear model.
+(d) (e) Test of the treatment effect by using the F-test.
+The researcher assumes that the northern citizens spend in average more than the average
+of those in other regions. Do you agree with his assumption at the 95% confidence level?
+2. A survey was conducted on a sample of 16 senior executives and data were collected on the fol-
+lowing variables:
+• Total income earned for the last year in million dollars, Y ;
+• Type of business (IT, non-IT);
+• Gender (male, female).
+The following displays the complete dataset:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 10 General Linear Model
+Y
+Business
+Gender
+Y
+Business
+Gender
+7
+7
+8
+10
+11
+12
+13
+14
+IT
+IT
+IT
+IT
+non-IT
+non-IT
+non-IT
+non-IT
+female
+female
+female
+female
+female
+female
+male
+male
+9
+10
+10
+11
+14
+14
+15
+17
+IT
+IT
+IT
+IT
+IT
+non-IT
+non-IT
+non-IT
+male
+male
+male
+male
+male
+male
+male
+male
+(a) (b) (c) (d) (e) (f) Write down the general linear model and state clearly the assumptions.
+Recode the factor levels and interactions to dummy variables.
+Estimate the parameter estimates given the following matrices:
+X X=
+    
+16 9
+9 9
+6 4
+4 4
+6 4
+4 4
+6 4
+4 4
+    , (X X )−1
+=
+    
+0.2
+0.2−0.2− 0.2
+0.4
+− 0.2
+0.2−0.4
+0.2
+− 0.7
+0.2−0.7
+0.7
+0.2−0.4− 1.15
+    , X Y=
+    
+182
+86
+55
+32
+    
+Estimate the level mean and treatment effect of a two-way ANOVA model and compare the
+results with the estimates of the general linear model.
+Test the interaction effect by testing the reduced model against the full model.
+Test the main effect of business and gender.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3

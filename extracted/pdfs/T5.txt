@@ -1,0 +1,99 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 5 Analysis of Variance
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 5 Analysis of Variance
+1. Sum of Squares
+SS E =
+ˆ
+ε ˆ
+ε =
+n
+i=1(yi −
+ˆ
+yi )2 error sum of squares
+SS T = Sy y =
+n
+i=1(yi −
+¯
+y )2 corrected total sum of
+squares SS R =
+n
+i=1( ˆ
+yi −
+¯
+y )2 regression sum of squares
+Note: SSE provides a measure of the goodness of fit of the model.
+SS T = SS R + SS E (prove)
+Source of Variation F -Ratio
+SS
+d. f.
+MS
+SSR
+Regression p MSR= SS R / F
+p= M S R /M S E
+SSE
+Error n− p− MSE
+1 = SS E /(n− p− 1)
+Total n− 1
+SST
+2. F Test for Regression Relation
+H0 : β1 = β2 =
+...
+= βp = 0
+H1 : not all βj equal to zero.
+Note: F-ratio above is test statistic for the hypothesis testing. We reject the null hypothesis iff
+F >Fα,p,n−p−1.
+Note: The test can only test collective significance of covariates as a group, not individually.
+3. Coefficient of Determination
+The coefficient of determination R 2 is defined to be
+R 2 = SS R /SS T= 1− SS E /SS T 0 ≤ R 2 ≤ 1
+Note: R 2 is the proportion of the total variation of Y that is explained by the model. (interpreta-
+tion) R 2 never decrease if more regressor variables are added to the model. What if there are p
+variables in the model with only p observations?
+The adjusted R 2 is defined to be
+R 2
+a
+= 1− M S E /M S T number of variables serve as penalty
+4. Extra Sum of Squares Principle
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 5 Analysis of Variance
+H0: reduced model vs H1: full model
+Note: If we obtain an insignificant result, it implies that subset of variables do not contribute
+much to explain the response variation given rest variables in the model.
+SS T= SS RF + SS EF = SS RR + SS ER
+SS E X T= SS RF− SS RR = SS ER− SS EF
+SS T= SS RR + SS E X T + SS EF
+Source of Variation F -Ratio
+SS
+d. f.
+MS
+SSR
+Regression (reduced model) R q MSRR = SSRR /q
+Extra SSEXT
+p− q MSEXT= SSEXT /(p− q ) F= MSEXT /MSEF
+SSE
+Error F n− p− MSE
+1 F = SSEF /(n− p− 1)
+Total n− 1
+SST
+Note: We reject H0 iff F >Fα,p−q,n−p−1
+5. EX: A NBA team manager wants to study, on average, how the point per game (Y ) is related to
+the field goal percentage (X1), the assists per game (X2), the rebounds per game (X3) and the
+turnovers per game (X4). He tries to fit a multiple linear regression model on the game statistics
+for 30 NBA teams to investigate their relationships. The data is contained in "NBA.csv".
+(a) What is the fit of the Model?
+(b) Test individually the significance of the regression parameters β1, . . . , β4, which regression
+parameter(s) give an insignificant result at α= 0.05?
+(c) Perform a F test for the model. What is your conclusion?
+(d) Build a linear regression model using the insignificant variable(s) ONLY. Is/Are the insignif-
+icant variable(s) effective in explaining the variation in Y ?
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2

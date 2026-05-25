@@ -6,6 +6,7 @@ from typing import Any, Dict
 from ..tools.analysis_helpers import llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
+from ..utils.progress import run_with_heartbeat
 from ..utils.state_definition import AgentState
 
 logger = setup_logger(__name__)
@@ -42,24 +43,29 @@ async def value_agent(
                 await result
 
     try:
-        await notify("准备估值分析参数", 0.1)
-        await notify("查询估值与分红数据", 0.35)
-        tool_payload = await run_tools(
-            [
-                ("stock_basic_info", {"stock_code": stock_code}),
-                ("historical_k_data", {
-                    "stock_code": stock_code,
-                    "start_date": f"{last_year}-01-01",
-                    "end_date": state.get("current_date", ""),
-                    "frequency": "d",
-                    "adjustflag": "2",
-                }),
-                ("dividend_data", {"stock_code": stock_code, "year": last_year}),
-                ("stock_industry", {"stock_code": stock_code}),
-            ]
+        await notify("准备估值分析参数", 0.05)
+        tool_payload = await run_with_heartbeat(
+            run_tools(
+                [
+                    ("stock_basic_info", {"stock_code": stock_code}),
+                    ("historical_k_data", {
+                        "stock_code": stock_code,
+                        "start_date": f"{last_year}-01-01",
+                        "end_date": state.get("current_date", ""),
+                        "frequency": "d",
+                        "adjustflag": "2",
+                    }),
+                    ("dividend_data", {"stock_code": stock_code, "year": last_year}),
+                    ("stock_industry", {"stock_code": stock_code}),
+                ]
+            ),
+            notify,
+            message="查询估值与分红数据",
+            start=0.05,
+            end=0.45,
+            expected_seconds=8.0,
         )
 
-        await notify("生成估值分析", 0.72)
         prompt = f"""请分析股票 {state.get("stock_name", "")}({stock_code}) 的估值水平。
 当前日期: {state.get("current_date", "")}
 
@@ -67,8 +73,15 @@ async def value_agent(
 
 {tool_payload}
 """
-        analysis = await llm_generate_analysis(VALUE_SYSTEM_PROMPT, prompt)
-        await notify("整理估值结论", 0.92)
+        analysis = await run_with_heartbeat(
+            llm_generate_analysis(VALUE_SYSTEM_PROMPT, prompt),
+            notify,
+            message="生成估值分析",
+            start=0.45,
+            end=0.92,
+            expected_seconds=18.0,
+        )
+        await notify("整理估值结论", 0.95)
         await notify("估值分析完成", 1.0)
         logger.info("%s 估值分析完成", SUCCESS_ICON)
         return {"value_analysis": analysis}

@@ -6,6 +6,7 @@ from typing import Any, Dict
 from ..tools.analysis_helpers import llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
+from ..utils.progress import run_with_heartbeat
 from ..utils.state_definition import AgentState
 
 logger = setup_logger(__name__)
@@ -42,23 +43,28 @@ async def technical_agent(
                 await result
 
     try:
-        await notify("准备K线分析参数", 0.1)
-        await notify("查询历史K线与市场范围", 0.35)
-        tool_payload = await run_tools(
-            [
-                ("historical_k_data", {
-                    "stock_code": stock_code,
-                    "start_date": start_date,
-                    "end_date": current_date,
-                    "frequency": "d",
-                    "adjustflag": "2",
-                }),
-                ("stock_basic_info", {"stock_code": stock_code}),
-                ("market_analysis_timeframe", {"time_range": "recent"}),
-            ]
+        await notify("准备K线分析参数", 0.05)
+        tool_payload = await run_with_heartbeat(
+            run_tools(
+                [
+                    ("historical_k_data", {
+                        "stock_code": stock_code,
+                        "start_date": start_date,
+                        "end_date": current_date,
+                        "frequency": "d",
+                        "adjustflag": "2",
+                    }),
+                    ("stock_basic_info", {"stock_code": stock_code}),
+                    ("market_analysis_timeframe", {"time_range": "recent"}),
+                ]
+            ),
+            notify,
+            message="查询历史K线与市场范围",
+            start=0.05,
+            end=0.45,
+            expected_seconds=8.0,
         )
 
-        await notify("生成技术面分析", 0.72)
         prompt = f"""请分析股票 {state.get("stock_name", "")}({stock_code}) 的技术面情况。
 当前日期: {current_date}
 
@@ -66,8 +72,15 @@ async def technical_agent(
 
 {tool_payload}
 """
-        analysis = await llm_generate_analysis(TECHNICAL_SYSTEM_PROMPT, prompt)
-        await notify("整理技术结论", 0.92)
+        analysis = await run_with_heartbeat(
+            llm_generate_analysis(TECHNICAL_SYSTEM_PROMPT, prompt),
+            notify,
+            message="生成技术面分析",
+            start=0.45,
+            end=0.92,
+            expected_seconds=20.0,
+        )
+        await notify("整理技术结论", 0.95)
         await notify("技术分析完成", 1.0)
         logger.info("%s 技术分析完成", SUCCESS_ICON)
         return {"technical_analysis": analysis}

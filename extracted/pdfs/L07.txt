@@ -1,0 +1,1384 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 7 Classification Models
+7 Classification Models
+7.1 Introduction
+In regression analyses, the response variable Y is related to some continuous explanatory
+variables, while in practice, Y may be related to qualitative (or nominal, categorical) explana-
+tory variables such as gender, race, machine type, categorized age, geographic location and
+so on. A study of effects of such variables, sometimes called factors, on the response variable
+entails a special form of ANOVA.
+A level of a factor is a particular form of that factor. For example:
+Factor Levels No. of levels
+Gender Male, female 2
+Race Oriental, Caucasian, African 3
+Age <12, 12–21, 22–40, 41–65, >65 5
+Region Urban, rural, industrial 3
+A treatment is a particular combination of factor levels. In a single-factor study, a treat-
+ment is simply a particular level of the factor. For example:
+(i) one factor: gender.
+no. of levels: 2 (male & female)
+no. of possible treatments: 2 (male & female)
+(ii) two factors: gender & race.
+no. of levels for gender: 2 (male & female)
+no. of levels for race: 3 (Oriental, Caucasian, African)
+no. of possible treatments: 2 ×3= 6 (Oriental male, Oriental female, Caucasian male,
+Caucasian female, African male, African female)
+Main objective:
+to determine whether the treatment groups have any systematic effects on the re-
+sponse variable, and to examine the nature of these effects.
+Technically, our underlying model treats all observations belonging to the same treatment
+group as a random sample from the same normal distribution (observations are more homo-
+geneous within each group). The idea is to study how the means of all these normal distribu-
+tions vary over the different treatment groups.
+Special case:
+Two treatment groups−→two-sample problem for normal random samples (useful tools:
+two-sample t -test and confidence interval based on Student’s t distributions).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+7.2 One-way classification
+7.2.1 Introduction
+No. of factors: 1
+No. of levels: k
+Data Structure and Assumptions
+Group 1 Group 2··· Group k
+N (θ1, σ2) N (θ2, σ2)··· N (θk , σ2)
+↓ ↓ ··· ↓
+random sample y11 y21··· yk 1
+y12 y22··· yk 2
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+y1n1 y2n2··· yk nk
+no. of obs. n1 n2··· nk
+sample mean ¯
+¯
+y1.
+y2.···
+¯
+yk.
+Note that a random sample of size ni is drawn for the i -th level of the factor. Figure 1 shows
+the distributions of five independent normal populations with different means but the same
+variance.
+Figure 1: Normal distributions with same variance but different means
+One-way classification model:
+Cell-means model: yi j= θi + εi j , i= 1, . . . , k , j= 1, . . . , ni , εi j
+iid
+∼N (0, σ2). (1)
+Note that {yi 1, . . . , yi ni }is the random sample of size ni drawn from population N (θi , σ2),
+whereas θi is the i -th treatment mean response. The overall sample size is n =
+ni . An-
+i
+other way to express the one-way classification model is given by
+Factor-effects model: yi j= µ+ τi + εi j , i= 1, . . . , k , j= 1, . . . , ni . (2)
+There is a total of k + 1 parameters here, which is more than the number of groups. So a
+constraint on the τi ’s is taken. For convenience of computation and interpretation, we shall
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+use the following constraint unless otherwise specified.
+constraint
+k
+i=1
+ni τi = 0. (3)
+= ⇒µ=
+ni θi /n, τi = θi−µ. (4)
+i
+µdenote the overall mean response of the k samples where τi is the i -th treatment effect (or
+simply, effect) (deviation of i -th treatment mean from µ).
+Remark: The constraint above is not the only one that we can take. Taking a different con-
+straint on the τi ’s results in a different reparameterization. Other suggested constraints in-
+clude
+(i) constraint
+k
+i=1
+τi = 0 (sum to zero constraint)
+= ⇒µ= k−1
+k
+i=1
+θi , τi = θi−µ;
+(ii) constraint τk = 0
+= ⇒µ= θk , τi = θi−µ.
+N.B. Constraint (i) resembles the one in (3) if n1 = n2 = ···= nk.
+7.2.2 Model fitting
+Some conventional notations are given below:
+Quantity Notation Definition
+overall sample sum y··
+k
+i=1
+ni
+j=1 yi j
+i -th sample sum yi·
+ni
+j=1 yi j
+overall sample mean ¯
+y·· y··/n
+i -th sample mean ¯
+yi· yi·/ni
+Least squares method:
+minimize
+i j
+(yi j−θi )2 w.r.t. the θi ’s
+ˆ
+= ⇒LS−estimator
+θi =¯
+yi·,
+i.e. estimate the i -th population mean by the i -th sample mean. Subject to constraint i ni τi =
+0,
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Parameter LS-Estimator
+µˆ
+µ=¯
+y··
+τiˆ
+τi =¯
+yi·
+−
+¯
+y··
+The fitted value for yi j is
+ˆ
+yi j=
+and this can also be obtained according to
+ˆ
+yi j=
+ˆ
+µ+ˆ
+τi·
+ˆ
+θi =¯
+yi·,
+=¯
+y··+¯
+yi·
+−
+¯
+y··
+=¯
+yi·.
+The residual is obtained as
+ˆ
+εi j= yi j−
+ˆ
+yi j= yi j−
+¯
+yi·.
+7.2.3 Example (Car Mileage Data)
+The following data give the number of miles/gallon recorded when four versions of a new car
+were test driven on a few separate occasions:
+A: 2000 cc automatic C: 2000 cc manual saloon B: 2000 cc manual estate
+D: 1300 cc manual saloon
+A 30 26 27 29
+B 28 29 28 31
+C 29 32 27 31 30
+D 45 35 45 37 40
+The following figure shows the raw observations and the various estimates obtained by fitting
+the one-way classification model.
+Fitting a one-way classification model to the data, we get LS estimates of the 4 treatment
+ˆ
+means (
+θi ’s), the overall mean ( ˆ
+µ) and the 4 treatment effects ( ˆ
+τi ’s):
+ˆ
+µ=¯
+y··
+= 32.17
+Version iˆ
+θiˆ
+τi
+A 1 28.00−4.17
+B 2 29.00−3.17
+C 3 29.80−2.37
+D 4 40.40 8.23
+It appears that version D has a “positive” effect on the number of miles/gallon, i.e. quite
+"petrol-friendly" compared to the other 3 versions. As always, we need more rigorous sta-
+tistical analysis to verify this claim.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Figure 2: Relationship among various estimates under 1-way classification model
+7.3 Test of hypotheses (test for treatment effects): one-way ANOVA
+Consider a one-way classification model
+yi j= θi + εi j , i= 1, . . . , k , j= 1, . . . , ni , εi j
+i.i.d.
+∼ N (0, σ2).
+The null hypothesis is that the factor has no effects, i.e.
+H0 : θ1 = ···= θk (= θor µ, say, a common mean) vs H1 : H0 is not true.
+So, we have
+Full model : yi j= µ+ τi + εi j ,
+k
+i=1
+ni τi = 0,
+and under H0,
+Reduced Model : yi j= µ+ εi j i.e.τ1 = ···= τk = 0.
+Here, the factor of a reduced model has no effect on the response variable (i.e. all treat-
+ment effects τi are zero). It is noticed that both full model and reduced model are multiple
+linear regression models (linear in parameters), where µand τi ’s play the role of intercept β0
+and βi ’s in the multiple linear regression model of Chapter 4, respectively. We’ll discuss the
+corresponding design matrix X in Chapter 8. According to the linear regression model theory,
+SST= SSR + SSE,
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+where SST=
+k
+i=1
+ni
+j=1
+(yi j−
+¯
+y··)2
+,
+SSE=
+k
+i=1
+ni
+j=1
+ˆ
+ε2
+i j=
+k
+i=1
+ni
+(yi j−
+j=1
+¯
+yi·)2
+.
+After some calculations, it can be shown that
+SSR=
+k
+i=1
+ni
+(¯
+yi·
+j=1
+−
+¯
+y··)2
+=
+k
+i=1
+ni (¯
+yi·
+−
+¯
+y··)2
+,
+which is also denoted as SStr, under the one-way classification framework. In the one-way
+classification setting, SSE is called within-group sum of squares, while SSR or SStr is between-
+group sum of squares or treatment sum of squares.
+Useful quantities for testing the reduced model against the full model:
+Name notation formula convenient expression
+Between-group S. S. SStr
+k
+i=1 ni (¯
+¯
+yi·
+−
+y··)2
+i y 2
+i·/ni−y 2
+··/n
+Within-group S. S. SSE k
+i=1
+ni
+j=1(yi j−
+¯
+yi·)2 SST−SStr
+Corrected Total S. S. SST k
+i=1
+ni
+j=1(yi j−
+¯
+y··)2 k
+i=1
+ni
+j=1 y 2
+i j−y 2
+··/n
+In the multiple linear regression terminology,
+• SSE — error S.S. or residual S. S.,
+• SStr — S. S. due to τ1, . . . , τk.
+The between-group S. S., also called (between-) treatment sum of squares, namely SStr, is
+the key source of variation distinguishing the reduced model from the full model. Its size
+measures the advantage gained from grouping the observations by the k treatments.
+Determination of degrees of freedom:
+1. SST has
+ni−1 = (n−1) d. f. as usual.
+i
+2. For SSE, note that
+SSE=
+n1
+(y1 j−
+j=1
+¯
+y1·)2 +
+n2
+(y2 j−
+j=1
+¯
+y2·)2 +···+
+nk
+(yk j−
+j=1
+¯
+yk·)2
+,
+which is a sum of k independent "corrected total S. S.". The i -th "corrected total S. S."
+refers to the random sample of the i -th treatment and has (ni−1) d. f. Thus, SSE has
+(n1−1) +···+ (nk−1) = (n−k ) d. f.
+3. SStr = SST−SSE and therefore has (n−1)−(n−k ) = (k−1) d. f.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Source S. S. d. f. M. S. F -Ratio
+Between groups SStr k−1 MStr = SStr/(k−1) F= MStr/MSE
+Within groups SSE n−k MSE= SSE /(n−k )
+Total SST n−1
+Based on the partition SST= SSE +SStr, we compile a one-way ANOVA table:
+F test (of size α) for testing
+H0 : τ1 = τ2 =
+= τk = 0 vs H1 : H0 is not true.
+We reject H0 iff the p-value P (Fk−1, n−k >F ) is smaller than α, or equivalently, iff
+MStr
+. . .
+MSE
+F=
+>Fα,k−1,n−k.
+If H0 is rejected, we say that the factor has significant effects on the response variable at
+100(1−α)% level.
+In the case where the factor has two levels (k= 2), the above ANOVA F test is equivalent
+to the usual two-sided t test for a common mean for two independent normal populations.
+7.3.1 Example (Car Mileage Data)
+To examine how petrol consumption depends on different versions of the new car, we take
+the factor to be "version" of four levels A, B, C and D. So we have
+k= 4, n1 = n2 = 4, n3 = n4 = 5, n = 18.
+Compute
+y1·
+= 112, y2·
+= 116, y3·
+= 149, y4·
+= 202, y··
+i j
+= 579,
+y 2
+i j= 19215, y 2
+··/n = 18624.5.
+Hence, the ANOVA table becomes:
+Source S. S. d. f. M. S. F -Ratio
+Between groups 476.5 3 158.8333 19.5058
+Within groups 114 14 8.142857
+Total 590.5 17
+Since F= 158.8333/8.1429= 19.5058 >F0.05,3,14 = 3.3439. We conclude that different versions
+of the new car DO have a significant effect on the petrol consumption rate.
+Unfortunately, the F test alone cannot reveal the actual cause of the significant result.
+In other words, the test can show that there are differences among the four car versions but
+cannot tell in what way they are different.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+7.4 Estimation (analysis of treatment means)
+If the ANOVA F-test reveals significant treatment effects, we proceed to analyze those effects
+̸= i ;
+in detail. Here are examples of parameters of interest:
+(i) individual treatment mean θi ;
+(ii) individual treatment effect τi ;
+(iii) overall response mean µ;
+(iv) comparison between two specified treatment means, θi−θj ;
+(v) comparison between two specified groups of treatment means,
+θi1 +···+ θir
+r−
+θj1 +···+ θjs
+s.
+In all the above examples, the parameter of interest has the general form
+L= a1θ1 + a2θ2 +···+ ak θk ,
+for some known constants a1, . . . , ak . For example,
+(i) ai = 1, a j= 0 for j
+̸= i ;
+(ii) ai = 1−ni /n, a j=−n j /n for j
+(iii) ai = ni /n for all i ;
+(iv) ai = 1, a j=−1, al = 0 for l
+̸= i , j ;
+(v) ail
+= 1/r for l= 1, . . . , r , a jl
+=−1/s for l= 1, . . . , s , other ai ’s are zero.
+Definition. If a1 +···+ ak = 0, then L is called a contrast. Contrasts are useful for comparing
+treatment means.
+For the examples mentioned above,
+• (ii) contrasts between the i -th and the overall treatment means,
+• (iv) contrasts between two individual treatment means,
+• (v) contrasts between averages of two groups of treatment means,
+• (i), (iii) - not contrasts.
+Under the one-way model, SSE∼σ2χ2
+n−k so that
+ˆ
+σ2 =
+SSE
+n−k= MSE,
+is unbiased for σ2, and is independent of the estimated treatment means
+ˆ
+θi =¯
+yi·.
+Consider the general linear combination L=
+k
+i=1 ai θi . It can be estimated unbiasedly
+by
+ˆ
+L=
+k
+i=1
+ai¯
+yi·
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+k
+i=1
+a 2
+i
+ni
+.
+Thus the standard error of
+k
+i=1
+a 2
+i
+ni
+Noting that ¯
+yi·
+∼N θi ,
+σ2
+ni
+are independent of each other, we have
+ˆ
+L∼N L, σ2
+ˆ
+L is
+se(ˆ
+L) =ˆ
+σ
+.
+The above results enable us to calculate confidence intervals for L or to test the hypothesis
+that L equals some specified value L0 say:
+• 100(1−α)% confidence interval for L—
+ˆ
+L ±se(ˆ
+L)tα/2,n−k.
+• t test for testing whether L= L0 at significance level α—
+1. calculate the test statistic
+|ˆ
+L−L0|
+T=
+se(ˆ
+L),
+2. reject the hypothesis iff T >tα/2,n−k.
+In practice, different comparisons of treatment effects may be of simultaneous interest.
+For construction of simultaneous confidence intervals of family confidence level ≥1−α, refer
+to Bonferroni’s and Scheffe’s methods described in §4.6.1.
+7.4.1 Example (Car Mileage Data)
+Having found that car versions have significant effects on petrol consumption, we examine
+the effects in detail.
+(i) The estimated treatment means are 28, 29, 29.8 and 40.4 for versions A, B, C and D re-
+spectively. Version D has a significantly low petrol consumption rate compared to the
+other three versions, perhaps due to its lower capacity (1300 cc).
+(ii) To assess such differences in a more critical manner, we calculate 99% confidence in-
+tervals separately for the six pairwise comparisons and obtain the following results:
+−7.01 ≤θ1−θ2 ≤5.01
+−7.50 ≤θ1−θ3 ≤3.90
+−18.10 ≤θ1−θ4 ≤−6.70
+−6.50 ≤θ2−θ3 ≤4.90
+−17.10 ≤θ2−θ4 ≤−5.70
+−15.97 ≤θ3−θ4 ≤−5.23.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+(iii) (iv) For example, the interval endpoints for θ1−θ3 are obtained as
+¯
+y1·
+−
+¯
+y3·
+±t0.005,14
+ˆ
+σ2
+1
+4
++
+1
+5
+= 28−29.8 ±2.977
+114
+14
+1
+4
++
+1
+5
+.
+It should be borne in mind that the family confidence level for the interval family falls
+below 99% but still ≥94% according to the Bonferroni’s method.
+Note: For a family confidence level ≥94%, Scheﬀe’s method (applied to collection of con-
+trasts) replaces t0.005,14 = 2.977 by 3F0.06,3,14 = 3.060, thus yielding less precise intervals
+than the Bonferroni’s method. Since 3Fα,3,14 <tα/12,14 whenever α>0.1325 approximately,
+Scheﬀe’s intervals are more precise if simultaneous intervals are constructed at family confi-
+dence level ≥86.75%.
+Based on the Bonferroni’s method, we observe from the set of intervals that version D
+stands out with its particularly high miles/gallon rate (low petrol consumption) which
+exceeds the second highest rate (version C) by somewhere between 5.23 and 15.97 miles/gallon.
+The other three versions (A,B,C) are largely indistinguishable since the confidence in-
+tervals for their pairwise comparisons all contain 0.
+To examine the difference between automatic and manual versions of the same capac-
+ity, we estimate the contrast
+θ1−(θ2 + θ3)/2
+and obtain a 95% confidence interval:
+−5.08 ≤θ1−
+θ2 + θ3
+2 ≤2.28,
+by evaluating ¯
+y1·
+−(¯
+y2·+¯
+y3·)/2 ±2.145
+114
+14
+1
++
+4
+1/4
+4
++
+1/4
+5
+.
+We see that there is no significant difference between manual and automatic versions.
+(v) Suppose the numbers of the four versions being manufactured follow the ratio 5 : 3 :
+2 : 1. To estimate the mean miles/gallon rate of all the cars manufactured, consider the
+linear combination
+(5θ1 + 3θ2 + 2θ3 + θ4)/11.
+The 95% confidence limits are obtained as
+5 ¯
+y1·+ 3 ¯
+y2·+ 2 ¯
+y3·+¯
+y4·
+±2.145
+114
+14
+25/121
+9/121
+4/121
++
++
++
+11
+rendering the interval
+4
+4
+5
+1/121
+5 ,
+28.01 ≤
+5θ1 + 3θ2 + 2θ3 + θ4
+11 ≤31.44.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+7.5 Two-way classification
+7.5.1 Introduction
+Factors: A, B
+No. of levels of A: I
+No. of levels of B: J
+Denote by a i b j the treatment made up of the i th level of A and the j th level of B.
+Observations:
+Level of A \Level of B 1 2··· J
+1 y111, . . . , y11r 2 y211, . . . , y21r y121, . . . , y12r··· y221, . . . , y22r··· .
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+I yI 11, . . . , yI 1r yI 21, . . . , yI 2r··· y1J 1, . . . , y1J r
+y2J 1, . . . , y2J r
+.
+.
+.
+yI J 1, . . . , yI J r
+Two-way classification model:
+Cell-means model: yi j k= θi j +εi j k, i= 1, . . . , I , , j= 1, . . . , J , , k= 1, . . . , r, εi j k
+i.i.d.
+∼ N (0, σ2).
+(5)
+In other words, the data set consists of I J random samples of equal size r (balanced de-
+sign). The sample size is n = I J r . To each treatment a i b j corresponds a random sample
+{yi j 1, . . . , yi j r }drawn from N (θi j , σ2).
+Conventional notation:
+Notation Definition Notation Definition
+y···
+I
+i=1
+J
+j=1
+r
+k=1 yi j k
+yi··
+J
+j=1
+r
+k=1 yi j k
+y·j·
+I
+i=1
+r
+k=1 yi j k
+yi j·
+r
+k=1 yi j k
+¯
+y··· y···/I J r
+¯
+yi·· yi··/J r
+¯
+y·j· y·j·/I r
+¯
+yi j· yi j·/r
+¯
+Define θi·,
+θi·, . . . etc. similarly as above.
+Reparameterize the two-way model as
+Factor-effects model: subject to constraints
+αi =
+i
+j
+yi j k= µ+ αi + βj + (αβ)i j + εi j k , (6)
+βj= 0,
+(αβ)i j= 0, ∀j,
+(αβ)i j= 0, ∀i ,
+i
+j
+then
+µ=¯
+θ··, αi =¯
+θi·
+−µ, βj=¯
+θ·j−µ, (αβ)i j= θi j−µ−αi−βj . (7)
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Terminology:
+Parameters Name
+µ overall mean response
+α1, . . . , αI main effects of A
+β1, . . . , βJ main effects of B
+(αβ)11, . . . , (αβ)I J interactions between A and B
+θi j treatment mean for a i b j
+¯
+θi· i th level mean of A
+¯
+θ·j j th level mean of B
+If there are no interactions (or the factors don’t interact, or the factor effects are additive), then
+the model becomes
+yi j k= µ+ αi + βj + εi j k . (8)
+At any fixed, the i th say, level of A, the difference between any two treatment means θi j
+and θi j ′ is βj−βj ′, which does not depend on the level fixed for A. In other words,
+the effects of factor B apply similarly at each level of A,
+or equivalently,
+the effects of factor A apply similarly at each level of B,
+or equivalently,
+the effects of A and B are additive.
+The parameters (αβ)i j ’s measure the extent of departure from additivity. Figure 3 gives
+line plots of the estimated treatment means which provide graphical interpretation of inter-
+actions in a two-way model, where I= 2, J= 4.
+Figure 3: Two-way models with and without interactions
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12
+--- PAGE 13 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+7.5.2 Model fitting
+Least squares method —
+minimize i j k (yi j k−θi j )2 over the θi j ’s
+ˆ
+= ⇒ LS-estimator
+θi j=¯
+yi j·
+So
+ˆ
+yi j k=
+ˆ
+θi j=¯
+yi j·, and ˆ
+εi j k= yi j k−
+¯
+yi j·.
+Thus, the error sum of squares is obtained as
+SSE=
+I
+i=1
+J
+j=1
+r
+(yi j k−
+k=1
+¯
+yi j·)2
+.
+This method uses the sample mean ¯
+yi j to estimate the population mean θi j for the a i b j
+treatment group.
+Given
+ˆ
+θi j=
+and constraints imposed on the various effects,
+ˆ
+µ+ˆ
+αi +ˆ
+βj + (αβ)i j
+Parameter LS-Estimator
+µˆ
+µ=¯
+y···
+αiˆ
+αi =¯
+ˆ
+yi··
+−
+µ=¯
+yi··
+ˆ
+βj
+βj=¯
+ˆ
+y·j·
+−
+µ=¯
+y·j·
+(αβ)i j (αβ)i j=¯
+ˆ
+yi j·
+−
+µ−
+¯
+−
+y···
+¯
+−
+y···
+ˆ
+αi−
+ˆ
+βj=¯
+yi j·
+−
+¯
+yi··
+−
+¯
+y·j·+¯
+y···
+7.5.3 Example: Naval Gun Firing Speed
+Table 2 displays a data frame of 36 rows representing runs of 18 men loading and firing naval
+guns attempting to get off as many rounds per minute as possible. Each man has two runs,
+using a different method of loading guns for each run.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+13
+--- PAGE 14 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Physique
+1 2 3
+Method
+M1 20.20 22.00 23.10
+M1 26.20 22.60 22.90
+M1 23.80 22.90 21.80
+M1 24.10 23.50 22.90
+M1 26.90 24.60 23.70
+M1 24.90 25.00 23.50
+M2 14.20 14.10 14.10
+M2 18.00 14.00 12.20
+M2 12.50 13.70 12.70
+M2 16.20 16.10 16.10
+M2 19.10 18.10 13.80
+M2 15.40 16.00 15.10
+There are three variables:
+Method Physique Rounds factor giving one of two methods for loading rounds into naval guns: M1 and M2.
+factor giving the physique of the men: 1 for slight, 2 for average, and 3 for heavy.
+number of rounds per minute fired by a man.
+Response variable: rounds
+Factors: method (of 2 levels), physique (of 3 levels), i.e. I= 2, J= 3.
+Number of replicates: r = 6.
+There are 2 ×3= 6 treatment groups, each consisting of a sample of 6 observations. The
+sample means ¯
+yi j·are given below:
+Method \Physique 1 2 3 level mean
+M1 24.35 23.43 22.98 23.59
+M2 15.90 15.33 14.00 15.08
+Level mean 20.13 19.38 18.49
+Figure 4 gives the line plot of 6 sample means and suggests that heavier men fire guns
+more slowly and method 1 is more efficient than method 2. Effects of the two factors appear
+to be additive as the two lines are more or less parallel with an overall sample mean being
+¯
+y···
+= 19.33.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+14
+--- PAGE 15 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Figure 4: Line plot of estimated treatment means
+Estimates of the various effects —
+Overall mean: ˆ
+µ= 19.3333
+Main effects of method: ˆ
+α1 = 4.2556, ˆ
+α2 =−4.2556
+ˆ
+ˆ
+Main effects of physique:
+β1 = 0.7917,
+β2 = 0.0500,
+Interactions:
+(αβ)i j=
+  
+ˆ
+β3 =−0.8417
+i \j 1 2 3
+1−0.0306−0.2056 0.2361
+2 0.0306 0.2056−0.2361
+7.6 Tests for relationship, interaction and main effects: two-way ANOVA
+There are altogether I J treatment groups. As in one-way ANOVA, the total corrected S. S. can
+be partitioned into a within-group and a between-group S. S. The between-group S. S. can
+further be split into three components: (i) main effects of A, (ii) main effects of B and (iii)
+interactions between A and B .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+15
+--- PAGE 16 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Based on the idea of partition of sum of squares, we have
+SST= SSA +SSB|A + SSAB|A,B + SSE
+where
+SSA: SSB|A: SSAB|A,B: SSE: S. S. due to main effects of factor A (S. S. due to α1, . . . , αI );
+S. S. due to main effects of factor B given the main effects of factor A (S. S. due to
+β1, . . . , βJ given α1, . . . , αI );
+S. S. due to the interactions of A and B given the main effects of A and the main
+effects of B (S. S. due to (αβ)11, . . . , (αβ)I J given α1, . . . , αI and β1, . . . , βJ );
+within-group or error S. S. .
+Owing to the balanced design (the size of each cell is r ), it can be proved that
+SSB|A = SSB, SSAB|A,B = SSAB ,
+where
+• SSA: S. S. due to main effects of factor A (S. S. due to α1, . . . , αI );
+• SSB: S. S. due to main effects of factor B (S. S. due to β1, . . . , βJ );
+• SSAB: S. S. due to the interactions of A and B (S. S. due to (αβ)11, . . . , (αβ)I J ).
+So we have the following important partition for the balanced design
+SST= SSA + SSB + SSAB + SSE .
+Under the balanced design, there are different ways to obtain SSA, SSB and SSAB. For example,
+they can be obtained based on the S. S. corresponding to the full model and reduced model.
+Another way is based on the meanings that they carry, e.g.
+SSA, which is S. S. due to α1, . . . , αI (i.e. αi ’s),
+and it can be obtained as
+SSA =
+=
+=
+I
+i=1
+I
+i=1
+I
+i=1
+J
+j=1
+J
+j=1
+r
+k=1
+ˆ
+α2
+i
+r
+(¯
+yi··
+k=1
+−
+¯
+y···)2
+J r (¯
+yi··
+−
+¯
+y···)2
+.
+Similarly, we can obtain SSB =
+i j k
+ˆ
+β2
+j and SSAB =
+i j k
+(αβ)2
+i j.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+16
+--- PAGE 17 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+Useful quantities:
+Name notation formula convenient expression
+S. S. due to main effects of A SSA
+S. S. due to main effects of B SSB
+Interaction S. S. SSAB
+Error S. S. SSE
+Total corrected S. S. SST
+I
+i=1
+J r (¯
+yi··
+−
+¯
+y···)2
+J
+j=1
+I
+i=1
+I r (¯
+y·j·
+−
+¯
+y···)2
+I
+i=1
+I
+i=1
+J
+j=1
+J
+j=1
+J
+j=1
+r (¯
+yi j·
+¯
+−
+yi··
+r
+k=1
+(yi j k−
+r
+k=1
+(yi j k−
+−
+¯
+y·j·+¯
+y···)2
+I
+i=1
+J
+j=1
+I
+i=1
+y 2
+i··/J r−y 2
+···/I J r
+y 2
+·j·/I r−y 2
+···/I J r
+J
+j=1
+y 2
+i j·/r−SSA−SSB−y 2
+···/I J r
+¯
+yi j·)2 SST−SSA−SSB−SSAB
+¯
+y···)2
+I
+i=1
+J
+j=1
+r
+k=1
+y 2
+i j k−y 2
+···/I J r
+Determination of degrees of freedom:
+1. SST has (I J r−1) d. f. as usual.
+2. SSA has (I−1) d. f.
+3. SSB has ( J−1) d. f.
+4. SSE has I J (r−1) d. f.
+5. SSAB = SST−SSA−SSB−SSE and therefore has (I J r−1)−(I−1)−( J−1)−I J (r−1) =
+(I−1)( J−1) d. f.
+Two-way ANOVA table:
+Source S. S. d. f. M. S. F -Ratio
+SSA
+MSA
+Main effect A SSA I−1 MSA =
+I−1
+SSB
+Main effect B SSB J−1 MSB =
+FA =
+FB =
+Interaction SSAB (I−1)( J−1) MSAB =
+Error SSE I J (r−1) MSE=
+(= n−I J )
+J−1
+SSAB
+(I−1)( J−1) FAB =
+SSE
+I J (r−1)
+MSE
+MSB
+MSE
+MSAB
+MSE
+Total SST I J r−1
+Two-way ANOVA begins with a test for relationship between the response and the 2 factors,
+i.e. to test for treatment effects:
+H0 : αi = 0, βj= 0, (αβ)i j= 0, ∀i , j vs. H1 : H0 is not true.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+17
+--- PAGE 18 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+The associated treatment sum of squares is
+SStr = SSA + SSB + SSAB,
+with degrees of freedom (I−1) + ( J−1) + (I−1)( J−1) = I J−1. The mean square is
+MStr = SStr (I J−1), and F -ratio is
+Ft r = MStr MSE .
+The above null hypothesis H0 is rejected iff the p -value P (FI J−1,I J (r−1) >Ft r ) is smaller than α.
+If the null hypothesis is rejected, we can test for interactions, i.e. to test
+H0 : (αβ)i j= 0, ∀i , j vs. H1 : H0 is not true.
+F test (of size α) for interactions —
+reject H0 iff the p-value P (F(I−1)( J−1),I J (r−1) >FAB ) is smaller than α.
+If H0 is rejected, we say that there are significant interactions between A and B at 100α% level.
+If H0 is not rejected, we proceed to test for main effects.
+vs Test for main effects of factor A is written as (given interactions are insignificant)
+H0 : α1 = ···= αI = 0 H1 : H0 is not true.
+Test for main effects of factor B is written as (given interactions are insignificant)
+H0 : β1 = ···= βJ = 0 vs H1 : H0 is not true.
+The ANOVA table also contains F -ratios, FA and FB , for testing for main effects of A and B
+respectively. They should be referred to the FI−1, I J (r−1) and FJ−1, I J (r−1) distributions, respec-
+tively.
+Tests for main effects are usually performed when the test for interactions reveals an in-
+significant result. There are two ways to proceed. (1) Under full model: The tests are as given
+in the two-way ANOVA table on p17. (2) Under additive model: Merge SSAB into SSE, i.e.
+SSAB + SSE −→SSE with d f = (I−1)( J−1) + I J (r−1) = I J r−I−J + 1. Testing for main effects
+of A and main effects of B can be constructed accordingly.
+If there is strong evidence for the existence of interactions, studying the main effects may
+not be meaningful since these effects vary over different levels of the other factor. Aggregating
+these effects over all levels of the other factor conceals the reality.
+When there is only one observation within each treatment group (i.e. r = 1), SSE= 0 and
+no estimate of σ2 is available. In this case, we can assume no interactions in the model. Once
+interactions are removed, we have some degrees of freedom left for computing SSE and esti-
+mating σ2
+.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+18
+--- PAGE 19 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+7.6.1 Example: Naval Gun Firing Speed
+Summary of data sums:
+Method \Physique 1 2 3 Total (yi··)
+1 146.1 140.6 137.9 424.6
+2 95.4 92.0 84.0 271.4
+Total (y·j·) 241.5 232.6 221.9 696
+ANOVA table:
+Source S. S. d. f. M. S. F -Ratio
+Main effects of Method 651.9511 1 651.9511 213.5911
+Main effects of Physique 16.0517 2 8.0258 2.6294
+Interaction 1.1872 2 0.5936 0.1945
+Error 91.5700 30 3.0523
+Total 760.7600 35
+First, we test for relationship between the response and the two factors. The F -ratio
+is [(651.9511 + 16.0517 + 1.1872)/5] ÷3.0523= 43.8482. The associated p -value is equal to
+P (F5,30 >43.8482) = 6.6382 ×10−13, and we strongly reject the null hypothesis that there is no
+relationship between the response and the two factors. Then we proceed to test for interac-
+tions.
+To test for interactions, the p -value is P (F2, 30 >0.1945) = 0.8243. We have support that
+there are no significant interactions and the effects of Method and Physique are additive.
+Testing for main effects is then meaningful. We find (full model)
+Effects p-value
+P (F1, 30 >213.5911) = 3.4939 ×10−15
+P (F2, 30 >2.6294) = 0.08868.
+If the additive model is used, the error and mean sums of squares are respectively taken as
+1.1872 + 91.57= 92.7572 and 92.7572/32= 2.89866, with 32 degrees of freedom. We have
+Main effects of Method Main effects of Physique Effects p-value
+Main effects of Method Main effects of Physique P (F1, 32 >224.9145) = 5.5511 ×10−16
+P (F2, 32 >2.7688) = 0.0778.
+It seems that the speed of firing naval guns depends very much on ‘Method’ but little on
+‘Physique’. As there are no significant interactions, men of different physique are similarly
+affected by the methods of firing, and have very similar firing speeds whichever method they
+are using.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+19
+--- PAGE 20 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+7.6.2 Example: Learning of College Mathematics
+The aim of the study is to investigate the effects of Teaching Method (factor A) and Student’s
+Quantitative Ability (factor B ) on learning of college mathematics.
+There are three variables:
+Teaching method (Factor A). Emphasize teaching of concepts in the abstract before going
+into drill routines (level 1), and standard method (level 2). So I= 2.
+Student’s quantitative ability (Factor B ). 1 for excellent, 2 for good, and 3 for moderate. So
+J= 3.
+Response variable. Score measured by a standard maths achievement test.
+Number of replicates (number of students randomly assigned for each of the 6 treatments):
+r = 21.
+Sample mean learning scores:
+Teaching Method (i ) Quantitative Ability ( j )
+Excellent Good Moderate Level mean
+Abstract 95 (¯
+y11·) 81 (¯
+y12·) 73 (¯
+y13·) 83
+Standard 90 (¯
+y21·) 86 (¯
+y22·) 82 (¯
+y23·) 86
+Level mean 92.5 83.5 77.5
+The following figure plots the 6 treatment means and suggests that interactions might have
+existed.
+ANOVA table:
+Source S. S. d. f. M. S. F -Ratio
+Main effects of Teaching Method 283.5 1 283.5 10.125
+Main effects of Quantitative Ability 4788 2 2394 85.5
+Interaction 1092 2 546 19.5
+Error 3360 120 28
+Total 9523.5 125
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+20
+--- PAGE 21 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+To test for interactions, F= 19.5 >4.79= F0.01,2,120. We have strong evidence that there are
+interactions between the two factors. So it may not be meaningful to test for main effects.
+¯
+In other words, we are not going to test H0 : α1 = α2 = 0, or equivalently H0 :
+θ1·
+=¯
+θ2·, i.e.
+the mean learning score based on the Abstract Teaching Method is equal to that based on the
+Standard Teaching Method.
+¯
+Why H0 : α1 = α2 = 0 is equivalent to H0 :
+θ1·
+=¯
+θ2·? Referring to Equation (7), α1 = α2 = 0 ⇒
+¯
+θ1·
+−µ=¯
+θ2·
+−µ= 0, i.e.
+¯
+θ1·
+=¯
+¯
+θ2·. The meanings of
+θi· can be referred to the table below
+Equation (7).
+7.7 L=
+Analysis of treatment means (estimation and hypothesis testing)
+If there are significant interactions, we usually proceed to study in detail the effects of one
+factor while keeping the other at a fixed level. Comparisons should be made among the indi-
+¯
+¯
+vidual treatment means θi j rather than among the factor level means
+θi·,
+θ·j.
+Consider in general a linear combination of the treatment means
+I
+i=1
+J
+j=1
+ai j θi j
+for some known constants ai j . It can be estimated unbiasedly by
+ˆ
+L=
+I
+i=1
+J
+j=1
+¯
+ai j
+yi j·.
+Under the two-way model, SSE∼σ2χ2
+I J (r−1) so that
+ˆ
+σ2 =
+SSE
+I J (r−1)
+= MSE
+is unbiased for σ2, and is independent of the estimated treatment means
+the degrees of freedom can also be written as n−I J since n = I J r . As ¯
+yi j·
+independent of each other, we have
+ˆ
+θi j=¯
+yi j·. Note that
+∼N (θi j , σ2/r ) are
+ˆ
+L∼N L, σ2
+J
+j=1
+a 2
+i j
+r.
+ˆ
+L is
+I
+i=1
+Thus, the standard error of
+se(ˆ
+L) =ˆ
+σ
+I
+i=1
+J
+j=1
+a 2
+i j
+r.
+Based on the above results, we can
+• calculate a 100(1−α)% confidence interval for L:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+21
+--- PAGE 22 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 7 Classification Models
+ˆ
+L ±se(ˆ
+L)tα/2,I J (r−1)
+• test whether L= L0 at significance level αby a t test:
+1. calculate the test statistic
+|ˆ
+L−L0|
+T=
+se(ˆ
+L),
+2. reject the hypothesis iff T >tα/2,I J (r−1).
+If interactions are not significant, it is then meaningful to compare factor level means for each
+¯
+¯
+factor. Note that the factor level means
+θi·and
+θ·j are special linear combinations of the treat-
+ment means θi j . Thus any linear combination of factor level means is in general a linear
+combination of treatment means.
+7.7.1 Example: Naval Gun Firing Speed
+We have shown in Section 7.6.1 that "Method" has significant effects on firing speed. To com-
+pare Method 1 with Method 2, consider the contrast
+L=
+j
+θ1 j
+3−
+j
+θ2 j
+3=
+θ11
+3
+θ12
++
++
+θ13
+3−
+An unbiased estimate is
+θ23
+3=¯
+θ1·
+−
+¯
+θ2·.
+3
+θ21
++
+θ22
+3
++
+3
+ˆ
+L=¯
+y1··
+−
+¯
+y2··
+= 8.5111.
+Note that
+1
+1
+1
+1
+se(ˆ
+L) =ˆ
+σ
+ˆ
+=
+σ
++
++
+32 ·6
+32 ·6
+1
+32 ·6
++
++
+32 ·6
+32 ·6
+1
++
+18
+1
+18= 1.7471
+1
+3= 0.5824.
+The 95% confidence interval for L is
+8.5111 ±0.5824(2.04227) = [7.3218, 9.7005].
++
+1
+32 ·6
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+22

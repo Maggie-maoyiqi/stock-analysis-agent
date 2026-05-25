@@ -1,0 +1,361 @@
+--- PAGE 1 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Class Test 45 mins
+1. Five observations of X and Y are obtained. A summary of the data is given in
+the following,
+xi =−5, yi =−15,
+x2
+i = 15, y2
+i = 131,
+xiyi = 40.
+Consider a linear regression model when Y is regressed on X.
+(a) Calculate the least squares estimates of the intercept and the slope.
+(b) Calculate the sum of squared errors and the unbiased estimate of the variance
+of the error.
+(c) Predict an individual value of Y when Xis−1.5. Calculate a 95% prediction
+interval.
+2. You are given the following matrices computed for a regression analysis yi =
+β0 + β1xi1 + β2xi2 + ϵi as
+(XTX) =
+13 21−17
+   10 13−9
+−9−17 21
+   ,XTY=
+  50
+ 33
+−46
+   
+(XTX)−1
+=
+  −120 129 53
+ 152−120−32
+−32 53 41
+   ,YTY = 131
+The matrices are properly ordered according to the regression equation given
+1
+248
+above.
+(a) Calculate the least squares estimates of the regression coeﬃcients.
+P. 1 of 7
+--- PAGE 2 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+(b) Test the hypotheses that
+H0 : β1 + β2 =−1 vs. H1 : H0 is not true
+at the 5% level of significance. State the decision rule and conclusion.
+(c) Test at a 5% significance level whether β1 is 0.
+(d) Consider a reduced model yi = β0 + β1xi1 + ϵi.
+i. Calculate the least squares estimates of the regression coeﬃcients. It is
+given that
+−1
+10 13
+13 21
+1
+=
+41
+21−13
+−13 10
+ii. Test at a 5% significance level whether β1 is 0.
+iii. Briefly explain whether it is unreasonable to observe diﬀerent results in
+(d)(ii) and (c).
+******** END OF PAPER ********
+P. 2 of 7
+--- PAGE 3 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+LIST OF FORMULAE
+1. Inverse Matrix
+−1
+=
+1
+ad−bc
+•Inversion of 2 ×2 matrices:
+A−1
+=
+a b
+c d
+d−b
+−c a
+•Inversion of 3 ×3 matrices:
+A−1
+=
+   a b c
+d e f
+g h k
+   
+−1
+=
+det (A)
+   ek−fh ch−bk bf−ce
+fg−dk ak−cg cd−af
+dh−eg gb−ah ae−bd
+where det (A) = a(ek−fh)−b(kd−fg) + c(dh−eg).
+2. Multivariate normal distribution
+1
+   ,
+exp−
+1
+2 (y−µ) Σ−1 (y−µ).
+•The probability density function:
+f(y) = (2π)p/2 √det Σ
+−1
+3. Linear Regression Analysis
+•SST = SYY =
+n
+i=1(yi−
+ˆ
+yi)2
+¯
+y)2
+.
+•SSE = n
+i=1(yi−
+•H= X(XTX)−1XT
+= YT(I−H)Y= YTY−YTXˆ
+β.
+•R2 = 1−SSE /SST.
+•ˆ
+β= (X X)−1 X Y∼Np+1(β,σ2 (X X)−1) where pis the number of explanatory
+variables included in the working model.
+•Simple linear regression:
+ˆ
+ˆ
+ˆ
+β0 = ¯ y−
+β1
+¯
+x;
+β1 = SXY /SXX
+SXY =
+n
+i=1(xi−
+¯
+x)(yi−
+¯
+y) =n
+i=1 xiyi−
+n
+¯
+n
+(n
+i=1 xi)2
+SXX =
+i=1(xi−
+x)2
+=
+i=1 x2
+i−
+n.
+(n
+i=1 xi
+n
+i=1 yi)
+1
+(X X)−1
+=
+SXX
+n
+i=1 x2
+i/n−
+¯
+x
+¯
+−
+x 1
+=
+ˆ
+ˆ
+SSE=
+n
+i=1 y2
+i−
+β0
+n
+i=1 yi−
+β1
+n
+i=1 xiyi
+P. 3 of 7
+n ,
+1
+SXX
+SXX/n+ ¯ x2
+¯
+−
+x
+−
+x 1
+¯
+--- PAGE 4 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+[SSER−SSE]/(p−q)
+•ˆ
+σ2 = MSE = SSE /(n−p−1)
+•Testing for H0 : βq+1 =
+...
+not true using the F-ratio given by
+= βp = 0, the reduced model against H1 : H0 is
+F=
+SSEXT /(p−q)
+SSE /(n−p−1)
+=
+∼Fp−q,n−p−1.
+SSE /(n−p−1)
+•Testing for the general linear hypothesis: H0 : Cβ= ℓ0 vs. H1 : H0 is not
+true using the F-ratio given by
+F=
+Cˆ
+β−ℓ0 C(X X)−1 C−1 Cˆ
+β−ℓ0 /r
+∼Fr,n−p−1.
+SSE /(n−p−1)
+where r is the number of rows given in C. Under H0,
+˜
+β=
+ˆ
+β+ (X X)−1 C C(X X)−1 C−1 ℓ0−Cˆ
+β.
+•Let ℓ= p
+j=0 cjβj= c β. The estimator for ℓ is
+[c0,c1,...,cp] is a vector of known constants, and that
+Note that
+ˆ
+ℓ= cˆ
+β, where c =
+ˆ
+ℓ∼N(ℓ, σ2 c (X X)−1
+ˆ
+ℓ−ℓ
+c).
+∼ tn−p−1
+ˆ
+se(
+ℓ)
+ˆ
+where se(
+ℓ) = ˆ
+σ2c (X X)−1c, and a 100(1−α)% confidence interval for ℓ
+is
+ˆ
+ˆ
+ℓ±se(
+ℓ) tα/2, n−p−1.
+•Suppose we want to construct simultaneous confidence intervals for the set of
+target parameters, {c β: c∈C}, of family confidence level ≥100(1−α)%.
+⋄Bonferroni’s method — (applicable to finite C). Suppose C= {c1,...,cg}
+contains g vectors. For j = 1,...,g, calculate the confidence interval for
+cjβby
+ˆ
+ˆ
+ˆ
+IB(cj) = cj
+β±se(cj
+β) tα/(2g),n−p−1 = cj
+β±ˆ
+σ cj(X X)−1cj
+1/2 tα/(2g),n−p−1.
+˜
+⋄Scheﬀe’s method — (applicable to any C). Let
+dbe the number of linearly
+˜
+independent vectors in C, i.e.
+d = dimension of vector space spanned by
+vectors in C. For j = 1,...,g, calculate the confidence interval for cjβby
+ˆ
+ˆ
+IS(cj) = cj
+β±se(cj
+β)
+˜
+ˆ
+dFα,
+˜
+d,n−p−1 = cj
+β±ˆ
+σ cj(X X)−1cj
+1/2˜
+dFα,
+˜
+d,n−p−1.
+P. 4 of 7
+--- PAGE 5 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+•Prediction for l=
+m
+j=1 aj y(j) for a= [a1,...,am] being a vector of mknown
+ˆ
+constants where the future responses [y(1),...,y(m)] are predicted by X0
+β,
+and l by
+ˆ
+ˆ
+l= a X0
+β.
+Hence the 100(1−α)% prediction interval for l is
+ˆ
+ˆ
+l±se(
+ℓ−ℓ) tα/2, n−p−1,
+where
+ˆ
+se(
+ℓ−ℓ) = ˆ σ a X0(X X)−1X0a+ a a
+1/2
+.
+⋄The 100(1−α)% prediction interval for the mean response corresponding
+to x0 = [1 x01,···, x0p] is
+ˆ
+x0
+β±tα/2,n−p−1
+ˆ
+σ x0 (X X)−1
+x0
+1/2
+.
+ˆ
+β0 +
+ˆ
+β1x0 ±tα/2,n−2
+ˆ
+σ
+1
+n
++ (x0−
+¯
+x)2
+SXX
+1/2
+.
+⋄The 100(1−α)% prediction interval for individual response corresponding
+to x0 is
+x0 + 1 1/2
+.
+¯
+x)2
++ 1
+1/2
+.
+ˆ
+x0
+β±tα/2,n−p−1
+ˆ
+σ x0 (X X)−1
+ˆ
+β0 +
+ˆ
+β1x0 ±tα/2,n−2
+ˆ
+σ
+1
+n
++ (x0−
+Sxx
+P. 5 of 7
+--- PAGE 6 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+P. 6 of 7
+--- PAGE 7 ---
+S&AS: SDST3600/STAT3600 Linear Statistical Analysis
+********** END OF PAPER **********
+P. 7 of 7

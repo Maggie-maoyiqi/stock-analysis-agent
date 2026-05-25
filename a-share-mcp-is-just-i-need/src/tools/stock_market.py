@@ -1,4 +1,5 @@
 """股票市场工具函数。"""
+import json
 import logging
 
 from ..data_source_factory import get_data_source
@@ -41,6 +42,29 @@ def get_historical_k_data(
     for row in rows:
         table += "| " + " | ".join(str(cell) for cell in row) + " |\n"
     return f"## {stock_code} K线数据 ({start_date} 至 {end_date})\n\n{table}"
+
+
+def get_historical_k_data_json(
+    stock_code: str,
+    start_date: str,
+    end_date: str,
+    frequency: str = "d",
+    adjustflag: str = "2",
+) -> str:
+    """获取股票历史K线数据并返回 JSON。"""
+    data_source = get_data_source(stock_code)
+    data = data_source.get_historical_k_data(stock_code, start_date, end_date, frequency, adjustflag)
+    return json.dumps(
+        {
+            "stock_code": stock_code,
+            "start_date": start_date,
+            "end_date": end_date,
+            "frequency": frequency,
+            "adjustflag": adjustflag,
+            "items": data or [],
+        },
+        ensure_ascii=False,
+    )
 
 
 def get_stock_basic_info(stock_code: str) -> str:

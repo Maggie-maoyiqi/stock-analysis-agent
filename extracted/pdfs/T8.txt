@@ -1,0 +1,250 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 8 Classification Models
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis
+Tutorial 8 Classification models
+1 Review
+1. The main objective of the classification model:
+To determine whether the treatment groups have any systematic effects on the response variable,
+and to examine the nature of these effects.
+Technically, our underlying model treats all observations belonging to the same treatment group
+as a random sample from the same normal distribution. The idea is to study how the means of
+all these normal distributions vary over the different treatment groups.
+2. No. of factors: 1
+No. of levels: k
+Observations:
+Level 1 2 ... k
+Responsesy11,
+···
+, y1n1 y21,
+···
+, y2n2...yk 1,
+···
+, yk nk
+Note that a random sample of size ni is drawn for the i -th level of the factor.
+The One-way classification model:
+yi j = θi + εi j , i= 1,···
+, k , j= 1,···
+, ni , εi j∼N (0, σ2)
+3. yi 1, ..., yi ni : random sample of size ni drawn from N (θi , σ2)
+θi : i−th treatment mean response.
+One-way classification model is defined as
+yi j = θi + εi j = µ+ τi + εi j , i= 1, . . . , k , j= 1, . . . , ni , εi j∼N (0, σ2)
+Note that
+• i represents the i th treatment group (from 1 to k ).
+• j represents the j th observation of the i th treatment group (from 1 to ni ).
+• ni is the size of the i th treatment group.
+• yi , . . . , yn is a random sample of size ni drawn from N (θi , σ2)
+• θi is the treatment mean response of the i th treatment group,
+• τis the i -th treatment effect (θi = µ+ τi ), and
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 8 Classification Models
+• µhas different meanings subject to different constraints. We should use the following con-
+straint unless otherwise specified
+constraint
+= ⇒µ=
+i
+k
+i=1
+ni τi = 0
+ni θi /n, τi = θi−µ
+4. Some conventional notations are given below:
+Quantity
+Notation Definition
+overall sample sum y..
+k
+i=1
+ni
+j=1 yi j
+i -th sample sum yi
+ni
+j=1 yi j
+overall sample mean ¯
+y.. y../n
+i -th sample mean ¯
+yi. yi./ni
+5. Consider a one-way classification model
+yi j = θi + εi j , i= 1, . . . , k , j= 1, . . . , ni , εi j
+i.i.d
+∼ N 0, σ2
+.
+The null hypothesis is that the factor has no effects, i.e.
+H0 : θ1 = ···= θk (= θor µ, say, a common mean ) vs H1 : H0 is not true.
+So, we have
+Full model : yi j = µ+ τi + εi j ,
+k
+i=1 ni τi = 0 and under H0,
+Reduced Model: yi j = µ + εi j i.e. τ1 = · · · = τk = 0.
+Here, the factor of a reduced model has no effect on the response variable (i.e. all treatment
+effects τi are zero).
+6. It is noticed that both full model and reduced model are multiple linear regression models (lin-
+ear in parameters), where µ and τi play the role of intercept β0 and βi in the multiple linear
+regression model. Dicussed in Chapter 8.
+7. SST = SSR +SS E , where
+• SST=
+k
+i=1
+ni
+j=1 yi j−
+¯
+y..
+2
+• SSE=
+k
+i=1
+ni
+j=1
+• SSR= SStr =
+k
+i=1
+ni
+j=1
+¯
+yi−
+,
+ˆ
+ε2
+i j =
+k
+i=1
+ni
+j=1 yi j−
+¯
+yi
+2
+¯
+y..
+2
+=
+k
+i=1 ni
+¯
+yi.
+−
+¯
+y..
+2
+,
+SSE is called within-group sum of squares, while SSR or SStr is betweengroup sum of squares or
+treatment sum of squares.
+8. Test for treatment effects: One-way ANOVA:
+H0 : τ1 =
+. . .
+= τk = 0 (reduced) vs. H1 : H0 is not true (full model).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 8 Classification Models
+¯
+y n−1
+The ANOVA table is
+Source F -ratio
+S. S.
+d. f. M. S.
+Between groups SSt r = i ni
+¯
+¯
+yi−
+y
+2 k−1MSTF= MST /MSE
+Within Groups SSE= i j yi j−
+¯
+yi
+2
+n−k MSE
+Total SST= i j yi j−
+SSt r is the key source of variation distinguishing the reduced model from the full model. Its size
+measures the advantage gained from grouping the observations by the k treatments.A large F-
+ratio means that SSt r is large relative to SSE, hence the treatment effects are not entirely equal.
+We reject H0 at a size αF test |F |>Fα,k−1,n−k or p -Value<α. If H0 is rejected, the factor has
+significant effects on Y at αlevel of significance.
+Remark: The F -test can only tell whether there are differences among the k treatment groups, but
+cannot tell in what way they are different.
+9. Analysis of treatment effects
+ˆ
+L=
+k
+¯
+i=1 ai
+yi·is an an unbiased estimator of L=
+k
+i=1 ai θi . Since
+standard error of L is estimated by:
+ˆ
+L∼N L, σ2 k
+i=1 a 2
+i /ni , the
+a 2
+i
+se
+ˆ
+L=
+ˆ
+σ2
+k
+,
+i=1
+ni
+ˆ
+An 100 (1−α) % confidence interval of L is
+L ±se(ˆ
+L)tα/2,n−k . To perform a size αt -teston the
+hypotheses:
+H0 : L= L0 vs. H1 : L
+̸= L0
+The test statistic is T=
+ˆ
+L−L0 /se(ˆ
+L)∼tn−k . We reject H0 if and only if |T |>Tα/2,n−k or
+(Tn−k >|T |) <α.
+Remark: If a1 + a2 +. . . + ak = 0, then L is called a CONTRAST.
+2 Exercise
+1. A clinical psychologist wished to compare three methods for reducing hostility levels in univer-
+sity students. A certain test (HLT) was used to measure the degree of hostility. A high score on
+the test indicated great hostility. Eleven students obtaining high and nearly equal scores were
+used in the experiment.
+Four were selected at random from among the 11 problem cases and treated with method 1.
+Four of the remaining seven students were selected at random and treated with method 2. The
+remaining three students were treated with method 3.
+All treatments were continued for a one-semester period. Each student was given the HLT test at
+the end of the semester, with the results shown in the table. Use these data to perform an analysis
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+STAT3600 Linear Statistical Analysis
+Tutorial 6 Classification Models
+of variance to determine if there are differences among mean scores for the three methods. Use
+α= 0.05.
+Method Test scores
+Totals
+80 92
+87
+1 83
+70 81
+78
+2 82
+63 76
+3 70
+342
+311
+209
+Total 862
+(a) Please state the the null and alternative hypotheses.
+(b) State Sy y , SSE, SST.
+(c) Produce the ANOVA table.
+(d) Perform an ANOVA test to see whether there is significant different between the mean of
+these 3 gruops (α= 0.05).
+(e) Perform a t test to see whether there is significant distinction between the mean of group 1
+and group 2(α= 0.05).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4

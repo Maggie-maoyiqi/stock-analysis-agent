@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 const STATUS_LABELS = {
   queued: "排队中",
   running: "分析中",
@@ -39,7 +41,7 @@ function getStepProgress(task, stepKey) {
     return 100;
   }
   if (backendStatus === "running") {
-    return 65;
+    return 5;
   }
   if (task?.status === "completed" && task?.[stepKey]) {
     return 100;
@@ -47,7 +49,65 @@ function getStepProgress(task, stepKey) {
   return 0;
 }
 
+function formatElapsed(seconds) {
+  if (seconds == null || Number.isNaN(seconds)) return "";
+  if (seconds < 60) return `${seconds.toFixed(1)}s`;
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${minutes}m${secs.toString().padStart(2, "0")}s`;
+}
+
 export default function StatusPanel({ task }) {
+  // Track when each step entered "running" and how long it ran.
+  const startedAtRef = useRef({});
+  const durationsRef = useRef({});
+  const [, forceTick] = useState(0);
+
+  // Reset timers when a new task arrives.
+  useEffect(() => {
+    startedAtRef.current = {};
+    durationsRef.current = {};
+  }, [task?.task_id]);
+
+  // Capture transitions to running/completed/failed from the latest poll.
+  useEffect(() => {
+    if (!task) return;
+    const statuses = task.step_statuses || {};
+    const now = performance.now();
+    Object.entries(statuses).forEach(([statusKey, status]) => {
+      if (status === "running" && !startedAtRef.current[statusKey]) {
+        startedAtRef.current[statusKey] = now;
+      }
+      if (
+        (status === "completed" || status === "failed") &&
+        startedAtRef.current[statusKey] &&
+        durationsRef.current[statusKey] == null
+      ) {
+        durationsRef.current[statusKey] =
+          (now - startedAtRef.current[statusKey]) / 1000;
+      }
+    });
+  }, [task]);
+
+  // Tick at 4Hz while the task is running so the elapsed-time labels update
+  // smoothly even between server polls.
+  useEffect(() => {
+    if (task?.status !== "running" && task?.status !== "queued") return;
+    const handle = window.setInterval(() => forceTick((n) => n + 1), 250);
+    return () => window.clearInterval(handle);
+  }, [task?.status]);
+
+  const now = performance.now();
+  const getElapsedFor = (statusKey) => {
+    if (durationsRef.current[statusKey] != null) {
+      return durationsRef.current[statusKey];
+    }
+    if (startedAtRef.current[statusKey]) {
+      return (now - startedAtRef.current[statusKey]) / 1000;
+    }
+    return null;
+  };
+
   return (
     <section className="panel">
       <div className="panel-header">
@@ -96,6 +156,8 @@ export default function StatusPanel({ task }) {
               const ready = backendStatus === "completed" || (task.status === "completed" && task[step.key]);
               const active = backendStatus === "running";
               const failed = backendStatus === "failed" || (task.status === "failed" && statusKey === "summary");
+              const elapsed = getElapsedFor(statusKey);
+              const elapsedLabel = formatElapsed(elapsed);
               return (
                 <div
                   className={`step-item ${ready ? "step-ready" : ""} ${active ? "step-active" : ""} ${
@@ -106,7 +168,12 @@ export default function StatusPanel({ task }) {
                   <div className="step-copy">
                     <div className="step-copy-main">
                       <span>{step.label}</span>
-                      <p>{message || (ready ? "该阶段已完成" : failed ? "该阶段执行失败" : active ? "正在处理" : "等待开始")}</p>
+                      <p>
+                        {message || (ready ? "该阶段已完成" : failed ? "该阶段执行失败" : active ? "正在处理" : "等待开始")}
+                        {elapsedLabel ? (
+                          <span className="step-elapsed"> · {elapsedLabel}</span>
+                        ) : null}
+                      </p>
                     </div>
                     <strong>{ready ? "完成" : failed ? "失败" : active ? `${Math.round(progress)}%` : "等待"}</strong>
                   </div>

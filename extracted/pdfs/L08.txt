@@ -1,0 +1,585 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 8 General Linear Model
+8 General Linear Model
+8.1 Introduction
+Linear regression models and classification models have been discussed as two separate en-
+tities in previous chapters. Situations not yet covered include, e.g.:
+• there exists a mixture of quantitative and qualitative (or categorical) variables in the
+dataset;
+• a two-way classification model has unequal sample sizes in treatment groups.
+It is desirable to have a universal approach to analysing such complicated data structures.
+In general, one can always rewrite (reparameterize) a linear model (linear regression model,
+classification model or a mixture of them) to the general form
+Y= X β + ε,
+by fixing an appropriate design matrix X , and hence, methods developed in Chapters 4 and
+5 can be applied directly.
+8.2 Quantitative representation of categorical variable
+Any categorical variable of k levels can be represented by a set of k−1 quantitative variables
+I1, . . . , Ik−1, known as dummy variables which are defined as:
+Level of categorical variable I1 I2 I3··· Ik−1
+1 1 0 0··· 0
+2 0 1 0··· 0
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0 0 0··· 1
+k 0 0 0··· 0
+k−1 The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+Table 1: Car mileage data with dummy variable
+Observation Mileage (Y ) Version∗ V1 V2 V3
+1 30 A 1 0 0
+2 26 A 1 0 0
+3 27 A 1 0 0
+4 29 A 1 0 0
+5 28 B 0 1 0
+6 29 B 0 1 0
+7 28 B 0 1 0
+8 31 B 0 1 0
+9 29 C 0 0 1
+10 32 C 0 0 1
+11 27 C 0 0 1
+12 31 C 0 0 1
+13 30 C 0 0 1
+14 45 D 0 0 0
+15 35 D 0 0 0
+16 45 D 0 0 0
+17 37 D 0 0 0
+18 40 D 0 0 0
+∗Version A: 2000 cc automatic C: 2000 cc manual saloon B: 2000 cc manual estate
+D: 1300 cc manual saloon
+Table 1 gives the one-factor classification Car Mileage Data introduced in Section 7.2.3
+with dummy variables created for the single factor Version:
+Categorical variable Dummy variables
+Version V1, V2, V3
+8.3 Representation of one-way classification based on car mileage example
+Factor of k levels: dummy variables V1, . . . , Vk−1
+Number of observations: n
+Model:
+Y= µ+ τ1V1 +···+ τk−1Vk−1 + ε.
+Here the subscripts identifying individual observations have been omitted from the vari-
+ables for simplicity.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+τ1, . . . , τk−1 play a similar role as the “treatment effects” τ1, . . . , τk defined for one-way
+classification models, but correspond to the set to zero constraint (ii) in Section 7.2.1 with
+τk = 0. In matrix notation, the model has the form
+Y= X β + ε,
+where
+β=
+     
+µ
+τ1
+.
+.
+.
+τk−1
+     
+and X is an n ×k matrix with 1 as the first column and the next k−1 columns correspond
+successively to the dummy variables V1, . . . , Vk−1.
+One-way ANOVA is equivalent to ANOVA for an MLR model consisting of:
+• explanatory variables: V1, . . . , Vk−1
+• regression coefficients: µ, τ1, . . . , τk−1.
+Interpretation of coefficients under constraint τk = 0:
+Recall one-way classification model,
+yi j= θi + εi j , i= 1, . . . , k , j= 1, . . . , ni
+or
+yi j= µ+ τi + εi j . Here we use constraint τk = 0 (constraint (ii)) in Section 7.2.1. So,
+θ1 = µ+ τ1 ; . . . ; θk−1 = µ+ τk−1 ; θk = µ+ 0 .
+(1)
+Therefore,
+µ= θk , τi = θi−µ= θi−θk , i= 1, . . . , k−1.
+• µ : effect of the k th level
+• τi : effect of the i th level compared to the k th level
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+8.3.1 Example: Car Mileage Data
+The design matrix X is 18 ×4 and has the form:
+Observation V1 V2 V3
+1 1 1 0 0
+2 1 1 0 0
+3 1 1 0 0
+4 1 1 0 0
+5 1 0 1 0
+6 1 0 1 0
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+18 1 0 0 0
+Regressing Mileage on Version (it is represented by 3 explanatory variables V1, V2 and V3;
+i.e. p= 3) gives the following results.
+Parameter LS-est. s.e. Lower 99%∗ Upper 99%∗
+µ 40.4 1.27615 36.60 44.20
+τ1−12.4 1.91423−18.10−6.70
+τ2−11.4 1.91423−17.10−5.70
+τ3−10.6 1.80476−15.97−5.23
+∗The 99% C.I.’s can be obtained manually as: LS-est.±t0.01/2,14 ×s.e., where t0.01/2,14 = 2.977.
+The 99% C.I.’s are the same as those intervals for θ1−θ4, θ2−θ4 and θ3−θ4 given in §7.4.1
+(ii), which were obtained using one-way classification model. It is noticed that all the 99%
+confidence intervals listed above are negative and do not include zero, i.e. τ1, τ2 and τ3 are
+all significantly negative. This suggests that ‘1300 cc manual saloon’ (Version D) cars run sig-
+nificantly more mileage/gallon than the other three versions of cars. The ANOVA table based
+on multiple regression model is given by
+Source S. S. d. f. M. S. F -Ratio
+Regression (i.e. between groups) 476.5 3 158.833 19.51
+Error (i.e. within groups) 114 14 8.143
+Total 590.5
+Since F= 19.51 >F0.05,3,14 = 3.3439, we conclude that different versions of the new car DO
+have a significant effect on the petrol consumption rate (mileage).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+8.4 Representation of two-way classification
+If a two-way classification model has a balanced structure, i.e. all treatment groups have the
+same number of observations, then it would be most convenient to carry out ANOVA using
+techniques given in Section 7.5. (In fact, the techniques given in Section 7.5 cannot be used
+for unbalanced structure, even after modifications.) Otherwise, the universal approach given
+here is the most appropriate.
+8.4.1 Two-way classification with interactions
+The main effects, and interactions between two categorical variables can be dealt with easily
+using dummy variables.
+Effects Representation
+Factor A of I levels dummy variables A1, . . . , AI−1
+Factor B of J levels dummy variables B1, . . . , BJ−1
+Interactions between A and B A1B1, A1B2, . . . A1BJ−1, A2B1, . . . AI−1BJ−1
+The full model is given by:
+Ω : Y= µ+ α1A1 +···+ αI−1AI−1 + β1B1 +···+ βJ−1BJ−1
++ (αβ)11A1B1 +···+ (αβ)1,J−1A1BJ−1
++ (αβ)21A2B1 +···+ (αβ)I−1,J−1AI−1BJ−1 + ε,
+or
+Ω : yi j k= µ+ αi + βj + (αβ)i j + εi j k, i= 1, . . . , I , j= 1, . . . , J , k= 1, . . . , ni j (2)
+where
+• εi j k
+i.i.d.
+∼ N (0, σ2).
+• α1, . . . , αI−1: main effects of A compared to I th level of A. In other words, αI = 0.
+• β1, . . . , βJ−1: main effects of B compared to J th level of B. In other words, βJ = 0.
+• (αβ)11, . . . , (αβ)I−1,J−1: interactions compared to interactions between last level of one
+factor with the other factor. So (αβ)I j = (αβ)i J = 0, ∀i , j.
+Note that α’s, β’s and (αβ)’s are defined different from those in Section 7.5.
+The sample size is n = i j ni j . In matrix notation, the model has the form
+Y= X β + ε.
+where
+β = [µ, α1, . . . , αI−1, β1, . . . , βJ−1, (αβ)11, . . . , (αβ)I−1,J−1]
+and X is an n ×I J matrix with 1 as the first column, followed by columns corresponding to
+variables
+A1, . . . , AI−1, B1, . . . , BJ−1, A1B1, . . . , AI−1BJ−1
+successively.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+Two-way ANOVA is equivalent to ANOVA for a multiple linear regression model consisting
+of:
+• explanatory variables: A1, . . . , AI−1, B1, . . . , BJ−1, A1B1, . . . , AI−1BJ−1
+• regression coefficient: α1, . . . , αI−1, β1, . . . , βJ−1, (αβ)11, . . . , (αβ)I−1,J−1.
+The above formulation enables analysis of two-way models in which treatment groups
+may contain samples of unequal sizes.
+Test for interaction:
+• Reduced model ω: regressing Y on A1, . . . , AI−1, B1, . . . , BJ−1, i.e.
+Y= µ+ α1A1 +···+ αI−1AI−1 + β1B1 +···+ βJ−1BJ−1 + ε. Two-way ANOVA often begins with a test for interactions. Fit the following two models:
+• Full model Ω: regressing Y on all explanatory variables. We obtain SSRΩ and SSEΩ.
+ω: (3)
+We obtain SSRωand SSEω.
+A test for interactions amounts to testing H0 : ωvs H1 : Ω.
+According to the partition idea in Chapter 5, the SST can be partitioned as (see page 9,
+Chapter 5)
+SST= SSRω+ SSEXTAB + SSEΩ,
+where
+SSEXTAB = SSEω−SSEΩ,
+the difference between the error sum of squares under the reduced model (3) and that under
+the full model (2). Note SSRω= SST−SSEω.
+The ANOVA table is given by:
+Source S. S. d. f. M. S. F -Ratio
+Regression fitting reduced model SSRω I + J−2
+(due to main effects of A & B)
+Extra (due to interactions in addition to main effects of A & B)
+SSEXTAB (I−1)( J−1) MSEXTAB =
+Error SSEΩ n−I J MSEΩ =
+SSEXTAB
+(I−1)( J−1) FAB =
+MSEXTAB
+MSEΩ
+SSEΩ
+n−I J
+Total SST n−1
+Note ˆ
+σ2 = MSEΩ and n is the sample size, i.e. the total number of observations.
+F test (of size α) for interactions:
+reject H0 iff the p-value P F(I−1)( J−1),n−I J >FAB is smaller than α.
+If H0 is rejected, we say that there are significant interaction A and B at αlevel.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+Remark: In case that there are no cases in some treatment groups, then the design matrix X
+has linearly dependent columns. This makes the regression coefficients not identifiable and
+so estimation of individual coefficients impossible. In this case, one may have to remove the
+interaction effects from the analysis. The full model becomes the additive model as given in
+(3). Test for interactions is not needed anymore.
+Test for main effects
+Tests for main effects are usually performed when the test for interactions reveals an in-
+significant result. We illustrate below a test of B can be for main effects of factor A; that for main effects
+developed in a similar way.
+Two approaches can be used to test for main effects.
+(i) Under full model
+Let ωbe a reduced model with αi = 0 for all i in (2), i.e.
+ω: Y= µ+ β1B1 +···+ βJ−1BJ−1
++ (αβ)11A1B1 +···+ (αβ)1,J−1A1BJ−1
++ (αβ)21A2B1 +···+ (αβ)I−1,J−1AI−1BJ−1 + ε. (4)
+A test for the main effects of A amounts to testing H0 : ωvs H1 : Ω. Fit the reduced model
+ωand we obtain SSEω. The corresponding two-way ANOVA is given by
+Source S. S. d. f. M. S. F -Ratio
+Main effects of B SST−SSEω I ( J−1)
+(& interactions)
+Main effects of A SSEXTA = SSEω−SSEΩ I−1 MSEXTA =
+SSEXTA
+MSEXTA
+FA =
+I−1
+SSEΩ
+MSEΩ
+Error SSEΩ n−I J MSEΩ =
+n−I J
+Total SST n−1
+F test (of size α) for main effects of A:
+reject H0 iff the p-value P FI−1,n−I J >FA is smaller than α.
+(ii) Under additive model
+Consider a two-way additive model under normal error assumptions
+Ωa : Y= µ+ α1A1 +···+ αI−1AI−1 + β1B1 +···+ βJ−1BJ−1 + ε (5)
+or
+Ωa : yi j k= µ+ αi + βj + εi j k, Subject to constraints αI = 0 and βJ = 0.
+i= 1, . . . , I , j= 1, . . . , J , k= 1, . . . , ni j.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+We illustrate below a test for the main effects of factor A, taking Ωa to be the full model.
+Let ωbe a reduced model with αi = 0 for all i , i.e. a one-way classification model based
+on factor B alone,
+ω: Y= µ+ β1B1 +···+ βJ−1BJ−1 + ε (6)
+A test for the main effects of A amounts to testing H0 : ωvs H1 : Ωa.
+By fitting Ωa and ω, we obtain SSEΩa
+and SSEωrespectively. Note that
+SSEω=
+I
+i=1
+J
+j=1
+The corresponding ANOVA table is given by
+ni j
+k=1
+y·j·
+2
+¯
+yi j k−
+.
+Source S. S. d. f. M. S. F -Ratio
+Main effects of B SST−SSEω J−1
+Main effects of A SSEXTA = SSEω−SSEΩa
+SSEXTA
+MSEXTA
+I−1 MSEXTA =
+FA =
+I−1
+SSEΩa
+MSEΩa
+Error SSEΩa
+n−I−J + 1 MSEΩa
+=
+n−I−J + 1
+Total SST n−1
+F test (of size α) for main effects of A:
+reject H0 iff the p -value P FI−1,n−I−J +1 >FA is smaller than α.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+8.4.2 Example: Car Type Data
+Make Table 2: Data on 35 cars (including dummy variables)
+Price Country Type C1 T1 T2 T3 T4 C1T1 C1T2 C1T3 C1T4
+Acura Legend Buick Century Chevrolet Beretta Chrysler Le Baron Chrysler Le Baron Coupe Dodge Daytona Dodge Grand Caravan Eagle Premier Eagle Summit Ford Aerostar Ford Escort Ford Probe Ford Tempo Ford Thunderbird Honda Accord Honda Civic Honda Civic CRX Honda Prelude Mazda 626 Mazda 929 Mazda MPV Mazda Protege Mitsubishi Galant Mitsubishi Sigma Nissan 240SX Nissan Maxima Nissan Sentra Nissan Stanza Pontiac Grand Am Subaru Legacy Subaru Loyale Toyota Camry Toyota Corolla Toyota Cressida Toyota Tercel 24760 Japan Medium 13150 USA Medium 10320 USA Compact 10945 USA Compact 12495 USA Medium 9745 USA Sporty 15395 USA Van 15350 USA Medium 8895 USA Small 12267 USA Van 7402 USA Small 11470 USA Sporty 9483 USA Compact 14980 USA Medium 12145 Japan Compact 6635 Japan Small 9410 Japan Sporty 13945 Japan Sporty 12459 Japan Compact 23300 Japan Medium 14944 Japan Van 6599 Japan Small 10989 Japan Compact 17879 Japan Compact 13249 Japan Sporty 17899 Japan Medium 7399 Japan Small 11650 Japan Compact 10565 USA Compact 11499 Japan Compact 9599 Japan Small 11588 Japan Compact 8748 Japan Small 21498 Japan Medium 6488 Japan Small 1 0 1 0 0 0 1 0 0
+0 0 1 0 0 0 0 0 0
+0 1 0 0 0 0 0 0 0
+0 1 0 0 0 0 0 0 0
+0 0 1 0 0 0 0 0 0
+0 0 0 0 1 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 1 0 0 0 0 0 0
+0 0 0 1 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 1 0 0 0 0 0
+0 0 0 0 1 0 0 0 0
+0 1 0 0 0 0 0 0 0
+0 0 1 0 0 0 0 0 0
+1 1 0 0 0 1 0 0 0
+1 0 0 1 0 0 0 1 0
+1 0 0 0 1 0 0 0 1
+1 0 0 0 1 0 0 0 1
+1 1 0 0 0 1 0 0 0
+1 0 1 0 0 0 1 0 0
+1 0 0 0 0 0 0 0 0
+1 0 0 1 0 0 0 1 0
+1 1 0 0 0 1 0 0 0
+1 1 0 0 0 1 0 0 0
+1 0 0 0 1 0 0 0 1
+1 0 1 0 0 0 1 0 0
+1 0 0 1 0 0 0 1 0
+1 1 0 0 0 1 0 0 0
+0 1 0 0 0 0 0 0 0
+1 1 0 0 0 1 0 0 0
+1 0 0 1 0 0 0 1 0
+1 1 0 0 0 1 0 0 0
+1 0 0 1 0 0 0 1 0
+1 0 1 0 0 0 1 0 0
+1 0 0 1 0 0 0 1 0
+Table 2 displays a dataset of 35 observations extracted from April, 1990 issue of Consumer
+Reports. Consider a two-way classification model for Price (response variable) with observa-
+tions classified by Country and Type:
+Price: Country: Type: list price with standard equipment, in US dollars
+2 levels (Japan, USA); 1 dummy C1
+5 levels (Compact, Medium, Small, Sporty, Van); 4 dummies T1, T2, T3, T4
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+Number of observations (Table 3):
+Compact Medium Small Sporty Van
+Japan 7 4 6 3 1
+USA 4 4 2 2 2
+To test for interactions, fit two models:
+• Full model: regressing price on C1, T1, T2, T3, T4, C1T1, C1T2, C1T3, C1T4.
+• Reduced model: regressing price on C1, T1, T2, T3, T4.
+ANOVA table:
+Source S. S. d. f. M. S. F -Ratio
+Main effects of Country & Type 505,998,900.9 5
+Interactions (due to interaction effects
+of Country & Type in addition to main
+effects of Country & Type)
+72,636,763.3 4 18,159,190.83 4.7788
+Error 94,999,431.3 25 3,799,977.25
+Total 673,635,095.5 34
+The p -value for interactions is P (F4,25 >4.7788) = 0.005299, so there are quite significant
+interactions between Country and Type.
+And the estimated regression coefficients:
+ˆ
+ˆ
+ˆ
+ˆ
+ˆ
+µ= 13831, ˆ
+α1 = 1113,
+β1 =−3502.75,
+β2 = 162.75,
+β3 =−5682.5,
+β4 =−3223.5,
+(αβ)11 = 1160.036, (αβ)12 = 6757.5, (αβ)13 =−1683.5, (αβ)14 = 480.8333.
+Estimated treatment means:
+Compact Medium Small Sporty Van
+Japan USA 12601.29 21864.25 7578.00 12201.33 14944.00
+10328.25 13993.75 8148.50 10607.50 13831.00
+Illustration of the estimated mean for treatment “13” (Japan small cars):
+ˆ
+µ+ˆ
+α1 +ˆ
+β3 + (αβ)13
+= 13831 + 1113 + (−5682.5) + (−1683.5)
+= 7578.
+(Note the estimated treatment means here are simply ¯
+yi j .)
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+Figure 1 displays the above estimated treatment means and clarifies the interactions between
+the two factors:
+Figure 1: Estimated treatment means for modified data under 2-way ANOVA model
+8.5 Analysis of treatment means (two-way classification)
+8.5.1 The method
+Consider a general two-way classification model:
+yi j k= θi j + εi j k, i= 1, . . . , I , j= 1, . . . , J , k= 1, . . . , ni j , εi j k
+i.i.d.
+∼ N (0, σ2).
+The sample size is n = i j ni j . The ni j ’s in CarType Example Data can be referred to Table
+3. When ni j= r, ∀i j , the model reduces to the balanced design (see (5) in Section 7.5). The
+estimation theory for the balanced design in Section 7.7 can be easily extended to the general
+model.
+If there are significant interactions, we usually proceed to study in detail the effects of one
+factor while keeping the other at a fixed level. Comparisons should be made among the indi-
+¯
+¯
+vidual treatment means θi j rather than among the factor level means
+θi·,
+θ·j.
+Consider a linear combination of the treatment means and its unbiased estimator
+J
+j=1
+ai j θi j and
+ˆ
+L=
+I
+i=1
+J
+j=1
+¯
+ai j
+yi j·,
+L=
+I
+i=1
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+for some known constants ai j . Noting that ¯
+yi j·
+other, we have
+∼N (θi j , σ2/ni j ) are independent of each
+ˆ
+L∼N L, σ2
+I
+i=1
+J
+j=1
+a 2
+i j
+ni j
+.
+Thus, the standard error of
+ˆ
+L is
+a 2
+i j
+se(ˆ
+L) =ˆ
+σ
+I
+i=1
+J
+j=1
+,
+ni j
+where ˆ
+σ2 = MSEΩ given in the ANOVA table of Section 8.4.1 (page 6). Based on the above
+results, we can
+• calculate a 100(1−α)% confidence interval for L:
+ˆ
+L ±se(ˆ
+L)tα/2,n−I J
+• test whether L= L0 at significance level αby a t test:
+1. calculate the test statistic
+|ˆ
+L−L0|
+T=
+se(ˆ
+L),
+2. reject the hypothesis iff T >tα/2,n−I J.
+If interactions are not significant, it is then meaningful to compare factor level means for each
+¯
+¯
+factor. Note that the factor level means
+θi·and
+θ·j are special linear combinations of the treat-
+ment means θi j . Thus any linear combination of factor level means is in general a linear
+combination of treatment means.
+8.5.2 Example: Car type data
+Since interaction effects are significant, we usually proceed to study the effects of one fac-
+tor while keeping the other factor at a fixed level. Here we consider the effects of the factor
+"Country" for each level ( j ) of the other factor "Type". The two-way classification is
+yi j k= θi j + εi j k,
+i= 1(Japan), 2(U.S.); j= 1(compact), 2(medium), 3(small), 4(sporty), 5(van).
+Set L= θ1 j−θ2 j for each car type j . A 95% confidence interval for L is
+¯
+y1 j·
+−
+¯
+y2 j·
+±ˆ
+σ
+1
++
+t0.025, 35−2×5,
+n1 j
+1
+n2 j
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12
+--- PAGE 13 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 8 General Linear Model
+where ˆ
+σ2 = SS E /(35−10) = 3799977.25.
+The following table summarises comparison results for each car type:
+Japan Type j¯
+y1 j· n1 j
+U.S.
+¯
+y2 j· n2 j
+¯
+¯
+y1 j·
+−
+y2 j·
+ˆ
+σ 1
+n1 j
++ 1
+n2 j
+95% interval
+compact medium small 12601.29 7 10328.25 4 2273.04 1221.82 [−243.35, 4789.42]
+21864.25 4 13993.75 4 7870.50 1378.40 [5031.63, 10709.37]
+7578.00 6 8148.50 2−570.50 1591.64 [−3848.54, 2707.54]
+sporty 12201.33 3 10607.50 2 1593.83 1779.51 [−2071.13, 5258.80]
+van 14944.00 1 13831.00 2 1113.00 2387.46 [−3804.07, 6030.07]
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+13

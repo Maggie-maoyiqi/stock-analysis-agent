@@ -1,0 +1,1640 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 3 Simple Linear Regression
+3 Simple Linear Regression
+3.1 Motivation
+In many situations, the value taken by one variable Y is influenced by or related to the value
+taken by some other variable X . In this chapter, we are mainly interested in determining what
+relationship exists between Y (dependent variable, response) and one X (independent vari-
+able, covariate, explanatory variable) (for example, Yi is the monthly expenditure of the i -th
+person while Xi is monthly income of the same person). We wish to describe the relationship
+between X and Y by means of a mathematical formula (or mathematical model) given by
+Y= f (X )
+However, even if the model is true, our data will not agree perfectly with the model in
+general. Unlike in some physical science subjects where there may be exact functional rela-
+tionships between variables while in economics and most other fields, the functional rela-
+tionships are usually not exact. We express our model as
+Y= f (X ) + ε
+systematic component random component
+3.2 Model Formulation and Assumptions
+When the data are of the form x1, y1 , . . . , xn , yn (with one dependent and one independent
+variable only), the simplest form is the simple linear regression model (SLR) given by
+Yi = β0 + β1 xi + εi , i= 1, 2, . . . , n
+where β’s are the regression parameters, εi ’s are stochastic disturbances or random errors
+which are not observable. Moreover we assume that the values of X1, . . . , Xn are non-random,
+i.e. fixed or regarded as given.
+After collection of the data, the first thing to do should be plotting the data points on a
+scatter diagram. Suppose the scatter diagram suggests a linear relationship between X and
+Y or a linear relationship is suggested by the subject matter knowledge or scientific evidence,
+we may approach to fit a simple linear regression model of the form
+Yi = β0 + β1 xi + εi , i= 1, 2, . . . , n
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+Assumptions
+(A1) (εi ) = 0 that implies (Y |X= xi ) = β0 + β1 xi (primary assumption);
+(A2) Var (εi ) = σ2 (constant variance);
+(A3) The εi ’s are uncorrelated (uncorrelatedness).
+3.3 Least Square Estimator
+The unknown parameters are β0, β1, and σ2. The parameters β0 and β1 are called the inter-
+cept and slope, respectively and are termed regression coefficients. Determination of the best
+fit line or the estimation of β0 and β1 from the observed data cannot be performed without
+specification of the criterion. The most commonly used criterion is to minimize the Sum of
+the Squared Errors (SSE), which is the sum of square of the vertical deviations from the fitted
+straight line. Mathematically, we have
+SSE=
+n
+ε2
+i =
+n
+i=1
+i=1
+yi− β0 + β1 xi
+2
+where yi is the observed value of Yi . Our objective is to choose β0 and β1 to minimize SSE,
+and this method is known as the method of least squares (LS).
+On differentiating SSE with respect to β0 and β1 and set to zero, we have the normal equa-
+tions:
+∂SSE
+=−2
+∂β0
+∂SSE
+=−2
+∂β1
+n
+i=1
+yi−β0−β1 xi = 0,
+n
+xi yi−β0−β1 xi = 0.
+i=1
+Solving for β0 and β1, we obtain the LS-estimator
+n
+i=1
+(xi−
+¯
+x ) yi−
+¯
+y
+ˆ
+β0 =¯
+y−
+ˆ
+β1¯
+x and
+ˆ
+β1 =
+SXY
+=
+.
+n
+i=1
+SXX
+(xi−
+¯
+x )2
+Note that the estimators are linear in yi ’s. The following figure illustrates the application of
+the least square method on a single linear regression:
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.3.1 Example (Westwood Company Data)
+Production Run Lot Size (X ) Man-hours (Y )
+1 30 73
+2 20 50
+3 60 128
+4 80 170
+5 40 87
+6 50 108
+7 60 135
+8 30 69
+9 70 148
+10 60 132
+Let man-hours be the dependent variable Y and lot size be the independent variable X . The
+simple linear regression model is given by
+man-hours= β0 + β1lot size + ε
+The least square estimate of β0 and β1 are therefore
+1
+¯
+x =
+10 (30 + 20 +. . . + 60) = 50, ¯
+y=
+SXX = (30−50)2 + (20−50)2 +. . . + (60−50)2
+1
+10 (73 + 50 +. . . + 132) = 110,
+= 3400,
+SXY = (30−50) (73−110) +. . . + (60−50) (132−110) = 6800,
+SXY
+6800
+ˆ
+β1 =
+=
+SXX
+3400= 2,
+ˆ
+ˆ
+β0 =¯
+y−
+β1¯
+x = 110−2 ×50= 10.
+Hence, the estimated regression line is given by:
+man-hours= 10 + 2 ×lot size.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.3.2 Example (Cholesterol Data)
+The data are put in pairs as follows
+X 46 20 52 30 57 25 28 36 22 43 57 33
+Y 3.5 1.9 4.0 2.6 4.5 3.0 2.9 3.8 2.1 3.8 4.1 3.0
+X 22 63 40 48 28 49 52 58 29 34 24 50
+Y 2.5 4.6 3.2 4.2 2.3 4.0 4.3 3.9 3.3 3.2 2.5 3.3
+Let the plasma levels of total cholesterol (in mg/ml) be the dependent variable Y be the independent variable X . The simple linear regression model is given by
+cholesterol levels= β0 + β1ages + ε
+The least square estimate of β0 and β1 are therefore
+1
+¯
+x =
+24 (46 + 20 +. . . + 50) = 39.4167,
+1
+¯
+y=
+24 (3.5 + 1.9 +. . . + 3.3) = 3.3542,
+SXX = (46−39.4167)2 + (20−39.4167)2 +. . . + (50−39.4167)2
+= 4139.8330,
+SXY = (46−39.4167) (3.5−3.3542) +. . . + (50−39.4167) (3.3−3.3542) = 217.8583,
+SXY
+ˆ
+β1 =
+=
+217.8583
+4139.8330= 0.0526,
+ˆ
+β1¯
+x = 3.3542−(0.0526 ×39.4167) = 1.2799.
+and the ages
+SXX
+ˆ
+β0 =¯
+y−
+Hence, the estimated regression line is given by:
+cholesterol levels= 1.2799 + 0.0526 ×ages.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.4 A Matrix Formulation
+Let
+Y=
+   
+Y1
+Y2
+.
+.
+.
+Yn
+   , X=
+    
+1 x1
+1 x2
+.
+.
+.
+.
+.
+.
+1 xn
+    , β=
+β0
+β1
+, ε =
+  The linear regression model is
+Y= X β + ε,
+where Var(Y ) = Var(ε) = σ2I n . We have
+SSE=
+n
+i=1
+yi−(β0 + β1 xi ) 2
+=
+n
+i=1
+ε2
+i
+=
+     
+y1−(β0 + β1 x1)
+y2−(β0 + β1 x2)
+.
+.
+.
+yn−(β0 + β1 xn )
+     
+     
+y1−(β0 + β1 x1)
+y2−(β0 + β1 x2)
+.
+.
+.
+yn−(β0 + β1 xn )
+     
+= Y−X β Y−X β
+= Y− X β Y−X β
+= Y−β X Y−X β
+= Y Y−Y X β−β X Y + β X X β
+= Y Y−2β X Y + β X X β
+In matrix notation, we have
+∂SSE
+ 
+ε1
+ε2
+.
+.
+.
+εn
+   .
+∂β
+then we have
+=
+   
+∂SSE
+∂β0
+∂SSE
+∂β1
+   =−2X Y + 2X X β= 0,
+ˆ
+β=
+ˆ
+β0
+β1
+ˆ
+= (X X )−1 X Y
+3.4.1 Example (Westwood Data)
+The regression of Y on X in matrix form is given by:
+Y= X β + ε,
+with components
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+Y=
+   
+73
+50
+.
+.
+.
+132
+   , X=
+    
+1 30
+1 20
+.
+.
+.
+.
+.
+.
+1 60
+    , β=
+β0
+β1
+, ε =
+  And
+X X=
+10 500
+500 28400
+, X Y=
+1100
+61800
+(X X )−1
+=
+0.8353−0.0147
+−0.0147 0.0003
+.
+As a result, the LS-estimate of β is:
+ˆ
+β=
+10
+2
+,
+which delivers the same results as given in Section 3.3.1.
+3.4.2 Example (Cholesterol Data)
+The matrices Y and X is given by
+Y=
+   
+3.5
+1.9
+.
+.
+.
+3.3
+   , X=
+    
+1 46
+1 20
+.
+.
+.
+.
+.
+.
+1 50
+    , β=
+β0
+β1
+, ε =
+  And
+X X=
+24 946
+946 41428
+, X Y=
+80.5
+3390.9
+(X X )−1
+=
+0.4170−0.0095
+−0.0095 0.0002
+As a result, the LS-estimate of β is:
+ˆ
+β=
+1.2799
+0.0526
+,
+which correspondes with the estimates given in Section 3.3.2.
+ 
+ε1
+ε2
+.
+.
+.
+ε10
+   .
+ 
+ε1
+ε2
+.
+.
+.
+ε24
+   .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.5 The Hat Matrix
+If X is an n ×(p + 1) matrix, the n ×n matrix H= X (X X )−1 X is commonly called the hat
+matrix and is a very useful matrix in regression. Some properties of the hat matrix H are listed
+below:
+1. H X= X ;
+2. H 2 = H ;
+3. H= H ;
+4. tr(H ) = p + 1, where p + 1 = 2 in the case of SLR;
+5. (I−H )2
+= I−H ;
+6. (I−H ) = I−H ;
+7. (I−H ) X= 0
+Proof:
+1. H X= X (X X )−1X X= X I= X
+2. H 2 = X (X X )−1X X (X X )−1X= X I (X X )−1X
+= X (X X )−1X= H
+3. H= X (X X )−1X
+= (X ) (X X )−1 X ∵ (AB )= B A
+= X (X X )−1X ∵ (X X ) is symmetric
+= H
+4. tr(H ) = tr X (X X )−1X
+= tr X X (X X )−1 ∵ tr(AB ) = tr(B A)
+= tr I p +1
+= p + 1
+5. (I−H )2 = (I−H )(I−H )
+= I 2
+−I H−H I + H 2
+= I−H−H + H
+= I−H
+6. (I−H ) = I−H= I−H
+7. (I−H )X= I X−H X= X−X= 0
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+Another approach to show that the LS-estimator of β is given below.
+SSE= Y−X β Y−X β
+= Y−H Y + H Y−X β Y−H Y + H Y−X β
+= (Y−H Y ) (Y−H Y ) + H Y−X β H Y−X β
++ 2Y (I−H ) H Y−X β
+= (Y−H Y ) (Y−H Y ) + H Y−X β H Y−X β
++ 2Y H Y−H H Y−X β + H X β
+= (Y−H Y ) (Y−H Y ) + H Y−X β H Y−X β
+≥(Y−H Y ) (Y−H Y )
+for all β . Equality in the above expression is achieved at
+H Y= Xˆ
+β
+X H Y= X Xˆ
+β
+ˆ
+β= (X X )−1 X Y
+ˆ
+β such that
+which completes the proof.
+3.5.1 Example (Westwood Data)
+The hat matrix is given by:
+H= X (X X )−1 X
+=
+      
+=
+     
+1 30
+1 20
+.
+.
+.
+.
+.
+.
+1 60
+      0.8353−0.0147
+−0.0147 0.0003
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+     ,
+1 1··· 1
+30 20··· 60
+where
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+H X=
+     
+=
+      
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+1 30
+1 20
+.
+.
+.
+.
+.
+.
+1 60
+      = X
+       
+    
+1 30
+1 20
+.
+.
+.
+.
+.
+.
+1 60
+      
+and
+H 2
+=
+     
+=
+     
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+       
+   
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+     
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+     = H
+as well as (I−H )2
+= I−H with
+I−H=
+     
+=
+     
+1 0··· 0
+0 1··· 0
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0 0··· 1
+     −
+     
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+     
+0.7824−0.2765··· −0.0412
+−0.2765 0.6353··· −0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0412−0.0118··· 0.8706
+     
+(I−H )2
+=
+     
+=
+     
+0.7824−0.2765··· −0.0412
+−0.2765 0.6353··· −0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0412−0.0118··· 0.8706
+0.7824−0.2765··· −0.0412
+−0.2765 0.6353··· −0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0412−0.0118··· 0.8706
+       
+   
+     = 0.7824−0.2765··· −0.0412
+−0.2765 0.6353··· −0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0412−0.0118··· 0.8706
+     
+I−H
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.5.2 Example (Cholesterol Data)
+The hat matrix H is given by
+H= X (X X )−1 X
+=
+      
+=
+     
+1 46
+1 20
+.
+.
+.
+.
+.
+.
+1 50
+      0.4170−0.0095
+−0.0095 0.0002
+0.0521 0.0108··· 0.0585
+0.0108 0.1327··· −0.0080
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0585−0.0080··· 0.0687
+     .
+1 1··· 1
+46 20··· 50
+Hence, the matrix I−H is given by
+I−H=
+     
+=
+     
+1 0··· 0
+0 1··· 0
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0 0··· 1
+     −
+     
+0.0521 0.0108··· 0.0585
+0.0108 0.1327··· −0.0080
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0585−0.0080··· 0.0687
+0.9479−0.0108··· −0.0585
+−0.0108 0.8673··· 0.0080
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0585 0.0080··· 0.9313
+     
+     
+The rest of the properties can be shown as Example 3.5.1.
+3.6 Properties of the LS Estimator
+Under assumptions (A1)-(A3), which can generalised to any p ≥1, we have (Y ) = X β,
+Var (Y ) = Var (ε) = σ2I where Var (·) is the variance-covariance matrix. Therefore,
+ˆ
+β= (X X )−1 X Y
+= (X X )−1 X (Y )
+= (X X )−1 X X β
+= β.
+Therefore, the LS estimator
+ˆ
+β is an unbiased estimator for β . Moreover, let A= (X X )−1 X ,
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+Var
+ˆ
+β= Var (AY )
+= A Var (Y )A
+= A σ2I A
+= (X X )−1 X σ2I (X X )−1 X
+= (X X )−1 X σ2I X (X X )−1
+= σ2 (X X )−1 X X (X X )−1
+= σ2 (X X )−1
+.
+ˆ
+Theorem 3.1 (Gauss-Markov Theorem): The LS estimator
+β= (X X )−1 X Y is the best linear
+unbiased estimator (BLUE) of β in the sense that it has the minimum variance among all linear
+unbiased estimators.
+Note: Normality assumption is not required for Gauss-Markov Theorem
+Assumptions Hereafter, in addition to (A1)-(A3) on page 2, we have the assumption that εi ’s are normally
+distributed (normality).
+(A4) The εi ’s are normally distributed (normality).
+(A1)-(A4) imply that
+εi
+i.i.d.
+∼ N 0, σ2 or ε ∼Nn 0, σ2 I n.
+Theorem 3.2 (Uniformly minimum variance in the class of all unbiased estimators): If the
+errors are normal and independent with mean zero and common variance, then the least
+ˆ
+squares estimators for the elements of
+β achieve uniformly minimum variance in the class of
+all unbiased estimators (UMVU).
+Remarks
+• The inference and prediction by the fitted line are valid for X values in the range of the
+data set, and have to be cautious outside the data range.
+• A linear relationship between two variables can exist without causation.
+• The linear regression model applies only if the true relationship between the variables
+is a straight-line/flat-plane relationship.
+ˆ
+• When the magnitude of the slope estimate
+β1 is close to zero, the fitted regression plane
+will be nearly parallel to the X -axis. Then the variable X will be of little use for the
+prediction of Y .
+3.7 Estimation of σ2
+Under the assumptions (A1)-(A4), the model is Yi = β0 + β1 xi + εi , i= 1, . . . , n or Y= X β + ε
+with ε ∼N 0, σ2I , then Y∼Nn X β, σ2I . Recall that Var (εi ) = σ2 = ε2
+i . If the εi ’s were
+observable, σ2 can be estimated by 1
+n
+n
+i=1 ε2
+i (the sample moment). In practice, the εi ’s are
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+not observable, therefore, we simply replace εi ’s by ˆ
+εi = yi−
+ˆ
+β0 +ˆ
+β1 xi , or more generally, we
+define
+1
+SSE
+=
+n
+n
+Sum Sum of Squares.
+ˆ
+εi = yi−
+ˆ
+yi
+ˆ
+where yi is the observed value, ˆ
+yi =
+β0 +ˆ
+β1 xi is the fitted value or predicted value, and ˆ
+εi is
+called the residual. With the normality assumption (A4), it can be shown that the maximum
+likelihood estimate of σ2 is (see §4.3)
+1
+˜
+σ2 =
+n
+n
+i=1
+ˆ
+ε2
+i =
+n
+i=1
+yi−
+ˆ
+yi
+2
+where SSE denote the of the Squared Errors, or Error (or Residual) However, we shall consider a more popular estimator (Error Mean MSE=
+ˆ
+σ2 =
+SSE
+(n−2).
+The denominator is replaced by (n−2) instead of n as 2 degrees of freedom had been used
+up for the estimation of the regression parameters β0, β1. It can be shown that (see later)
+(n−2)ˆ
+σ2
+σ2
+=
+SSE
+σ2
+∼χ2
+n−2,
+Squares)
+ˆ
+and is independent of
+β0,
+ˆ
+β1.
+Furthermore, the estimate of εcan be also expressed in terms of the hat matrix. The esti-
+mated values of Y (fitted values) under the model can be expressed as
+ˆ
+Y= Xˆ
+β= X (X X )−1 X Y= H Y ,
+with residuals
+ˆ
+ε = Y−
+ˆ
+Y= (I−H ) Y .
+The Error Sum of Squares in terms of H is given by
+SSE=
+n
+i=1
+ˆ
+ε2
+i =
+ˆ
+εˆ
+ε = Y (I−H ) Y ,
+where the residual (error) degrees of freedom (df) is n−2, the difference of the number of
+observations and the two explanatory variables included in the model. Note the Error Sum of
+Squares can also be written as
+SSE= Y Y−Y Xˆ
+β.
+The expected value of SSE is
+(SSE) = (n−2) σ2
+,
+where σ2 is estimated by the Mean Square Error or Error Mean Squares which is unbiased for
+σ2:
+ˆ
+SSE
+σ2 = MSE=
+.
+n−2
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12
+--- PAGE 13 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.7.1 Example (Westwood Data)
+From Example 3.5.1, we determined both the Hat matrix H and I−H
+ˆ
+Y= H Y=
+     
+0.2176 0.2765··· 0.0412
+0.2765 0.3647··· 0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0412 0.0118··· 0.1294
+     
+     
+73
+50
+.
+.
+.
+132
+     =
+     
+ˆ
+ε = Y−
+ˆ
+Y=
+     
+73
+50
+.
+.
+.
+132
+     −
+     
+70
+50
+.
+.
+.
+130
+     =
+     
+3
+0
+.
+.
+.
+2
+     ,
+SSE=
+ˆ
+εˆ
+ε = 3 0··· 2
+     
+3
+0
+.
+.
+.
+2
+     = 60,
+70
+50
+.
+.
+.
+130
+     
+or
+SSE= Y (I−H ) Y
+= 73 50··· 132
+     
+0.7824−0.2765··· −0.0412
+−0.2765 0.6353··· −0.0118
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0412−0.0118··· 0.8706
+Hence, the error mean squares is given by
+SSE
+60
+MSE=
+ˆ
+σ2
+=
+=
+= 7.5.
+n−2
+10−2
+3.7.2 Example (Cholesterol Data)
+The Hat matrix H and I−H were computed in Example 3.5.2.
+ˆ
+Y= H Y=
+     
+0.0521 0.0108··· 0.0585
+0.0108 0.1327··· −0.0080
+.
+.
+.
+.
+.
+.
+.
+.
+.
+0.0585−0.0080··· 0.0687
+     
+     
+3.5
+1.9
+.
+.
+.
+3.3
+     =
+     
+       
+   
+73
+50
+.
+.
+.
+132
+     = 60,
+3.7006
+2.3324
+.
+.
+.
+3.9111
+     
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+13
+--- PAGE 14 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+SSE=
+ˆ
+ε = Y−
+ˆ
+Y=
+     
+3.5
+1.9
+.
+.
+.
+3.3
+     −
+     
+3.7006
+2.3324
+.
+.
+.
+3.9111
+     =
+     
+−0.2006
+−0.4324
+.
+.
+.
+−0.6111
+     ,
+ˆ
+εˆ
+ε =−0.2006−0.4324··· −0.6111
+     
+−0.2006
+−0.4324
+.
+.
+.
+−0.6111
+     = 2.4548,
+or
+SSE= Y (I−H ) Y
+= 3.5 1.9··· 3.3
+     
+0.9479−0.0108··· −0.0585
+−0.0108 0.8673··· 0.0080
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0585 0.0080··· 0.9313
+Hence, the mean square error MSE is given by
+SSE
+2.4548
+MSE=
+ˆ
+σ2
+=
+=
+= 0.1116.
+n−2
+       
+   
+3.5
+1.9
+.
+.
+.
+3.3
+     = 2.4548,
+24−2
+3.8 Inference about β
+ˆ
+Based on the results provided in the Sections 3.6, the underlying distribution of
+β is
+ˆ
+β∼N β, σ2 (X X )−1
+ˆ
+The standard errors (se) of
+β are square roots of the diagonal elements of the covariance ma-
+trix Var
+ˆ
+β=
+ˆ
+σ2(X X )−1. For simple linear regression, the covariance matrix can be expressed
+as
+ˆ
+σ2 (X X )−1
+=
+ˆ
+σ2
+SXX
+n
+i=1 x 2
+i /n−
+¯
+x
+−
+x 1
+¯
+=
+ˆ
+σ2
+SXX
+SXX/n +¯
+x 2
+¯
+−
+x
+−
+x 1
+¯
+ˆ
+Hence, the standard error of the estimated intercept
+β0 and slope
+ˆ
+β1 are
+se
+ˆ
+β0 =
+ˆ
+σ2
+1
++
+n
+¯
+x 2
+SXX
+, se
+ˆ
+β1 =
+Suppose we are interested in the parameter βj , j= {0, 1}. As a result of the distribution prop-
+ˆ
+erties of
+β, we obtain
+ˆ
+σ2
+SXX
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+14
+--- PAGE 15 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+ˆ
+βj−βj
+se
+ˆ
+∼tn−2.
+βj
+The above results enable us to calculate a 100 (1−α) % confidence intervals for βj :
+ˆ
+βj ±se
+ˆ
+βj tα/2,n−2.
+Moreover, we are able to test the hypothesis that βj equals some specified value βj0 at signif-
+icance level 100 (α) % by a t test:
+H0 : βj= βj0 vs. H1 : βj
+T=
+ˆ
+βj−βj0
+se
+βj
+ˆ
+,
+̸= βj0
+We reject the null hypothesis H0 iff T >tα/2,n−2.
+[Note that the above rejection criterion is equivalent to checking whether βj0 falls outside the
+100 (1−α) % confidence interval for βj.]
+Remark: Generally we don’t need to make statistical inference on β0 unless we have good
+reason to do so. In most situations, we are interested in β1 (or in general βj , j ≥1, in multiple
+linear regression). In the following examples, we are making statistical inference on β0, but it
+is mainly for illustration purpose.
+3.8.1 Example (Westwood Data)
+ˆ
+Based on the results given in 3.3.1, 3.5.1 and 3.7.1, we obtain the estimated covariance of
+β
+by
+Var
+ˆ
+β=
+ˆ
+σ2 (X X )−1
+= 7.5
+0.8353−0.0147
+−0.0147 0.0003
+=
+6.2647−0.1103
+−0.1103 0.0022
+,
+ˆ
+and the standard errors of
+β are
+se
+ˆ
+β0 = 6.2647= 2.5029, se
+ˆ
+β1 = 0.0022= 0.0470
+Note that t0.025,8 = 2.3060, the 95% confidence intervals of β0 and β1 are given by
+CI β0 = 10 ±2.3060 ×2.5029= [4.2282, 15.7718],
+CI β1 = 2 ±2.3060 ×0.0470= [1.8917, 2.1083].
+Suppose that we would like to test
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+15
+--- PAGE 16 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+H0 : β1 = 0 vs. H1 : β1
+̸= 0
+The test statistic is given by
+T=
+ˆ
+β1−β1
+se
+β1
+ˆ
+=
+2−0
+0.0470= 42.5833.
+Since T= 42.5833 >t0.025,8 = 2.3060. Therefore, we reject H0 at 5% significance level.
+Furthermore, we would also like to test (mainly for illustration)
+H0 : β0 = 0 vs. H1 : β0
+̸= 0,
+The test statistic is given by
+T=
+ˆ
+β0−β0
+se
+β0
+ˆ
+=
+10−0
+2.5029= 3.9953.
+Since T= 3.9953 >t0.025,8 = 2.3060. Therefore, we reject H0 at 5% significance level.
+3.8.2 Example (Cholesterol Data)
+Based on the results given in 3.3.2, 3.5.2 and 3.7.2, the error mean squares MSE=
+ˆ
+The estimated covariance matrix of
+β is given by
+Var
+ˆ
+β=
+ˆ
+σ2 (X X )−1
+ˆ
+σ2 is 0.1116.
+= 0.1116
+0.4170−0.0095
+−0.0095 0.0002
+=
+0.0465−0.0011
+−0.0011 0.00003
+,
+ˆ
+and the standard errors of
+β are
+se
+ˆ
+β0 = 0.0465= 0.2157, se
+ˆ
+β1 = 0.00003= 0.0052
+Note that t0.025,22 = 2.074, the 95% confidence intervals of β0 and β1 are given by
+CI β0 = 1.2799 ±2.074 ×0.2157= [0.8325, 1.7272],
+CI β1 = 0.0526 ±2.074 ×0.0052= [0.0418, 0.0634].
+Suppose that we would like to test
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+16
+--- PAGE 17 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+H0 : β1 = 0 vs. H1 : β1
+̸= 0
+The test statistic is given by
+=
+0.0526−0
+0.0052= 10.1364.
+T=
+ˆ
+β1−β1
+se
+β1
+ˆ
+Since T= 10.1364 >t0.025,22 = 2.074. Therefore, we reject H0 at 5% significance level.
+Furthermore, we would also like to test
+H0 : β0 = 0 vs. H1 : β0
+̸= 0,
+The test statistic is given by
+T=
+ˆ
+β0−β0
+se
+β0
+ˆ
+=
+1.2799−0
+0.2157= 5.9336.
+Since T= 5.9336 >t0.025,22 = 2.074. Therefore, we reject H0 at 5% significance level.
+3.9 Prediction
+Suppose we wish to predict future responses other than those already observed in the sample
+data. A few cases may arise:
+(i) to predict the mean response [Y ] of future items whose X values are all equal to x0;
+(ii) to predict the (individual) response y of a future item whose X value is equal to x0;
+(iii) to predictm
+j=1 a j y ( j ), where a j ’s are known constants and y (1)
+, . . . , y (m) are responses
+of m future (not yet observed) items whose X values are equal to x (1)
+0 , . . . , x (m)
+0 , respec-
+tively.
+Case (iii) reduces to (i) if x ( j )
+0 = x0 and a j= 1/m for all j and m →∞.
+Case (iii) reduces to (ii) if m = 1, a1 = 1, x (1)
+0 = x0 and y (1) = y.
+3.9.1 Multiple Prediction
+Consider the most general case (iii), where we want to predict l=
+m
+j=1 a j y ( j ) where y ( j ) =
+β0 + β1 x ( j )
+0 + ε( j )
+, j= 1, . . . m. Based on the SLR model, the future responses y (1)
+, . . . , y (m) are
+independent, and
+y ( j ) ∼N β0 + β1 x ( j )
+0 , σ2
+.
+Hence
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+17
+--- PAGE 18 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+l∼N
+j
+a j β0 + β1 x ( j )
+0 , σ2
+j
+a 2
+j.
+It is natural to predict l by
+ˆ
+l=
+a j
+ˆ
+β0 +ˆ
+β1 x ( j )
+0 =
+ˆ
+β0
+a j +ˆ
+β1
+a j x ( j )
+0 = cˆ
+β,
+j
+j
+j
+where c is 2 ×1 and c = j a j , j a j x ( j )
+0 . Note
+E (ˆ
+l ) = E
+a j
+ˆ
+β0 +ˆ
+β1 x ( j )
+j
+0
+=
+a j β0 + β1 x ( j )
+0 ∵ˆ
+ˆ
+β0 and
+β1 are unbiased
+j
+Var(ˆ
+l ) = Var cˆ
+β= c Var
+ˆ
+β c
+= c σ2 (X X )−1 c = σ2c (X X )−1 c.
+Therefore,
+a j β0 + β1 x ( j )
+0 , σ2c (X X )−1 c.
+ˆ
+l∼N
+j
+A 100(1−α)% prediction interval for l is defined to be a (random) interval [A, B ] such that
+(A ≤l ≤B ) = 1−α.
+ˆ
+To find A, B , note first that
+l and l are independent (since
+sample data but l refers to future observations) and
+ˆ
+l is calculated from the observed
+ˆ
+l−l∼N 0, σ2 c (X X )−1 c +
+j
+a 2
+j.
+Estimating σby ˆ
+σ, we have
+se (ˆ
+l−l ) =ˆ
+σ c (X X )−1 c +
+j
+a 2
+j
+1/2
+.
+l−l
+se (ˆ
+l−l )∼tn−2.
+Note ˆ
+A 100(1−α)% prediction interval for l is
+ˆ
+l ±tα/2,n−2 se (ˆ
+l−l ).
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+18
+--- PAGE 19 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+3.9.2 Mean Response [Y ]
+Let x 0 = [1 x0] . For case (i), with x ( j )
+0 = x0, a j= 1/m, j= 1, . . . , m, m →∞, the 100(1−α)%
+prediction interval for [Y ] is
+ˆ
+β0 +ˆ
+β1 x0 ±tα/2,n−2ˆ
+σ x 0 (X X )−1 x 0
+1/2
+,
+i.e.
+ˆ
+β0 +ˆ
+β1 x0 ±tα/2,n−2ˆ
+σ
+1
+n
++ (x0−
+¯
+x )2
+SX X
+1/2
+.
+Note: The prediction interval for the mean response can also be called confidence interval.
+3.9.3 Individual Response
+For case (ii), with m = 1, x (1)
+0 = x0, a1 = 1, the 100(1−α)% prediction interval for individual
+response is
+ˆ
+β0 +ˆ
+β1 x0 ±tα/2,n−2ˆ
+σ x 0 (X X )−1 x 0 + 1 1/2
+i.e.
+ˆ
+β0 +ˆ
+β1 x0 ±tα/2,n−2ˆ
+σ
+1
+n
++ (x0−
+Sx x
+¯
+x )2
++ 1
+1/2
+,
+.
+3.9.4 Example (Westwood Data)
+Suppose we would like to predict individually at X= 55 and X= 70. Here, the predicted
+individual responses are the same as the predicted mean responses, denoted by ˆ
+y and given
+by
+ˆ
+y (55) = 10 + 2 ×55 = 120,
+ˆ
+y (70) = 10 + 2 ×70= 150.
+A 95% prediction interval for an individual response (man-hours) at lot size of 55 is:
+120 ±2.3060 × 7.5
+A 95% prediction interval for an individual man-hours at lot size of 70 is:
+150 ±2.3060 × 7.5
+1
+10
++ (70−50)2
+3400
++ 1 = [143.0313, 156.9687].
+1
+10
++ (55−50)2
+3400
++ 1 = [113.3544, 126.6456].
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+19
+--- PAGE 20 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+1
+10
++ (55−50)2
+3400= 0.8973,
+1
+On the other hand, if prediction the mean man-hours, the predicted value ˆ
+y is the same.
+However, the standard errors for the prediction become:
+se (55) = 7.5
+se (70) = 7.5
+10
++ (70−50)2
+3400= 1.2776.
+A 95% prediction/confidence interval of the mean man-hours at lot size of 55 is:
+ˆ
+y (55) ±t0.025,8 se (55) = 120 ±2.3060 ×0.8973= [117.9308, 122.0692].
+A 95% prediction/confidence interval of the mean man-hours at lot size of 70 is:
+ˆ
+y (70) ±t0.025,8 se (70) = 150 ±2.3060 ×1.2776= [147.0538, 152.9462].
+Also, prediction for an individual response of a particular future observation is less precise
+than for the mean response of all observations. This is because taking mean helps reduce the
+randomness of the observations.
+3.9.5 Example (Cholesterol Data)
+Suppose we wish to predict the cholesterol level of a future patient whose age is 60 say. Then
+the predicted value is
+ˆ
+ˆ
+β0 + 60
+β1 = 4.437.
+1
+The 95% prediction interval is
+4.437 ±2.074 ×0.3340
++ (60−39.417)2
+24
+4139.833
++ 1 = [3.696, 5.178].
+Note: The same predicted value, 4.437, is also used for predicting (or estimating) the mean
+cholesterol level, i.e. β0 + 60β1, of future patients whose ages are 60. However, the 95% pre-
+diction (or confidence) interval for the mean cholesterol level for β0 + 60β1 is shorter:
+1
+4.437 ±2.074 ×0.3340
++ (60−39.417)2
+24
+4139.833 = [4.174, 4.700].
+Figure 1 compares the 95% prediction intervals at various ages for the cholesterol level
+of a future patient with the 95% prediction/confidence intervals for the corresponding mean
+cholesterol levels. Clearly, prediction for response of a particular future patient is less precise
+than estimation for the mean response of all patients of the same age. This is because taking
+mean helps reduce uncertainty in our target.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+20
+--- PAGE 21 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 3 Simple Linear Regression
+6.0
+5.5
+95% confidence limits for mean response
+95% prediction limits for one response
+5.0
+4.5
+cholesterol level
+4.0
+3.5
+3.0
+2.5
+2.0
+1.5
+1.0
+10 15 20 25 30 35 40 45 50 55 60 65 70
+age
+Figure 1: 95% confidence intervals for mean responses vs 95% prediction intervals for one
+future response in the cholesterol example
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+21

@@ -6,11 +6,13 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 load_dotenv(PROJECT_ROOT / ".env")
 
+from backend.storage import init_db  # noqa: E402
 from backend.schemas import (  # noqa: E402
     AnalysisCreateRequest,
     AnalysisCreateResponse,
@@ -38,6 +40,7 @@ app = FastAPI(
     version="1.0.0",
     description="A股智能分析系统后端接口",
 )
+init_db()
 
 frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 app.add_middleware(
@@ -73,6 +76,23 @@ async def get_analysis(task_id: str):
     if not record:
         raise HTTPException(status_code=404, detail="任务不存在")
     return AnalysisTaskResponse(**record)
+
+
+@app.get("/api/analysis/{task_id}/stream")
+async def stream_analysis(task_id: str):
+    """通过 SSE 推送分析任务状态。"""
+    record = task_manager.get_task(task_id)
+    if not record:
+        raise HTTPException(status_code=404, detail="任务不存在")
+    return StreamingResponse(
+        task_manager.stream(task_id),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 @app.get("/api/profile", response_model=ProfileResponse)

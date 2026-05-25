@@ -1,0 +1,247 @@
+--- PAGE 1 ---
+SDST3600/STAT3600
+Assignment 4 (submit Q4, Q7)
+Deadline: Apr 30, 2026
+Note: (1) Numeric values should be presented in 4 decimal places. (2) Show the intermediate steps
+for Q4 – Q10.
+1. A rehabilitation center researcher was interested in examining the relationship between physical
+prior to surgery of persons undergoing corrective knee surgery and time required in physical
+therapy until successful rehabilitation. Patient records in the rehabilitation center were examined,
+and 24 male subjects ranging in age from 18 to 30 years who had undergone similar corrective
+knee surgery during the past year were selected for the study. The number of days (Y) required
+for successful completion of physical therapy and the prior physical fitness status (A: 1 = below
+average, 2 = average, 3 = above average) of each patient are recorded. The rehabilitation
+researcher wishes to use age of patient (X) as a concomitant variable. The data file is ‘rehabit.csv’.
+(a) Read the data into ‘mydata’. Run and explain the following codes.
+mydata$A<-factor(mydata$A,levels=1:3,labels=c('below','average','above'))
+mydata$A<-relevel(mydata$A,ref='below')
+(b) Prepare a scatter plot of the data. Does it appear that there are effects of physical fitness status
+on the mean number of days required for therapy? Discuss.
+(c) State the regression model equivalent to covariance model according to the setting in (a). Also
+stat the reduced regression model for testing for treatment effects.
+(d) Fit the full regression model and report the least squares estimates of the regression
+coefficients.
+(e) Fit the reduced regression models and test for treatment effects; use  = 0.01. State the
+hypotheses, decision rule and conclusion.
+(f) Estimate the mean number of days required for therapy for patients of average physical fitness
+and age 24 years; use a 99% confidence interval.
+(g) Make all pairwise comparisons between the treatment effects; use a 95% confidence level.
+Comment on the comparisons.
+2. A sociologist selected a random sample of 45 adjunct professors who teach in the evening division
+of a large metropolitan university for a study of special problems associated with teaching in the
+evening division. The data collected include the amount of payment received by the faculty
+member for teaching a course during the past semester. The sociologist classified the faculty
+members by subject matter of course (factor A, 1 = humanities, 2 = social sciences, 3 =
+engineering, 4 = management) and highest degree earned (factor B, 1 = bachelor, 2 = master, 3 =
+doctorate). The earnings per course (in thousand dollar’s, Y) are stored in ‘adjunct.txt’.
+(a) Consider an ANOVA model for this case. State the equivalent regression model; use
+‘humanities’ and ‘doctorate’ as the reference levels.
+(b) Read the data into ‘mydata’. Run and apply to factor B in a similar manner.
+mydata$A<-factor(mydata$A,levels=1:4,labels=c('humanities','social','engineering','management'))
+mydata$A<-relevel(mydata$A,ref='humanities')
+(c) Report the least squares estimates for the regression coefficient in the regression model in (a).
+(d) Find the treatment means obtained, 𝑌 . by the model. Plot the treatment means. Does it appear
+that any factor effects are present? Explain.
+(e) What is the reduced model for testing for interaction effects? Fit the reduced model and thus,
+test whether or not interaction effects are present by fitting the full and reduced models; use a
+= 0.01. State the alternatives, decision rule and conclusion. What is the p-value of the test?
+1
+--- PAGE 2 ---
+(f) State the reduced regression models for testing for subject matter and highest degree main
+effects, respectively, and conduct each of the tests. Use  = .01 each time and state the
+alternatives, decision rule, and conclusion. What is the p-value of each test?
+(g) Based on the full model, make all pairwise comparisons between the subject matter means.
+Use a 95 percent (individual) confidence coefficient.
+(h) Based on the full model, make all pairwise comparisons between the highest degree matter
+means. Use a 95 percent (individual) confidence coefficient.
+3. 4. A consumer organization studied the effect of age and gender of automobile owner on size of
+cash offer (Y: in hundred dollars) for a used car by utilizing 12 persons in each of three age groups
+(A: 1 = young, 2 = middle, 3 = elderly) who acted as the owner of a used car. Six male (B = 1)
+and six female (B = 2) volunteers were used in each age group. An analyst wishes to use each
+dealer’s sales volume (X: in hundred thousand dollars) as a concomitant variable. The data are
+stored in ‘cash.txt’. Assume that covariance model is applicable.
+(a) State the regression model equivalent to covariance model. Fit this full model.
+(b) State the reduced regression models for testing for interaction and factor A and factor B
+main effects, respectively. Fit these reduced regression models.
+(c) Test for interaction effects; use  = .05. State the alternatives, decision rule, and conclusion.
+What is the p-value of the test?
+(d) Test for factor A main effects; use  = .05. State the alternatives, decision rule, and conclusion.
+What is the p-value of the test?
+(e) Test for factor B main effects; use  = .05. State the alternatives, decision rule, and conclusion.
+What is the P-value of the test?
+(f) For each factor, make all pairwise comparisons between the factor level main effects. Use a
+90% confidence level for each comparison.
+Six observations of a response variable Y and a treatment A are given as follows.
+A 1 1 1 2 3 3
+Y 2 1 2 7 4 3
+(a) Use level 3 of A as the reference level and the zero constraint (ii) in 7.2.1, state the regression
+model equivalent to an ANOVA model. State the data matrix, X, of the regression model.
+(b) Calculate 𝑋 𝑋, 𝑋 𝑌 and 𝑌 𝑌.
+(c) It is given that
+6 3 1
+3 3 0
+1 0 1
+1
+6
+3 3 3
+3 5 3
+3 3 9
+Calculate the LSE of the regression coefficients.
+(d) Compile the ANOVA table. Test the effects of A at the 5% level of significance. State the
+hypotheses, decision rule and conclusion.
+(e) Conduct a T test for each of the coefficients at the 5% level of significance. Interpret the
+results.
+(f) Express mean Y for each level of A in terms of the parameters in (a).
+(g) Express the pairwise comparisons of mean Y for the 3 levels of A in terms of the parameters
+in (a). Thus, make all pairwise comparisons between the treatment effects; use a 90%
+confidence level by the Bonferroni’s method. Thus, comment of the comparisons of the
+treatment effects.
+2
+--- PAGE 3 ---
+5. Six observations of Y are given for four treatments defined by two factors A and B.
+A
+B 1 2
+1 2
+0
+8
+6
+2 1 7
+9
+1
+32
+5 1 1 1
+1 5 1 1
+1 1 1 5
+1 1 5 1
+(a) Use levels 2 of A and B, respectively, as the reference levels. Using the sum to zero constraint
+(i) in 7.2.1, state the regression model equivalent to a 2-way ANOVA model with interaction.
+State the data matrix, X, of the regression model.
+(b) Calculate 𝑋 𝑋, 𝑋 𝑌 and 𝑌 𝑌.
+(c) It is given that
+7 1 1 1
+1 7 1 1
+1 1 1 7
+1 1 7 1
+Calculate the LSE of the regression coefficients.
+(d) Test whether there is a regression of Y on the main effects of A, B and their interaction
+simultaneously at the 5% level of significance. Compile the ANOVA table, state the
+hypotheses, decision rule and conclusion.
+(e) Express mean Y for each of the four treatments in terms of the parameters in (a).
+(f) Express the pairwise comparisons among the means for Y of the four treatments in terms of
+the parameters in (a). Thus, make all pairwise comparisons between among the treatments;
+use a 90% confidence level by the Bonferroni’s method. Thus, comment of the comparisons
+of the treatment effects.
+(g) State the reduced model to test for the interaction effect. State the data matrix, Xr, of the
+regression model.
+(h) It is given that
+7 1 1
+1 7 1
+1 1 7
+1
+40
+6 1 1
+1 6 1
+1 1 6
+Calculate SSE for the reduced model.
+(i) Test the interaction effect at the 5% level of significance by an F test. state the hypotheses,
+decision rule and conclusion. State the hypotheses, decision rule and conclusion.
+(j) Consider a model without interaction. Test the main effects of A and B, respectively, by an F
+test at the 5% level of significance. State the hypotheses, decision rule and conclusion.
+6. A randomized block design is considered. There are 3 levels of factor A and two blocks. The
+observations of Y are given as follows.
+A
+Block 1 2 3
+1 5 -1
+-2
+20
+15
+2 1 0
+12
+1
+(a) Use level 3 of A as the reference level. Using the zero constraint (ii) in 7.2.1. State the
+regression model equivalent to the block design. State the data matrix X.
+(b) Calculate the LSE for the regression coefficients. It is given that
+3
+--- PAGE 4 ---
+9 2 4 5
+2 2 0 1
+4 0 4 2
+5 1 2 5
+1
+52
+28 20 20 16
+20 44 18 4
+16 4 4 24
+20 18 31 4
+(c) Compile the ANOVA table.
+(d) Test at the 5% level of significance the effect of factor A. State the hypotheses, decision rule
+and conclusion.
+(e) Use the Bonferroni’s method at 95% confidence level, conduct a pairwise comparison of mean
+Y among the three levels of A.
+7. Five observations of a response variable Y, a treatment A and a covariate X are given as follows.
+A 1 2 2 3 3
+X 3 2 1 4 5
+Y 31 22 11 43 53
+It is given that
+5 1 2 15
+1 1 0 3
+15 3 3 55
+1
+2 0 2 3
+4
+83 29 56 18
+29 15 20 6
+18 6 12 4
+56 20 40 12
+(a) Use level 3 of A as the reference level. Using the zero constraint (ii) in 7.2.1. State the
+regression model equivalent to an ANCOVA model. State the data matrix X.
+(b) Calculate the LSE for the regression coefficients and SSE in (a).
+(c) State the reduced model for testing the effects of A and calculate SSE for the reduced model.
+(d) Test the effects of A; use  = 0.05. State the hypotheses, decision rule and conclusion.
+(e) Use the Bonferroni’s method at 90% confidence level, conduct a pairwise comparison of mean
+Y among the three levels of A.
+(f) Construct a 95% confidence interval for the average of two mean Y when the values of A and
+X are given as follows.
+A X
+1 1
+3 4
+8. Seven observations of a response variable Y, two treatments A and B, and a covariate X are given
+as follows.
+A 2 2 1 2 1 1 1 2
+B 2 2 1 1 2 2 2 1
+X 5 -2 -5 -4 -1 1 4 2
+Y -26 8 24 20 0 -9 -26 -10
+1
+(a) State the regression model equivalent to ANCOVA model with interaction between A and B.
+Write down the data matrix.
+(b) Calculate least squares estimates of the regression coefficients and SSE. It is given that
+4 4 1 1 1
+⎣ ⎢ ⎢ ⎢ ⎡8 4 3 1 0
+0 1 7 5 92⎦ ⎥ ⎥ ⎥ ⎤
+344 552 336 544 2
+3 1 3 1 7
+⎣ ⎢ ⎢ ⎢ ⎡ 358 344 376 262 18
+376 336 737 547 30
+662
+1 1 1 1 5
+18 2 30 46 12 ⎦ ⎥ ⎥ ⎥ ⎤
+262 544 547 1721 46
+Calculate the standard errors of the regression coefficients.
+(c) Test for interaction effects; use  = .05. State the alternatives, decision rule, and conclusion.
+What is the p-value of the test?
+4
+--- PAGE 5 ---
+(d) Construct the Bonferroni 95% confidence intervals for the pairwise comparisons among all
+four treatments defined by A and B. Comment on the differences.
+A Student’s t table is given as
+2-tailed 
+df 0.1 0.05 0.0250 0.0333 0.0167 0.0083 0.0042
+1 6.31 12.71 25.45 19.08 38.19 76.39 152.79
+2 2.92 4.30 6.21 5.34 7.65 10.89 15.44
+3 2.35 3.18 4.18 3.74 4.86 6.23 7.94
+4 2.13 2.78 3.50 3.19 3.96 4.85 5.89
+5 2.02 2.57 3.16 2.91 3.53 4.22 4.98
+6 1.94 2.45 2.97 2.75 3.29 3.86 4.49
+7 1.89 2.36 2.84 2.64 3.13 3.64 4.17
+8 1.86 2.31 2.75 2.57 3.02 3.48 3.96
+5

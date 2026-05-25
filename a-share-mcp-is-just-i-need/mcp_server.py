@@ -40,6 +40,7 @@ from src.tools.briefing import get_market_context, get_stock_snapshot  # noqa: E
 from src.tools.stock_market import (  # noqa: E402
     get_dividend_data,
     get_historical_k_data,
+    get_historical_k_data_json,
     get_stock_basic_info,
 )
 
@@ -48,6 +49,18 @@ from src.tools.stock_market import (  # noqa: E402
 def historical_k_data(stock_code: str, start_date: str, end_date: str, frequency: str = "d", adjustflag: str = "2") -> str:
     """获取股票历史K线数据。"""
     return get_historical_k_data(stock_code, start_date, end_date, frequency, adjustflag)
+
+
+@mcp.tool()
+def historical_k_data_json(
+    stock_code: str,
+    start_date: str,
+    end_date: str,
+    frequency: str = "d",
+    adjustflag: str = "2",
+) -> str:
+    """获取股票历史K线数据并返回 JSON 字符串。"""
+    return get_historical_k_data_json(stock_code, start_date, end_date, frequency, adjustflag)
 
 
 @mcp.tool()

@@ -11,6 +11,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
+from ..utils.progress import run_with_heartbeat
 from ..utils.state_definition import AgentState
 
 load_dotenv()
@@ -86,23 +87,29 @@ async def summary_agent(
         )
         chain = prompt | llm
 
-        await notify("生成综合投资报告", 0.6)
-        result = await chain.ainvoke(
-            {
-                "user_query": state.get("user_query", ""),
-                "fundamental_analysis": state.get("fundamental_analysis", "无数据"),
-                "technical_analysis": state.get("technical_analysis", "无数据"),
-                "value_analysis": state.get("value_analysis", "无数据"),
-                "news_analysis": state.get("news_analysis", "无数据"),
-                "forecast_analysis": state.get("forecast_analysis", "无数据"),
-            }
+        result = await run_with_heartbeat(
+            chain.ainvoke(
+                {
+                    "user_query": state.get("user_query", ""),
+                    "fundamental_analysis": state.get("fundamental_analysis", "无数据"),
+                    "technical_analysis": state.get("technical_analysis", "无数据"),
+                    "value_analysis": state.get("value_analysis", "无数据"),
+                    "news_analysis": state.get("news_analysis", "无数据"),
+                    "forecast_analysis": state.get("forecast_analysis", "无数据"),
+                }
+            ),
+            notify,
+            message="生成综合投资报告",
+            start=0.15,
+            end=0.88,
+            expected_seconds=35.0,
         )
 
         report = result.content
         reports_dir = PROJECT_ROOT / "reports"
         reports_dir.mkdir(exist_ok=True)
         report_file = reports_dir / f"report_{state.get('stock_code', 'unknown').replace('.', '_')}_{int(time.time())}.md"
-        await notify("保存报告文件", 0.9)
+        await notify("保存报告文件", 0.92)
         report_file.write_text(report, encoding="utf-8")
 
         await notify("汇总报告完成", 1.0)

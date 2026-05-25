@@ -7,6 +7,7 @@ from ..tools.analysis_helpers import llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.execution_logger import get_execution_logger
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
+from ..utils.progress import run_with_heartbeat
 from ..utils.state_definition import AgentState
 
 logger = setup_logger(__name__)
@@ -46,22 +47,27 @@ async def fundamental_agent(
                 await result
 
     try:
-        await notify("准备分析上下文", 0.1)
-        await notify("查询财务与分红数据", 0.35)
-        tool_payload = await run_tools(
-            [
-                ("stock_basic_info", {"stock_code": stock_code}),
-                ("profit_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
-                ("growth_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
-                ("balance_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
-                ("cash_flow_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
-                ("dupont_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
-                ("dividend_data", {"stock_code": stock_code, "year": last_year}),
-                ("stock_industry", {"stock_code": stock_code}),
-            ]
+        await notify("准备分析上下文", 0.05)
+        tool_payload = await run_with_heartbeat(
+            run_tools(
+                [
+                    ("stock_basic_info", {"stock_code": stock_code}),
+                    ("profit_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
+                    ("growth_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
+                    ("balance_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
+                    ("cash_flow_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
+                    ("dupont_data", {"stock_code": stock_code, "year": last_year, "quarter": 4}),
+                    ("dividend_data", {"stock_code": stock_code, "year": last_year}),
+                    ("stock_industry", {"stock_code": stock_code}),
+                ]
+            ),
+            notify,
+            message="查询财务与分红数据",
+            start=0.05,
+            end=0.45,
+            expected_seconds=10.0,
         )
 
-        await notify("生成基本面分析", 0.72)
         prompt = f"""请分析股票 {state.get("stock_name", "")}({stock_code}) 的基本面情况。
 当前日期: {state.get("current_date", "")}
 
@@ -69,8 +75,15 @@ async def fundamental_agent(
 
 {tool_payload}
 """
-        analysis = await llm_generate_analysis(FUNDAMENTAL_SYSTEM_PROMPT, prompt)
-        await notify("整理基本面结论", 0.92)
+        analysis = await run_with_heartbeat(
+            llm_generate_analysis(FUNDAMENTAL_SYSTEM_PROMPT, prompt),
+            notify,
+            message="生成基本面分析",
+            start=0.45,
+            end=0.92,
+            expected_seconds=20.0,
+        )
+        await notify("整理基本面结论", 0.95)
         get_execution_logger().log_interaction(
             "fundamental_agent",
             {"stock_code": stock_code},

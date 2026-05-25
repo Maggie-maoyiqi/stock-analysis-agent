@@ -2,17 +2,11 @@
 import asyncio
 import time
 from datetime import datetime
-from typing import Optional, Tuple
 import re
+from typing import Optional, Tuple
 
-from ..agents import (
-    fundamental_agent,
-    forecast_agent,
-    news_agent,
-    summary_agent,
-    technical_agent,
-    value_agent,
-)
+from .chart_service import build_analysis_charts
+from .langgraph_workflow import build_analysis_graph
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
 from ..utils.state_definition import AgentState
 
@@ -83,6 +77,7 @@ def build_initial_state(query: str) -> AgentState:
         "forecast_analysis": "",
         "final_report": "",
         "report_file": "",
+        "charts": [],
         "current_date": datetime.now().strftime("%Y-%m-%d"),
         "execution_time": 0.0,
         "errors": [],
@@ -97,79 +92,33 @@ async def run_analysis_workflow(query: str, progress_callback=None) -> AgentStat
     initial_state = build_initial_state(query)
     logger.info("识别到股票: %s (%s)", initial_state["stock_name"], initial_state["stock_code"])
 
-    state: AgentState = initial_state.copy()
-
     async def notify(step: str, status: str, progress: float, message: str = ""):
         if progress_callback:
             maybe_awaitable = progress_callback(step, status, progress, message)
             if asyncio.iscoroutine(maybe_awaitable):
                 await maybe_awaitable
 
-    async def run_step(step_key: str, func):
-        await notify(step_key, "running", 0.02, "等待调度")
+    completed_steps: set[str] = set()
 
-        async def step_progress_callback(_: str, message: str, local_progress: float):
-            workflow_progress = min(0.79, 0.1 + sum(1 for candidate, _ in parallel_steps if state.get(
-                {
-                    "fundamental": "fundamental_analysis",
-                    "technical": "technical_analysis",
-                    "value": "value_analysis",
-                    "news": "news_analysis",
-                    "forecast": "forecast_analysis",
-                }[candidate],
-                "",
-            )) * 0.13)
-            await notify(step_key, "running", max(0.03, local_progress), message)
-            await notify("workflow", "running", workflow_progress, f"{state.get('stock_name', '')} 分析中")
-
-        result = await func(state, progress_callback=step_progress_callback)
-        state.update(result)
-        result_text = state.get(
-            {
-                "fundamental": "fundamental_analysis",
-                "technical": "technical_analysis",
-                "value": "value_analysis",
-                "news": "news_analysis",
-                "forecast": "forecast_analysis",
-            }[step_key],
-            "",
+    async def graph_progress_callback(step: str, status: str, progress: float, message: str = ""):
+        if step in {"fundamental", "technical", "value", "news", "forecast"} and status == "completed":
+            completed_steps.add(step)
+        workflow_progress = 0.1 + min(0.65, len(completed_steps) * 0.13)
+        if step == "summary":
+            workflow_progress = 0.8 + progress * 0.2
+        await notify(step, status, progress, message)
+        await notify(
+            "workflow",
+            "completed" if step == "summary" and status == "completed" else "running",
+            min(workflow_progress, 1.0),
+            "正在生成综合报告" if step == "summary" else f"已完成 {len(completed_steps)}/5 个分析 Agent",
         )
-        step_status = "failed" if isinstance(result_text, str) and result_text.startswith("分析失败") else "completed"
-        await notify(step_key, step_status, 1.0 if step_status == "completed" else 0.95, "已完成" if step_status == "completed" else "执行失败")
-
-    parallel_steps = [
-        ("fundamental", fundamental_agent),
-        ("technical", technical_agent),
-        ("value", value_agent),
-        ("news", news_agent),
-        ("forecast", forecast_agent),
-    ]
 
     await notify("workflow", "running", 0.05, "识别股票并启动并行分析")
-    parallel_steps = [
-        ("fundamental", fundamental_agent),
-        ("technical", technical_agent),
-        ("value", value_agent),
-        ("news", news_agent),
-        ("forecast", forecast_agent),
-    ]
-    tasks = [asyncio.create_task(run_step(step_key, func)) for step_key, func in parallel_steps]
-    for completed_count, task in enumerate(asyncio.as_completed(tasks), start=1):
-        await task
-        await notify("workflow", "running", 0.1 + completed_count * 0.13, f"已完成 {completed_count}/{len(tasks)} 个分析 Agent")
-
-    await notify("summary", "running", 0.05, "等待汇总")
-
-    async def summary_progress_callback(_: str, message: str, local_progress: float):
-        overall_progress = 0.8 + local_progress * 0.2
-        await notify("summary", "running", local_progress, message)
-        await notify("workflow", "running", overall_progress, "正在生成综合报告")
-
-    summary_result = await summary_agent(state, progress_callback=summary_progress_callback)
-    state.update(summary_result)
-    await notify("summary", "completed", 1.0, "综合报告已完成")
+    graph = build_analysis_graph(graph_progress_callback)
+    final_state = await graph.ainvoke(initial_state.copy())
+    final_state["charts"] = await build_analysis_charts(final_state.get("stock_code", ""), final_state.get("stock_name", ""))
     await notify("workflow", "completed", 1.0, "分析完成")
-    final_state = state
     final_state["execution_time"] = time.time() - start_time
 
     if final_state.get("report_file"):

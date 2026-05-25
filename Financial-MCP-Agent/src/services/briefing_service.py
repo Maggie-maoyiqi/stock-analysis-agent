@@ -3,8 +3,15 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
+from uuid import uuid4
 from typing import Any, Dict, List
 
+from backend.storage import save_brief_record
+from .chart_service import (
+    build_portfolio_distribution_chart,
+    build_recommendation_radar_charts,
+    build_watchlist_bar_chart,
+)
 from .profile_service import load_profile
 from .recommendation_service import (
     build_position_reviews,
@@ -175,6 +182,12 @@ async def generate_daily_brief(session: str = "morning") -> Dict[str, Any]:
         "position_reviews": position_reviews,
         "recommendations": recommendations,
     }
+    charts = []
+    if watchlist_reviews:
+        charts.append(build_watchlist_bar_chart(watchlist_reviews))
+    if position_reviews:
+        charts.append(build_portfolio_distribution_chart(position_reviews))
+    charts.extend(build_recommendation_radar_charts(recommendations))
 
     BRIEF_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -194,6 +207,8 @@ async def generate_daily_brief(session: str = "morning") -> Dict[str, Any]:
             "markdown": markdown,
             "markdown_file": str(markdown_path),
             "docx_file": docx_output,
+            "charts": charts,
         }
     )
+    save_brief_record(uuid4().hex, report)
     return report

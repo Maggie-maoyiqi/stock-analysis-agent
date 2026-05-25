@@ -1,0 +1,51 @@
+--- PAGE 1 ---
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 2
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+STAT3600 Linear Statistical Analysis (2023-2024)
+Tutorial 2 Matrix and Distribution Theory
+1. Preliminary
+• For a r.v. X with expectation E (X ) = µ, the variance of X is defined to be
+Var(X ) = E (X − µ)2
+• For a r.v. X with expectation E (X ) = µ, we have Var(X ) = E (X 2) − µ2
+.
+Proof: From the definition of variance, we have
+Var(X ) = E (X − µ)2
+= E (X 2) − 2µX + µ2
+= E (X 2) − 2µE (X ) + µ2
+= E (X 2) −
+µ2 In the third step here, we used linearity of expectation
+• Matrix definition
+Identity matrix, inversion, rank, trace
+Symmetric: AT = A, Idempotent: A2 = A
+2. Given
+Y1
+Y2
+(a) What is distribution of
+∼N2
+1
+1
+,
+1 1
+1 4
+i. Y1−2Y2
+ii. Z=
+Z1
+Z2
+=
+Y1 + Y2
+2Y1−Y2
+(b) Write down the covarince between Z1 and Z2.
+(c) Use R to generate 10 random samples from the two distributions in (a).
+3. Given X1, ..., Xn are n iid samples from the same distribution Nd (0, ΩX ) and a known vector v ∈ d
+(a) What is the distribution of X ′
+1v
+(b) Let A = (X1; ...; Xn ) ∈ d ×n , what is the distribution of A′
+1v
+(c) Let S=
+1
+n AA′. Show that S is an unbiased estimator of C o v (X )
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1

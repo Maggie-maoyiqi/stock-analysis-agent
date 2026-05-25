@@ -324,6 +324,12 @@ textarea {
   line-height: 1.45;
 }
 
+.step-elapsed {
+  color: #98a4b3;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.82rem;
+}
+
 .mini-progress {
   width: 100%;
 }
@@ -574,6 +580,42 @@ textarea {
   border-radius: 14px;
   background: #f5f8fc;
   color: #425466;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.chart-card {
+  padding: 16px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fcfdff 0%, #f3f8fb 100%);
+  border: 1px solid rgba(19, 34, 56, 0.08);
+}
+
+.chart-card-header h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.chart-radar {
+  max-width: 320px;
+  margin: 0 auto;
+  display: block;
+}
+
+.chart-label {
+  font-size: 11px;
+  fill: #425466;
 }
 
 .markdown-body {

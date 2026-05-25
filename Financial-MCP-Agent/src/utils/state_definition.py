@@ -1,6 +1,6 @@
 """LangGraph状态定义。"""
 import operator
-from typing import Annotated, List, Optional, TypedDict
+from typing import Annotated, Any, Dict, List, Optional, TypedDict
 
 
 class AgentState(TypedDict):
@@ -16,6 +16,7 @@ class AgentState(TypedDict):
     forecast_analysis: Optional[str]
     final_report: Optional[str]
     report_file: Optional[str]
+    charts: Optional[List[Dict[str, Any]]]
     current_date: str
     execution_time: float
     errors: Annotated[List[str], operator.add]

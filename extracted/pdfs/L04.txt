@@ -1,0 +1,1502 @@
+--- PAGE 1 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+THE UNIVERSITY OF HONG KONG
+DEPARTMENT OF STATISTICS AND ACTUARIAL SCIENCE
+SDST3600/STAT3600 Linear Statistical Analysis
+Chapter 4 Multiple Linear Regression
+4 Multiple Linear Regression
+4.1 Model Formulation and Assumptions
+A sample of n observations is observed in the form of (yi , xi 1, . . . , xi p ) for the i th observation:
+Y X1 X2. . . Xp
+y1 y2 .
+.
+.
+yn x11 x12. . . x1p
+x21 x22. . . x2p
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+xn1 xn2. . . xnp
+where Y is the response variable and X1, . . . , Xp are the explanatory variables. A multiple linear
+regression model (MLR) assumes:
+(A1) X1, . . . , Xp are non-random variables or they are given,
+(A2) yi = β0 + β1 xi 1 +. . . + βp xi p + εi with εi ∼N 0, σ2
+,
+(A3) the responses y1, . . . , yn are independent.
+Equivalently, in matrix form,
+Y= X β + ε, ε ∼N 0, σ2I ,
+where,
+Y=
+     
+y1
+y2
+.
+.
+.
+yn
+     , X=
+     
+1 x11. . . x1p
+1 x21. . . x2p
+.
+.
+.
+1 xn1. . . xnp
+     , β=
+     
+β0
+β1
+.
+.
+.
+βp
+     , ε =
+     
+ε1
+ε2
+.
+.
+.
+εn
+     .
+β0, β1, . . . βp are the unknown regression coefficients with βj measuring the associated effect
+of X j on Y ; and X is an n × p + 1 design matrix with known entries. Here we assume the
+columns of X are linearly independent. The word ’linear’ in a linear model refers to the prop-
+erty that (Y ) is ‘linear’ in the regression coefficients β0, β1, . . . βp , but not necessarily in each
+explanatory variable.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+1
+--- PAGE 2 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Examples:
+Linear models (linear combination of parameters):
+• y= β0 + β1 x + ε(SLR)
+• y= β0 + β1 x + β2 x 2 + ε
+(explanatory variables: x1 = x , x2 = x 2)
+• y= β0 + β1 sin 2πz1−β2 log z2 + ε
+(explanatory variables: x1 = sin 2πz1, x2 =−log z2)
+NOT Linear models:
+• y= β0 + β1 x γ1
+1 + β2 x γ2
+2 + ε
+β0
+• y=
++ ε
+1 + exp β1 x1 + β2 x2
+4.2 Model Fitting by Least Square Method
+Same as the SLR, the unknown parameters β can be estimated by minimizing the Error Sum
+of Squares or Sum of the Squared Errors given the observed data of the explanatory variable X
+and response variable Y .
+Y−X β 2
+= Y−X β Y−X β= ε ε =
+n
+i=1
+ε2
+i
+Hence,
+min
+β
+Y−X β 2
+= min
+β
+n
+(yi−β0−β1 xi 1−
+i=1
+. . .
+−βp xi p )2
+The LS-estimator
+ˆ
+β=
+ˆ
+ˆ
+ˆ
+β0,
+β1, . . . ,
+βp satisfies
+ˆ
+β=
+     
+ˆ
+β0
+ˆ
+β1
+.
+.
+.
+ˆ
+βp
+     = (X X )−1 X Y
+which is the result we obtained for the SLR in Chapter 3.
+4.2.1 Example (Environmental Data)
+A data set is taken from an environmental study that measured four variables:
+ozone (Y ) - ozone surface concentration in New York, in parts per million;
+radiation (X1) - solar radiation, in langley;
+temperature (X2) - observed temperature, in degrees Fahrenheit;
+wind (X3) - wind speed, in miles per hour;
+for 30 days.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+2
+--- PAGE 3 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Table 1: Environmental data
+ozone radiation temperature wind
+3.45 190.00 67.00 7.40
+3.30 118.00 72.00 8.00
+2.29 149.00 74.00 12.60
+2.62 313.00 62.00 11.50
+2.84 299.00 65.00 8.60
+2.67 99.00 59.00 13.80
+2.00 19.00 61.00 20.10
+2.52 256.00 69.00 9.70
+2.22 290.00 66.00 9.20
+2.41 274.00 68.00 10.90
+2.62 65.00 58.00 13.20
+2.41 334.00 64.00 11.50
+3.24 307.00 66.00 12.00
+1.82 78.00 57.00 18.40
+3.11 322.00 68.00 11.50
+2.22 44.00 62.00 9.70
+1.00 8.00 59.00 9.70
+2.22 320.00 73.00 16.60
+1.59 25.00 61.00 9.70
+3.17 92.00 61.00 12.00
+2.84 13.00 67.00 12.00
+3.56 252.00 81.00 14.90
+4.86 223.00 79.00 5.70
+3.33 279.00 76.00 7.40
+3.07 127.00 82.00 9.70
+4.14 291.00 90.00 13.80
+3.39 323.00 87.00 11.50
+2.84 148.00 82.00 8.00
+2.76 191.00 77.00 14.90
+3.33 284.00 72.00 20.70
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+3
+--- PAGE 4 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Figure 1: Scatterplot matrix for the environmental data
+Multiple regression of Y on X1, X2 and X3:
+yi = β0 + β1 xi 1 + β2 xi 2 + β3 xi 3 + εi where
+Y=
+     
+3.45
+3.30
+.
+.
+.
+3.33
+     , or X=
+      
+1 190.00 67.00 7.40
+1 118.00 72.00 8.00
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+1 284.00 72.00 20.70
+Y= X β + ε (matrix form),
+      , β=
+    
+β0
+β1
+β2
+β3
+    , ε =
+     
+ε1
+ε2
+.
+.
+.
+ε30
+     
+and
+X X=
+    
+30 5733 2085 354.7
+5733 1463179 411076 67085.7
+2085 411076 147243 24523
+354.7 67085.7 24523 4583.39
+    , X Y=
+    
+83.84
+17097.38
+5953.47
+973.64
+    
+(X X )−1
+=
+    
+2.8559226 0.0006173−0.0353507−0.0409097
+0.0006173 0.0000033−0.0000181 0.0000000
+−0.0353507−0.0000181 0.0005339 0.0001439
+−0.0409097 0.0000000 0.0001439 0.0026139
+    .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+4
+--- PAGE 5 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+As a result, the LS-estimate of β is:
+ˆ
+β=
+    
+−0.2953
+0.0013
+0.0456
+−0.0278
+    .
+Hence, the fitted model is given by:
+ozone =−0.2953 + 0.0013 radiation + 0.0456 temperature−0.0278 wind.
+When other factors are fixed, on average, ozone
+• increases by 0.0013 parts per million when radiation increases by 1 langley.
+• increases by 0.0456 parts per million when temperature increase by 1 degree Fahren-
+heit.
+• decreases by 0.0278 parts per million when wind increases by 1 mile per hour.
+4.2.2 Example (Philadelphia Birth Data)
+These are data based on a 5% sample of all births occurring in Philadelphia in 1990. The
+sample has 1115 observations (after deleting 32 cases with incomplete information) on five
+variables:
+grams (Y ) - Birth weight in grams;
+ethnic (X1) - Mother is African American (1=yes, 0=no);
+educ (X2) - Mother’s years of education (0-17 Years);
+smoke (X3) - Whether mother smoked during pregnancy (1=yes, 0=no);
+gestate (X4) - Gestational age in weeks;
+Multiple regression of Y on X1, X2, X3 and X4:
+yi = β0 + β1 xi 1 + β2 xi 2 + β3 xi 3 + β4 xi 4 + εi or Y= X β + ε (matrix form),
+where
+Y=
+     
+2898
+994
+.
+.
+.
+3352
+     , X=
+      
+1 0 0 1 40
+1 1 0 1 26
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+1 0 17 0 40
+      , β=
+       
+β0
+β1
+β2
+β3
+β4
+       , ε =
+     
+ε1
+ε2
+.
+.
+.
+ε1115
+     
+and
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+5
+--- PAGE 6 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+X X=
+       
+1115 662 13677 269 43308
+662 662 7953 172 25459
+13677 7953 172665 3074 531622
+269 172 3074 269 10263
+43308 25459 531622 10263 1690092
+       , X Y=
+       
+3589783
+2042398
+44209264
+797138
+140755743
+       
+(X X )−1
+=
+       
+As a result, the LS-estimate of β is:
+0.2445−0.0085−0.0028−0.0085−0.0052
+−0.0085 0.0039 0.0001 0.0000 0.0001
+−0.0028 0.0001 0.0002 0.0002 0.0000
+−0.0085 0.0000 0.0002 0.0053 0.0001
+−0.0052 0.0001 0.0000 0.0001 0.0001
+       .
+ˆ
+β=
+       
+−2834.4857
+−168.9684
+9.5718
+−174.8129
+156.5116
+       .
+Hence, the fitted model is given by:
+grams=−2834.49−168.97 ethnic + 9.57 educ−174.81 smoke + 156.51 gstate
+When other factors are fixed, on average, the weight of the child
+• decreases by 168.9684 grams when the mother is Afro-American.
+• increases by 9.5718 grams when the education duration of the mother increases by 1
+year.
+• decreases by 174.8129 grams when the mother is a smoker.
+• increases by 156.5116 grams when the gestational age increases by 1 week.
+4.3 Relations with likelihood methods
+4.3.1 Likelihood
+Under the standard linear model assumptions,
+Y∼Nn (X β, σ2I ),
+where β = [β0, . . . , βp ].
+The likelihood function based on data Y is
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+6
+--- PAGE 7 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+L(β0, . . . , βp , σ2) = (2πσ2)−n/2 exp−
+∥Y−X β ∥2
+2σ2 ,
+where Y−X β 2
+:= Y−X β Y−X β.
+Hence, the log likelihood function of Y is
+n
+ln L(β0, . . . , βp , σ2) =−
+2
+ln(2πσ2)−
+∥Y−X β ∥2
+2σ2.
+4.3.2 Maximum likelihood estimator (MLE)
+Maximizing ℓ(β0, . . . , βp , σ2) with respect to β, σ2 is equivalent to
+min
+β ∥Y−X β ∥2 = min
+β
+Y−X β Y−X β.
+The MLE of β is given by
+∂ln L
+∂β
+=
+1
+X Y−X β !
+= 0
+σ2
+X Y−X X β= 0
+X X β= X Y
+ˆ
+β= (X X )−1 X Y ,
+which is equivalent to the LS-estimator of
+ˆ
+β.
+The MLE of σ2 can be obtained by
+∂ln L
+n
+=−
++
+∂σ2
+σ
+Y−X β 2
+σ3
+nσ2
+˜
+σ2
+˜
+σ2
+!
+= 0
+= Y−X β 2
+1
+=
+n
+Y−Xˆ
+β 2
+SSE
+=
+n
+• Note
+ˆ
+Y= Xˆ
+β= X (X X )−1 X Y= H Y is a n-vector of fitted values.
+•
+ˆ
+εi = yi−
+ˆ
+yi is the i th residual; ˆ
+ε = Y−
+ˆ
+Y .
+• SSE= Y−Xˆ
+β 2
+of squares.
+= Y−
+ˆ
+Y 2
+= Y−
+ˆ
+Y Y−
+ˆ
+Y=
+4.3.3 Maximum likelihood
+The maximum likelihood is
+L(ˆ
+ˆ
+β0, . . . ,
+βp ,
+˜
+σ2) = (2π˜
+σ2)−n/2 exp−
+= 2π
+SSE
+n
+−n/2
+exp
+ˆ
+εˆ
+ε = Y (I−H ) Y is the error sum
+∥Y−Xˆ
+β ∥2
+2 ˜
+σ2
+−n
+2
+.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+7
+--- PAGE 8 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+The maximum log-likelihood is
+where c ln L(ˆ
+ˆ
+β0, . . . ,
+βp ,
+˜
+σ2) =−(n/2) ln (SSE) + c ,
+is a constant term (depending on the sample size). Notice that the maximum log-like-
+lihood is a function of the error sum of squares SSE which plays a crucial role in the statistical
+inference of linear modelling.
+4.4 Inference about regression parameters
+Some useful results under MLR:
+• SSE∼σ2χ2
+n−p−1,
+•
+ˆ
+σ2 = SSE /(n−p−1) = MSE −→unbiased for σ2
+,
+•
+ˆ
+β= (X X )−1 X Y∼Np +1 β, σ2 (X X )−1
+,
+•
+ˆ
+β and ˆ
+σ2 are independent.
+4.4.1 Statistical Inference
+Let c = [c0, c1, . . . , cp ] , where c0, c1, . . . , cp are known constants. Suppose we are interested in
+the parameter
+ℓ=
+p
+j=0
+c j βj= c β.
+An unbiased estimator for ℓis
+ˆ
+ℓ= cˆ
+β,
+where
+•
+ˆ
+ℓ∼N ℓ, σ2c (X X )−1 c ,
+• se(ˆ
+ℓ) =ˆ
+σ2c (X X )−1 c ,
+•
+ˆ
+ℓ−ℓ
+se(ˆ
+ℓ)∼tn−p−1.
+The above results enable us to calculate confidence intervals for ℓor to test the hypothesis
+that ℓequals some specified value ℓ0. For example,
+• a 100(1−α)% confidence interval for ℓis
+ˆ
+ℓ±se
+ˆ
+ℓ tα/2,n−p−1.
+• To test whether ℓ= ℓ0 at significance level α, we can do a t test:
+1. calculate the test statistic
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+8
+--- PAGE 9 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+ˆ
+ℓ−ℓ0
+se(ˆ
+ℓ),
+T=
+2. reject the hypothesis iff T >tα/2,n−p−1.
+Note that the above rejection criterion is equivalent to checking whether ℓ0 falls outside
+the 100(1−α)% confidence interval for ℓ.
+Inference about an individual βj can be done by putting c j= 1 and ck = 0 for all k
+4.4.2 Example (Environmental Data)
+The estimated value of Y can be determined by the regression model:
+ˆ
+Y= Xˆ
+β=
+      
+1 190.00 67.00 7.40
+1 118.00 72.00 8.00
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+1 284.00 72.00 20.70
+        
+  
+−0.2953
+0.0013
+0.0456
+−0.0278
+    =
+     
+2.8024
+2.9197
+.
+.
+.
+2.7828
+     .
+Hence, the estimated error ˆ
+ε can be determined by:
+ˆ
+ε = Y−
+ˆ
+Y=
+      
+3.45
+3.30
+.
+.
+.
+3.33
+      −
+      
+2.8024
+2.9197
+.
+.
+.
+2.7828
+      =
+      
+0.6476
+0.3803
+.
+.
+.
+0.5472
+      .
+To estimate σ2, we first need to determine SSE and MSE:
+SSE=
+ˆ
+εˆ
+ε = 0.6476 0.3803 . . . 0.5472
+     
+0.6476
+0.3803
+.
+.
+.
+0.5472
+     = 9.0738,
+SSE
+9.0738
+̸= j.
+The standard errors of
+ˆ
+σ2 = MSE=
+ˆ
+β can =
+n−p−1
+30−3−1
+= 0.3490.
+be determined by the square roots of the diagonal elements of
+the estimated covariance matrix of
+ˆ
+β :
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+9
+--- PAGE 10 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Var
+ˆ
+β=
+ˆ
+σ2 (X X )−1
+=
+    
+0.9967 0.0002−0.0123 0.0143
+0.0002 1.17 ×10−6
+−6.3 ×10−6 4.9 ×10−9
+−0.0123−6.3 ×10−6 0.000186 0.0001
+−0.0143 4.9 ×10−9 0.0001 0.000912
+    ,
+se
+ˆ
+β=
+    
+0.9983
+0.0011
+0.0136
+0.0302
+    .
+Let 1−α= 0.95 be our confidence level, the α/2-quantile of the t-distribution with n−p−1 =
+30−3−1 = 26 degrees of freedom is t0.025,26 = 2.0555. Thus, the 95% confidence intervals (CI)
+for the regression coefficients (exclude intercept) are given by:
+CI β1 = 0.0013 ±2.0555 ×0.0011= [−0.0009, 0.0035],
+CI β2 = 0.0456 ±2.0555 ×0.0136= [0.0175, 0.0737],
+CI β3 =−0.0278 ±2.0555 ×0.0302= [−0.0899, 0.0342].
+The confidence intervals of β1 and β3 include 0. If we would like to test whether each of these
+parameters differs significantly from zero, i.e. H0 : βj= 0 vs. H1 : βj
+̸= 0, j ∈{1, 2, 3}, we cannot
+reject the null hypotheses for β1 and β3 at 5% significance level.
+Let c = (0, 0, 1, 0) be a constant vector, and so ℓ= c β= β2. That means, we concentrate
+only on β2. The estimator of the parameter ℓbecomes
+ˆ
+ℓ= cˆ
+β= (0, 0, 1, 0)
+    
+−0.2953
+0.0013
+0.0456
+−0.0278
+    = 0.0456.
+ˆ
+The standard error of
+ℓis therefore
+Var
+ˆ
+ℓ=
+ˆ
+σ2c (X X )−1 c
+= (0, 0, 1, 0)
+    
+0.9967 0.0002−0.0123 0.0143
+0.0002 1.17 ×10−6
+−6.3 ×10−6 4.9 ×10−9
+−0.0123−6.3 ×10−6 0.000186 0.0001
+−0.0143 4.9 ×10−9 0.0001 0.000912
+    
+    
+0
+0
+1
+0
+    
+= 0.000186,
+se
+ˆ
+ℓ= 0.0136.
+Thus, the 95% confidence interval is
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+10
+--- PAGE 11 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+CI (ℓ) = 0.0456 ±2.0555 ×0.0136= (0.0175, 0.0737).
+Suppose we want to see if ℓdiffers significantly from 0, i.e. to test
+H0 : ℓ= 0 vs. H1 : ℓ̸= 0 (i.e. β2 unrestricted.)
+The test statistic is given by
+T=
+ˆ
+ℓ−ℓ0
+se
+ℓ=
+ˆ
+0.0456−0
+0.0136= 3.3412.
+Since T= 3.342 >t0.025,26 = 2.0555. Therefore, we reject H0 at 5% significance level.
+4.4.3 Example (Philadelphia Birth Data: 4 explanatory variables)
+The hat matrix is given by:
+The value of Y H= X (X X )−1 X=
+   
+0.0360 0.0297 . . .−0.0092
+0.0297 0.0499 . . .−0.0115
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0092−0.0115 . . . 0.0062
+  under the model is estimated by:
+ˆ
+Y= H Y=
+     
+0.0360 0.0297 . . .−0.0092
+0.0297 0.0499 . . .−0.0115
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+−0.0092−0.0115 . . . 0.0062
+     
+     
+2898
+994
+.
+.
+.
+3352
+     =
+     
+ .
+3251.1636
+891.0334
+.
+.
+.
+3588.6975
+     .
+By means of H , we can compute SSE and MSE:
+SSE= Y (I−H ) Y= 211110570.1002,
+SSE
+211110570.1002
+MSE=
+=
+n−p−1
+1115−4−1
+ˆ
+The estimated covariance of
+β is hence
+= 190189.7028
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+11
+--- PAGE 12 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Var
+ˆ
+β=
+ˆ
+σ2 (X X )−1
+= 190189.7028
+       
+−0.0085 0.0039 0.0001 0.0000 0.0001
+−0.0028 0.0001 0.0002 0.0002 0.0000
+−0.0085 0.0000 0.0002 0.0053 0.0001
+−0.0052 0.0001 0.0000 0.0001 0.0001
+0.2445−0.0085−0.0028−0.0085−0.0052
+       
+=
+       
+46492.9331−1610.0898−526.5170−1610.3251−991.7152
+−1610.0898 743.1223 23.6783 1.9571 22.6039
+−526.5170 23.6783 41.7083 44.4557−0.2543
+−1610.3251 1.9571 44.4557 1000.0940 21.1779
+−991.7152 22.6039−0.2543 21.1779 25.1358
+       ,
+and the standard errors of
+ˆ
+β are
+se
+ˆ
+β=
+       
+215.6222
+27.2603
+6.4582
+31.6243
+5.0136
+       .
+Note that the degrees of freedom here is n−p−1 = 1115−4−1 = 1110 and t0.025,1110 = 1.9621,
+the 95% confidence intervals of the regression parameters β1, . . . , β4 are given by
+CI β1 =−168.9684 ±1.9621 ×27.2603= [−222.4558,−115.4809],
+CI β2 = 9.5718 ±1.9621 ×6.4582= [−3.0998, 22.2435],
+CI β3 =−174.8129 ±1.9621 ×31.6243= [−236.8630,−112.7628],
+CI β4 = 156.5116 ±1.9621 ×5.0136= [146.6744, 166.3487].
+Suppose that we would like to test
+H0 : β2 = 0 vs. H1 : β2
+̸= 0,
+The test statistic is given by
+T=
+ˆ
+β2−β2
+se
+β2
+ˆ
+=
+9.5718−0
+6.4582= 1.4821.
+Since T= 1.4821 <t0.025,1110 = 1.9621. Therefore, we do not reject H0 at 5% significance level.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+12
+--- PAGE 13 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+4.4.4 Example (Philadelphia Birth Data: 1 explanatory variable)
+Suppose we fit a SLR model of Y on X2 (Mother’s years of education), we obtain
+ˆ
+β=
+If we test
+2779.6
+35.87
+; se(ˆ
+β ) = 111.9
+8.99
+.
+H0 : β2 = 0 vs. H1 : β2
+̸= 0,
+T=
+35.87−0
+8.99= 3.99.
+The p -value is 0.000063, strongly rejects H0. This contradicts with the result found in Section
+4.4.3. we take?
+the test statistic is
+Which result should 4.5 Prediction
+4.5.1 Multiple Prediction, Individual Response Prediction and Mean Response Prediction
+Consider a prediction problem concerning:
+response (unobserved) Future regressor setting
+(given)
+Y X1 X2··· Xp
+y (1) y (2) .
+.
+.
+y (m) Define an m ×(p + 1) matrix
+x (1)
+01 x (1)
+02··· x (1)
+0p
+x (2)
+01 x (2)
+02··· x (2)
+0p
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+x (m)
+01 x (m)
+02··· x (m)
+0p
+X 0 =
+      
+1 x (1)
+01··· x (1)
+0p
+1 x (2)
+01··· x (2)
+0p
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+1 x (m)
+01··· x (m)
+0p
+      . (1)
+Let a = [a1, . . . , am ] be a vector of m known constants. Suppose we are interested in predict-
+ing
+l=
+m
+j=1
+a j y ( j )
+,
+where y ( j ) = β0 + β1 x ( j )
+01 +···+ βp x ( j )
+0p + ε( j )
+, j= 1, . . . , m.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+13
+--- PAGE 14 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Note [y (1)
+, . . . , y (m)] = X 0β + ε. Naturally, we predict [y (1)
+, . . . , y (m)] by X 0
+ˆ
+β which is m ×1,
+and l by
+ˆ
+ˆ
+l= a X 0
+β . (2)
+Following a similar derivation in SLR (a X 0 plays the same role as c in SLR), it is easy to show
+that a 100(1−α)% prediction interval for l is
+ˆ
+l ±tα/2,n−p−1 se
+ˆ
+l−l , (3)
+where
+se(ˆ
+l−l ) =ˆ
+σ2 a X 0(X X )−1X 0a + a a.
+Similarly, the 100(1−α)% prediction interval for the mean response corresponding to x 0 =
+1 x01,
+···
+, x0p can be obtained as
+x 0
+ˆ
+β ±tα/2,n−p−1ˆ
+σ x 0 (X X )−1 x 0
+1/2 . (4)
+The 100(1−α)% prediction interval for individual response corresponding to x 0 is
+x 0
+ˆ
+β ±tα/2,n−p−1ˆ
+σ x 0 (X X )−1 x 0 + 1
+1/2 . (5)
+4.5.2 Examples (Environmental Data I)
+Suppose we would like to predict the individual ozone concentration and the expected ozone
+concentration when solar radiation= 200, temperature= 70oF and wind speed= 15m/h. The
+predicted individual or mean response is
+x 0
+ˆ
+β= 1 200 70 15
+    
+−0.2953
+0.0013
+0.0456
+−0.0278
+    = 2.7406.
+The estimated standard error of the predicted individual response is
+ˆ
+σ2 1 + x 0 (X X )−1 x 0
+where
+x 0 (X X )−1 x 0 = 1 200 70 15
+    
+2.8559226 0.0006173−0.0353507−0.0409097
+0.0006173 0.0000033−0.0000181 0.0000000
+−0.0353507−0.0000181 0.0005339 0.0001439
+−0.0409097 0.0000000 0.0001439 0.0026139
+    
+    
+1
+200
+70
+15
+  =0.0604.
+So
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+14
+  
+--- PAGE 15 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+ˆ
+σ2 1 + x 0 (X X )−1 x 0 = 0.3490 (1 + 0.0604)
+= 0.6083.
+Since t0.025,26 = 2.0555, the 95% prediction interval of the individual response is
+2.7406 ±2.0555 ×0.6083= [1.4902, 3.9911]
+The standard error of the predicted mean response is
+ˆ
+σ2x 0 (X X )−1 x 0 = 0.3490 ×0.0604= 0.1452
+The 95% prediction interval of the mean response is
+2.7406 ±2.0555 ×0.1452= [2.4422, 3.0391]
+4.5.3 Environmental Data II
+Suppose we wish to predict the difference in ozone concentration between two typical days
+on which (radiation, temperature, wind) are observed to be
+(x (1)
+01 , x (1)
+02 , x (1)
+03 ) = (100, 70, 10) and (x (2)
+01 , x (2)
+02 , x (2)
+03 ) = (50, 80, 10),
+respectively. Here, m = 2, a = (1,−1) and the associated X 0 matrix in (1) is
+X 0 =
+1 100 70 10
+1 50 80 10
+,
+then
+a X 0 = 1−1 100−50 70−80 10−10= 0 50−10 0 ,
+and
+a a = (1−1)
+1
+−1
+= 2.
+From (2), the predicted value is
+ˆ
+ˆ
+l= a X 0
+β= 0 50−10 0
+    
+−0.2953
+0.0013
+0.0456
+−0.0278
+    =−0.3908 .
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+15
+--- PAGE 16 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Note
+a X 0 (X X )−1 X 0a = 0 50−10 0
+  2.8559226 0.0006173−0.0353507−0.0409097
+0.0006173 0.0000033−0.0000181 0.0000000
+  
+−0.0353507−0.0000181 0.0005339 0.0001439
+−0.0409097 0.0000000 0.0001439 0.0026139
+      
+  
+0
+50
+−10
+0
+    
+= 0.0798,
+se(ˆ
+l−l ) = 0.3490 (0.0798 + 2) = 0.8520.
+Since t0.025,26 = 2.0555, the 95% prediction interval is
+−0.3908 ±2.0555 ×0.8520= [−2.1420, 1.3605]
+i.e. [−2.1420, 1.3605], which lies on both sides of zero. In other words, we cannot predict with
+confidence which day is likely to have higher ozone concentration.
+To predict the mean difference in ozone concentration between the days with (radiation=
+100, temp= 70, wind= 10) and days with (radiation= 50, temp= 80, wind= 10) the predicted
+value is the same as before:−0.3908. However, the 95% prediction interval becomes
+−0.3908 ±2.0555 × 0.3490 ×0.0798 = [−0.7338,−0.04771],
+which is much narrower than the previous prediction interval and lies completely below zero.
+Although ozone concentration is predicted not to differ significantly between the two days,
+we can predict with confidence that, on average, days with (radiation= 100, temp= 70, wind
+= 10) have lower ozone concentration than days with (radiation= 50, temp= 80, wind= 10).
+4.6 Simultaneous Intervals
+4.6.1 Bonferroni’s method and Scheffe’s method for simultaneous confidence intervals
+Let be a subset in (p +1) \0(p +1), the space of (p +1)-dimensional nonzero vectors. Suppose
+we want to construct confidence intervals
+simultaneous {I (c ) : c ∈}
+for the set of target parameters
+c β : c ∈ ,
+of family confidence level ≥100(1−α)%, such that, ideally,
+c β ∈I (c ) ∀c ∈= 1−α.
+1. Bonferroni’s method — (applicable to finite )
+Suppose= {c 1, . . . , c g }contains g vectors. For j= 1, . . . , g , calculate the confidence
+interval for c j β by
+I B (c j ) = c j
+ˆ
+β ±se(c j
+ˆ
+β ) tα/(2g ),n−p−1 = c j
+ˆ
+β ±ˆ
+σ c j (X X )−1c j
+1/2
+tα/(2g ),n−p−1.
+Then we have
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+16
+--- PAGE 17 ---
+˜
+d= dimension of vector
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+c j β ∈I B (c j ) ∀j= 1, . . . , g ≥1−α.
+Note: If g= 1, then c 1β ∈I B (c 1) = 1−α.
+Proof: It can be shown using Bonferroni’s argument. i Ai ≥1−
+i (1− (Ai )).
+2. Scheffe’s method — (applicable to any )
+˜
+Let
+d be the number of linearly independent vectors in , i.e.
+space spanned by vectors in . Calculate
+I S (c ) = cˆ
+β ±se(cˆ
+β )˜
+d Fα,
+˜
+d ,n−p−1 = cˆ
+β ±ˆ
+σ c (X X )−1c
+1/2˜
+d Fα,
+˜
+d ,n−p−1.
+Then we have
+c β ∈I S (c ) ∀c ∈ ≥1−α.
+For j= 1, . . . , g , calculate the confidence interval for c j β by
+I S (c j ) = c j
+ˆ
+β ±se(c j
+ˆ
+β )˜
+d Fα,
+˜
+d ,n−p−1 = c j
+ˆ
+β ±ˆ
+σ c j (X X )−1c j
+1/2˜
+d Fα,
+˜
+d ,n−p−1.
+Proof: There exists a (p + 1) ×˜
+d matrix A of rank
+Note first that for any λ ∈˜
+d \0˜
+d ,
+˜
+d such that ⊂ Aλ : λ ∈˜
+d \0˜
+d.
+0 ≤
+λ A (ˆ
+2
+β−β )
+λ A (X X )−1 Aλ A (X X )−1 A 1/2 λ− A (X X )−1 A−1/2 A (ˆ
+β−β )
+= (ˆ
+β−β ) A A (X X )−1 A−1 A (ˆ
+β−β )−
+λ A (ˆ
+β−β ) 2
+λ A (X X )−1 Aλ,
+so that
+λ A (ˆ
+β−β ) 2
+λ A (X X )−1 Aλ ≤ A (X X )−1 A−1/2 A (ˆ
+β−β )
+2
+and equality holds when λ= A (X X )−1 A−1 A (ˆ
+β−β ). Thus
+sup
+λ∈˜
+d \0˜
+d
+λ A (ˆ
+β−β ) 2
+d s 2λ A (X X )−1 Aλ=
+A (X X )−1 A−1/2 A (ˆ
+β−β )
+2
+˜
+/(σ2˜
+d )
+It follows that
+1−α = sup
+λ∈˜
+d \0˜
+d
+λ A (ˆ
+β−β ) 2
+˜
+≤Fα,
+˜
+d s 2λ A (X X )−1 Aλ
+d ,n−p−1
+≤ sup
+c ∈
+c (ˆ
+β−β ) 2
+≤˜
+d Fα,
+˜
+s 2c (X X )−1c
+d ,n−p−1
+= c (ˆ
+β−β ) ≤s c (X X )−1c
+1/2˜
+d Fα,
+˜
+d ,n−p−1 ∀c ∈.
+∀λ ∈˜
+d \0˜
+d
+s 2/σ2
+∼F˜
+d ,n−p−1.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+17
+--- PAGE 18 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Thus,
+c β ∈I S (c ) ∀c ∈ ≥1−α.
+Remark:
+1/2
+(a) Simultaneous confidence intervals (SCI’s) constructed by either method have a conservative
+family confidence level in general.
+(b) The two methods apply to the construction of SCI’s for linear combinations of param-
+eters (see Chapter 7) as well as for mean responses (see example below).
+4.6.2 Example (Cholesterol data)
+Suppose we wish to construct simultaneous confidence intervals for the mean cholesterol lev-
+els [Y ] = β0 + β1 x at ages x = x ∗
+1 , . . . , x ∗
+g where x ∗
+j ’s are all different, with a family confidence
+level of at least 95%.
+Setting= (1, x ∗
+1 ), . . . , (1, x ∗
+g ) , we may use either Bonferroni’s method to calculate the simul-
+taneous intervals I B (1, x ∗
+j ) : j= 1, . . . , g or Scheffe’s method to calculate the simultaneous
+intervals I S (1, x ∗
+j ) : j= 1, . . . , g.
+1. Bonferroni’s method—
+For each j= 1, . . . , g , we have
+I B (1, x ∗
+j ) =ˆ
+β0 +ˆ
+β1 x ∗
+j ±ˆ
+σ
++
+n
+(x ∗
+¯
+j−
+x )2
+Sx x
+= 1.280 + 0.0526 x ∗
+j ±0.3340
+1
+2. Scheffe’s method—
+We have, for each j= 1, . . . , g,
+I S (1, x ∗
+j ) =ˆ
+β0 +ˆ
+β1 x ∗
+j ±ˆ
+σ
++
+n
+(x ∗
+¯
+j−
+x )2
+Sx x
+1/2
+˜
+d F0.05,
+˜
+d ,22
+= 1.280 + 0.0526 x ∗
+j ±0.3340
+1
+24
++
+(x ∗
+j−39.417)2
+4139.833
+1/2
+˜
+d F0.05,
+˜
+d ,22.
+˜
+For example, we consider
+d= 2, x ∗
+1 = 50 and x ∗
+2 = 60. The simultaneous confidence intervals
+for the mean cholesterol levels at ages 50 and 60, with a family confidence level of at least 95%,
+are respectively
+1
++
+24
+t0.025/g ,22
+(x ∗
+j−39.417)2
+4139.833
+1/2
+t0.025/g ,22
+1
+(3.700, 4.122) and (4.132, 4.742) for Bonferroni’s method,
+(3.681, 4.141) and (4.105, 4.770) for Scheffe’s method.
+4.6.3 Bonferroni’s method and Scheffe’s method for simultaneous prediction intervals
+Let Y 0 = [Y (1)
+, . . . , Y (m)] be a vector of m independent unobserved responses such that
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+18
+--- PAGE 19 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Y 0 ∼Nm X 0β, σ2I m
+for a given m ×(p + 1) design matrix X 0, which is given in (1).
+Let be a subset in m \0m , the space of m-dimensional nonzero vectors. Suppose we want
+to construct simultaneous prediction intervals
+{(a ) : a ∈}
+for the set of future response combinations
+{a Y 0 : a ∈}
+with a family confidence level 100(1−α)%, such that, ideally,
+(a Y 0 ∈(a ) ∀a ∈) = 1−α.
+Bonferroni’s and Scheffe’s methods described in §4.6.1 for constructing simultaneous con-
+fidence intervals apply also to construction of simultaneous prediction intervals (proofs are
+also similar).
+1. Bonferroni’s method — (applicable to finite )
+Suppose= {a 1, . . . , a g }. For i= 1, . . . , g , calculate the prediction interval for a i Y 0 by
+B (a i ) = a i X 0
+ˆ
+β ±se(a i X 0
+ˆ
+β−a i Y 0) tα/(2g ),n−p−1
+= a i X 0
+ˆ
+β ±ˆ
+σ a i X 0(X X )−1X 0a i + a i a i
+1/2
+tα/(2g ),n−p−1.
+Then we have
+a i Y 0 ∈B (a i ) ∀i= 1, . . . , g ≥1−α.
+Note: If g= 1, then a 1 Y 0 ∈B (a 1) = 1−α.
+2. Scheffe’s method — (applicable to any )
+Let ˜
+m be the number of linearly independent vectors in , i.e. ˜
+m = dimension of vector
+space spanned by vectors in .
+Calculate the prediction interval for a Y 0 by
+S (a ) = a X 0
+ˆ
+β ±se(a i X 0
+ˆ
+β−a i Y 0)˜ m Fα,
+˜
+m, n−p−1
+ˆ
+= a X 0
+β ±ˆ
+σ a X 0(X X )−1X 0a + a a
+1/2 ˜ m Fα,
+˜
+m, n−p−1.
+Then we have
+a Y 0 ∈S (a ) ∀a ∈ ≥1−α.
+4.6.4 Example (Cholesterol data)
+Consider m (≥2) patients of ages x ∗
+1 , . . . , x ∗
+m respectively, of whom the cholesterol levels are
+unobserved. Among these m patients a total ofm
+2 = m(m−1)/2 distinct pairs can be formed.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+19
+--- PAGE 20 ---
+SDST3600/STAT3600 Linear Statistical Analysis Chapter 4 Multiple Linear Regression
+Suppose we wish to predict the difference in cholesterol level of each pair of patients, and
+construct simultaneous prediction intervals for thesem
+2 differences with at least 95% family
+confidence level.
+This problem fits in with our general setting where contains g=
+m
+2 vectors. For the
+pair {j1, j2}⊂{1, . . . , m}( j1 < j2), the difference in cholesterol level Y ( j1)−Y ( j2) is given by
+a Y 0 = [a1, . . . , am ]Y 0 with a j1
+= 1, a j2
+=−1 and the remaining a j ’s being 0. Thus Y ( j1)−Y ( j2)
+ˆ
+is predicted by
+β1(x ∗
+−x ∗
+j1
+j2 ), and the corresponding prediction interval given as follows.
+1. Bonferroni’s method—
+±t0.025/(m
+2 ),22 ×0.3340
+x ∗
+−x ∗
+j1
+j2
+2
+4139.833
++ 2.
+0.0526 x ∗
+j1
+−x ∗
+j2
+2. Scheffe’s method—
+Note that every vector in can be expressed as a linear combination of the following
+m−1 linearly independent vectors in :
+[1, 0, . . . , 0,−1], [0, 1, 0, . . . , 0,−1], . . . , [0, . . . , 0, 1,−1].
+Thus we have ˜
+m = m−1. Each Scheffe’s prediction interval is given by
+0.0526 x ∗
+j1
+−x ∗
+j2
+± (m−1)F0.05,m−1, 22 ×0.3340
+x ∗
+−x ∗
+j1
+j2
+2
+4139.833
+It is of interest to compare the relative precisions of the two methods by considering the ratio
+length of Bonferroni’s interval
+length of Scheffe’s interval=
+t0.025/(m
+2 ),22
+.
+(m−1)F0.05,m−1, 22
+The following figure plots the above ratio against m. We observe that Bonferroni’s prediction
+intervals have the same length as Scheffe’s intervals for m = 2, and are shorter and hence more
+precise than Scheffe’s intervals for m >2.
++ 2.
+The University of Hong Kong
+Department of Statistics and Actuarial Science
+20
