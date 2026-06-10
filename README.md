@@ -120,43 +120,61 @@ stock-analysis-agent/
 └── README.md
 ```
 
+## 环境要求
+
+- Python 3.10+
+- Node.js 18+
+- 可访问 Baostock / yfinance 数据源的网络环境
+- OpenAI 兼容模型 API Key（用于生成分析报告）
+
 ## 启动方式
+
+以下命令均从仓库根目录执行。请先克隆项目并进入目录：
+
+```bash
+git clone <your-repository-url> stock-analysis-agent
+cd stock-analysis-agent
+```
 
 ### 1. 创建虚拟环境
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 2. 安装 MCP 服务端依赖
+Windows PowerShell 使用：
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent/a-share-mcp-is-just-i-need
-pip install -U pip
+.venv\Scripts\Activate.ps1
+```
+
+### 2. 安装 Python 依赖
+
+```bash
+python -m pip install -U pip
 pip install -r requirements.txt
 ```
 
-### 3. 安装主应用依赖
+根目录的 `requirements.txt` 会自动聚合安装：
+
+- `Financial-MCP-Agent/requirements.txt`
+- `a-share-mcp-is-just-i-need/requirements.txt`
+
+不需要、也不应该把 README 写成某个开发者本机的绝对路径。
+
+TensorFlow 仅用于 TCN 预测，在 Python 3.13 环境中会自动跳过并使用轻量回归预测，不影响其余功能。
+
+### 3. 安装前端依赖
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent/Financial-MCP-Agent
-pip install -r requirements.txt
+npm --prefix Financial-MCP-Agent/frontend install
 ```
 
-### 4. 安装前端依赖
+### 4. 配置环境变量
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent/Financial-MCP-Agent/frontend
-npm install
-```
-
-### 5. 配置环境变量
-
-```bash
-cd /Users/maoyiqi/stock-analysis-agent/Financial-MCP-Agent
-cp .env.example .env
+cp Financial-MCP-Agent/.env.example Financial-MCP-Agent/.env
 ```
 
 至少需要配置：
@@ -169,31 +187,39 @@ A_SHARE_MCP_PATH=../a-share-mcp-is-just-i-need
 FRONTEND_ORIGIN=http://localhost:5173
 ```
 
-### 6. 启动后端
+配置完成后，可先执行自检：
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent/Financial-MCP-Agent
+python scripts/smoke_test.py
+```
+
+### 5. 启动后端
+
+```bash
+cd Financial-MCP-Agent
 python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 7. 启动前端
+### 6. 启动前端
+
+另开一个终端，在仓库根目录执行：
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent/Financial-MCP-Agent/frontend
-npm run dev
+npm --prefix Financial-MCP-Agent/frontend run dev
 ```
 
-### 8. 访问地址
+### 7. 访问地址
 
 - 前端：[http://localhost:5173](http://localhost:5173)
 - 后端健康检查：[http://localhost:8000/api/health](http://localhost:8000/api/health)
+- 分析任务 SSE 状态流：`GET /api/analysis/{task_id}/stream`
 
 ## 命令行模式
 
 如果你只想用 CLI：
 
 ```bash
-cd /Users/maoyiqi/stock-analysis-agent/Financial-MCP-Agent
+cd Financial-MCP-Agent
 python main.py --command "帮我分析贵州茅台"
 python main.py --interactive
 ```

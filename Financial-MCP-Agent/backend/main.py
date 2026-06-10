@@ -65,7 +65,7 @@ async def create_analysis(request: AnalysisCreateRequest):
     return AnalysisCreateResponse(
         task_id=record["task_id"],
         status=record["status"],
-        message="分析任务已创建，前端可轮询任务状态。",
+        message="分析任务已创建，前端可通过 SSE 实时订阅任务状态。",
     )
 
 

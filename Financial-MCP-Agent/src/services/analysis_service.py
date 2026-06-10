@@ -33,12 +33,12 @@ def extract_stock_info(query: str) -> Tuple[Optional[str], Optional[str]]:
         if name in query:
             return code, full_name
 
-    hk_match = re.search(r"\b(\d{4,5}\.HK)\b", query, re.IGNORECASE)
+    hk_match = re.search(r"(?<![A-Za-z0-9])(\d{4,5}\.HK)(?![A-Za-z0-9])", query, re.IGNORECASE)
     if hk_match:
         code = hk_match.group(1).upper()
         return code, f"港股{code}"
 
-    us_match = re.search(r"\b([A-Z]{1,5})\b", query)
+    us_match = re.search(r"(?<![A-Za-z0-9])([A-Z]{1,5})(?![A-Za-z0-9])", query)
     if us_match:
         code = us_match.group(1).upper()
         if code not in {"HK", "SH", "SZ"}:
@@ -55,7 +55,7 @@ def extract_stock_info(query: str) -> Tuple[Optional[str], Optional[str]]:
             code = f"sh.{code_num}"
         return code, f"股票{code_num}"
 
-    hk_digits = re.search(r"\b(\d{4,5})\b", query)
+    hk_digits = re.search(r"(?<!\d)(\d{4,5})(?!\d)", query)
     if hk_digits and any(keyword in query for keyword in ["港股", "H股", "hk", "HK"]):
         code = f"{hk_digits.group(1)[-4:].zfill(4)}.HK"
         return code, f"港股{code}"

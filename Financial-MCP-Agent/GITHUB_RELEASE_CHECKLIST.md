@@ -9,7 +9,7 @@
 项目默认假设这两个目录并列存在：
 
 ```text
-/Users/maoyiqi/stock_mock/
+stock-analysis-agent/
 ├── Financial-MCP-Agent
 └── a-share-mcp-is-just-i-need
 ```
@@ -17,7 +17,6 @@
 ### 2. 创建全新虚拟环境
 
 ```bash
-cd /Users/maoyiqi/stock_mock
 python -m venv .venv
 source .venv/bin/activate
 ```
@@ -25,22 +24,18 @@ source .venv/bin/activate
 ### 3. 安装依赖
 
 ```bash
-cd /Users/maoyiqi/stock_mock/a-share-mcp-is-just-i-need
-pip install -U pip
+python -m pip install -U pip
 pip install -r requirements.txt
 
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
-pip install -r requirements.txt
-
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent/frontend
-npm install
+npm --prefix Financial-MCP-Agent/frontend install
 ```
+
+这里默认是在仓库根目录执行。不要在文档里写死某个开发者机器上的绝对路径。
 
 ### 4. 配置模型密钥
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
-cp .env.example .env
+cp Financial-MCP-Agent/.env.example Financial-MCP-Agent/.env
 ```
 
 至少检查这些值：
@@ -58,16 +53,15 @@ FRONTEND_ORIGIN=http://localhost:5173
 ### 1. Python 语法检查
 
 ```bash
-python -m compileall /Users/maoyiqi/stock_mock/Financial-MCP-Agent /Users/maoyiqi/stock_mock/a-share-mcp-is-just-i-need
+python scripts/smoke_test.py
 ```
 
-预期：无报错。
+预期：所有检查显示 `[ok]`，最后输出 `Smoke test passed.`。
 
 ### 2. 前端打包检查
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent/frontend
-npm run build
+npm --prefix Financial-MCP-Agent/frontend run build
 ```
 
 预期：`built in ...`。
@@ -79,7 +73,7 @@ npm run build
 推荐：
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
+cd Financial-MCP-Agent
 python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -88,9 +82,8 @@ python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 另开一个终端：
 
 ```bash
-source /Users/maoyiqi/stock_mock/.venv/bin/activate
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent/frontend
-npm run dev
+source .venv/bin/activate
+npm --prefix Financial-MCP-Agent/frontend run dev
 ```
 
 ### 3. 健康检查
@@ -118,7 +111,7 @@ npm run dev
 预期：
 
 - 成功创建任务
-- 进度条推进
+- 进度条推进（前端通过 SSE 实时接收状态）
 - 最终生成综合报告
 
 ### 2. 用户档案
@@ -177,7 +170,7 @@ npm run dev
 检查：
 
 ```bash
-ls /Users/maoyiqi/stock_mock/Financial-MCP-Agent/reports/briefs
+ls Financial-MCP-Agent/reports/briefs
 ```
 
 预期：
@@ -185,17 +178,17 @@ ls /Users/maoyiqi/stock_mock/Financial-MCP-Agent/reports/briefs
 - 有 `.md`
 - 环境完整时有 `.docx`
 
-### 2. 用户档案文件
+### 2. 用户档案数据库
 
 检查：
 
 ```bash
-cat /Users/maoyiqi/stock_mock/Financial-MCP-Agent/data/user_profile.json
+ls -lh Financial-MCP-Agent/data/financial_agent.db
 ```
 
 预期：
 
-- 自选股和持仓已持久化
+- SQLite 数据库存在，自选股和持仓可在重启后继续读取
 
 ## 六、推 GitHub 前最后确认
 
@@ -247,7 +240,6 @@ pip show python-docx
 如果没装：
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
 pip install -r requirements.txt
 ```
 

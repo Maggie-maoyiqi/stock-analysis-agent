@@ -80,11 +80,17 @@ def build_analysis_graph(progress_callback: ProgressCallback | None = None):
                 await maybe_awaitable
         return result
 
-    graph.add_node("fundamental", lambda state: run_specialist("fundamental", fundamental_agent, state))
-    graph.add_node("technical", lambda state: run_specialist("technical", technical_agent, state))
-    graph.add_node("value", lambda state: run_specialist("value", value_agent, state))
-    graph.add_node("news", lambda state: run_specialist("news", news_agent, state))
-    graph.add_node("forecast", lambda state: run_specialist("forecast", forecast_agent, state))
+    def make_specialist_node(step_key: str, func):
+        async def node(state: AgentState) -> Dict[str, Any]:
+            return await run_specialist(step_key, func, state)
+        node.__name__ = f"{step_key}_node"
+        return node
+
+    graph.add_node("fundamental", make_specialist_node("fundamental", fundamental_agent))
+    graph.add_node("technical", make_specialist_node("technical", technical_agent))
+    graph.add_node("value", make_specialist_node("value", value_agent))
+    graph.add_node("news", make_specialist_node("news", news_agent))
+    graph.add_node("forecast", make_specialist_node("forecast", forecast_agent))
     graph.add_node("summary", run_summary)
 
     for node_name in ["fundamental", "technical", "value", "news", "forecast"]:

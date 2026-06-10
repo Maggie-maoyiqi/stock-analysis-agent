@@ -1,0 +1,2 @@
+-r a-share-mcp-is-just-i-need/requirements.txt
+-r Financial-MCP-Agent/requirements.txt

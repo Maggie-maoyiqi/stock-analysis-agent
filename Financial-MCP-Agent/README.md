@@ -29,7 +29,7 @@
 ## 🏗️ 项目结构
 
 ```text
-stock_mock/
+stock-analysis-agent/
 ├── Financial-MCP-Agent/
 │   ├── backend/                 # FastAPI 后端
 │   ├── frontend/                # React 前端
@@ -89,41 +89,42 @@ Markdown / Word
 
 ## 🚀 启动方式
 
+以下命令均从仓库根目录执行：
+
 ### 1. 创建虚拟环境
 
 ```bash
-cd /Users/maoyiqi/stock_mock
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 2. 安装 MCP 服务端依赖
+### 2. 安装 Python 依赖
 
 ```bash
-cd /Users/maoyiqi/stock_mock/a-share-mcp-is-just-i-need
-pip install -U pip
+python -m pip install -U pip
 pip install -r requirements.txt
 ```
 
-### 3. 安装 Agent 后端依赖
+如果你是从仓库根目录启动整个项目，也可以直接执行根目录的：
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
 pip install -r requirements.txt
 ```
 
-### 4. 安装前端依赖
+这个入口会同时安装主应用和 MCP 服务依赖。公开 README 不应包含任何开发者本机绝对路径。
+
+TensorFlow 在 Python 3.13 环境中会自动跳过，预测模块会回退到轻量回归模型。
+
+### 3. 安装前端依赖
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent/frontend
-npm install
+npm --prefix Financial-MCP-Agent/frontend install
 ```
 
-### 5. 配置 `.env`
+### 4. 配置 `.env`
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
-cp .env.example .env
+cp Financial-MCP-Agent/.env.example Financial-MCP-Agent/.env
 ```
 
 DeepSeek 示例：
@@ -136,30 +137,37 @@ A_SHARE_MCP_PATH=../a-share-mcp-is-just-i-need
 FRONTEND_ORIGIN=http://localhost:5173
 ```
 
-### 6. 启动后端
+配置后建议先在仓库根目录执行：
+
+```bash
+python scripts/smoke_test.py
+```
+
+### 5. 启动后端
 
 推荐方式：
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
+cd Financial-MCP-Agent
 python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 现在也支持：
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent/backend
-python main.py
+cd Financial-MCP-Agent
+python backend/main.py
 ```
 
-### 7. 启动前端
+### 6. 启动前端
+
+另开一个终端，在仓库根目录执行：
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent/frontend
-npm run dev
+npm --prefix Financial-MCP-Agent/frontend run dev
 ```
 
-### 8. 访问地址
+### 7. 访问地址
 
 - 前端：[http://localhost:5173](http://localhost:5173)
 - 后端健康检查：[http://localhost:8000/api/health](http://localhost:8000/api/health)
@@ -167,7 +175,7 @@ npm run dev
 ## 🖥️ CLI 模式
 
 ```bash
-cd /Users/maoyiqi/stock_mock/Financial-MCP-Agent
+cd Financial-MCP-Agent
 python main.py --command "帮我分析贵州茅台"
 python main.py --interactive
 ```
@@ -179,6 +187,7 @@ python main.py --interactive
 - `GET /api/health`
 - `POST /api/analysis`
 - `GET /api/analysis/{task_id}`
+- `GET /api/analysis/{task_id}/stream` (`SSE`)
 
 ### 用户档案接口
 
@@ -239,7 +248,7 @@ FutureWarning: The pynvml package is deprecated...
 
 详细步骤见：
 
-- [GITHUB_RELEASE_CHECKLIST.md](/Users/maoyiqi/stock_mock/Financial-MCP-Agent/GITHUB_RELEASE_CHECKLIST.md)
+- [GITHUB_RELEASE_CHECKLIST.md](GITHUB_RELEASE_CHECKLIST.md)
 
 ## ⚠️ 免责声明
 
