@@ -1,6 +1,7 @@
 """FastAPI backend entrypoint."""
 import os
 import sys
+import warnings
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -11,6 +12,10 @@ from fastapi.responses import StreamingResponse
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 load_dotenv(PROJECT_ROOT / ".env")
+warnings.filterwarnings("ignore", message=r"The default value of `allowed_objects` will change.*")
+warnings.filterwarnings("ignore", message=r"The pynvml package is deprecated.*", category=FutureWarning)
+warnings.filterwarnings("ignore", module=r"langgraph\.cache\.base")
+warnings.filterwarnings("ignore", module=r"torch\.cuda")
 
 from backend.storage import init_db  # noqa: E402
 from backend.schemas import (  # noqa: E402

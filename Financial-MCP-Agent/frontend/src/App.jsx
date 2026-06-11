@@ -25,6 +25,7 @@ export default function App() {
   const [brief, setBrief] = useState(null);
   const [briefLoading, setBriefLoading] = useState(false);
   const streamRef = useRef(null);
+  const taskActive = task?.status === "queued" || task?.status === "running";
 
   useEffect(() => {
     const loadInitialProfile = async () => {
@@ -203,7 +204,7 @@ export default function App() {
           />
         </div>
 
-        <AnalysisForm onSubmit={handleSubmit} loading={submitting} />
+        <AnalysisForm onSubmit={handleSubmit} loading={submitting} disabled={taskActive} />
 
         {error ? <div className="error-banner">{error}</div> : null}
 

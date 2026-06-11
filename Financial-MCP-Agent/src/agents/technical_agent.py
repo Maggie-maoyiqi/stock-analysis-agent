@@ -3,7 +3,7 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from typing import Any, Dict
 
-from ..tools.analysis_helpers import llm_generate_analysis
+from ..tools.analysis_helpers import LLMUnavailableError, build_offline_analysis, llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
 from ..utils.progress import run_with_heartbeat
@@ -72,14 +72,28 @@ async def technical_agent(
 
 {tool_payload}
 """
-        analysis = await run_with_heartbeat(
-            llm_generate_analysis(TECHNICAL_SYSTEM_PROMPT, prompt),
-            notify,
-            message="生成技术面分析",
-            start=0.45,
-            end=0.92,
-            expected_seconds=20.0,
-        )
+        try:
+            analysis = await run_with_heartbeat(
+                llm_generate_analysis(TECHNICAL_SYSTEM_PROMPT, prompt),
+                notify,
+                message="生成技术面分析",
+                start=0.45,
+                end=0.92,
+                expected_seconds=20.0,
+            )
+        except LLMUnavailableError as exc:
+            analysis = build_offline_analysis(
+                title="技术面分析",
+                stock_name=state.get("stock_name", ""),
+                stock_code=stock_code,
+                tool_payload=tool_payload,
+                reason=str(exc),
+                bullet_points=[
+                    "已成功获取历史 K 线、基础信息和市场时间范围工具输出。",
+                    "当前因模型不可用，无法自动归纳趋势、量价关系和关键位判断。",
+                    "你可以先结合下方 K 线原始数据、前端图表中的均线/回撤/收益曲线做人工判断。",
+                ],
+            )
         await notify("整理技术结论", 0.95)
         await notify("技术分析完成", 1.0)
         logger.info("%s 技术分析完成", SUCCESS_ICON)

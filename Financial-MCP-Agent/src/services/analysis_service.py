@@ -7,6 +7,7 @@ from typing import Optional, Tuple
 
 from .chart_service import build_analysis_charts
 from .langgraph_workflow import build_analysis_graph
+from ..tools.mcp_client import analysis_tool_cache
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
 from ..utils.state_definition import AgentState
 
@@ -98,26 +99,38 @@ async def run_analysis_workflow(query: str, progress_callback=None) -> AgentStat
             if asyncio.iscoroutine(maybe_awaitable):
                 await maybe_awaitable
 
-    completed_steps: set[str] = set()
+    specialist_steps = {"fundamental", "technical", "value", "news", "forecast"}
+    specialist_progresses = {step: 0.0 for step in specialist_steps}
 
     async def graph_progress_callback(step: str, status: str, progress: float, message: str = ""):
-        if step in {"fundamental", "technical", "value", "news", "forecast"} and status == "completed":
-            completed_steps.add(step)
-        workflow_progress = 0.1 + min(0.65, len(completed_steps) * 0.13)
-        if step == "summary":
+        if step in specialist_steps:
+            specialist_progresses[step] = max(specialist_progresses[step], progress)
+            average_specialist_progress = sum(specialist_progresses.values()) / len(specialist_progresses)
+            workflow_progress = 0.05 + average_specialist_progress * 0.75
+            workflow_message = f"{initial_state['stock_name']} 分析中"
+        elif step == "summary":
             workflow_progress = 0.8 + progress * 0.2
+            workflow_message = "正在生成综合报告"
+        else:
+            workflow_progress = progress
+            workflow_message = message or "分析中"
         await notify(step, status, progress, message)
         await notify(
             "workflow",
             "completed" if step == "summary" and status == "completed" else "running",
             min(workflow_progress, 1.0),
-            "正在生成综合报告" if step == "summary" else f"已完成 {len(completed_steps)}/5 个分析 Agent",
+            workflow_message,
         )
 
     await notify("workflow", "running", 0.05, "识别股票并启动并行分析")
-    graph = build_analysis_graph(graph_progress_callback)
-    final_state = await graph.ainvoke(initial_state.copy())
-    final_state["charts"] = await build_analysis_charts(final_state.get("stock_code", ""), final_state.get("stock_name", ""))
+    async with analysis_tool_cache():
+        graph = build_analysis_graph(graph_progress_callback)
+        final_state = await graph.ainvoke(initial_state.copy())
+        try:
+            final_state["charts"] = await build_analysis_charts(final_state.get("stock_code", ""), final_state.get("stock_name", ""))
+        except Exception as exc:
+            logger.warning("图表数据生成失败，已跳过图表展示: %s", exc)
+            final_state["charts"] = []
     await notify("workflow", "completed", 1.0, "分析完成")
     final_state["execution_time"] = time.time() - start_time
 

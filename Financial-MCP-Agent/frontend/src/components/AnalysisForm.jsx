@@ -6,12 +6,12 @@ const EXAMPLES = [
   "分析招商银行的基本面和新闻风险",
 ];
 
-export default function AnalysisForm({ onSubmit, loading }) {
+export default function AnalysisForm({ onSubmit, loading, disabled = false }) {
   const [query, setQuery] = useState(EXAMPLES[0]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!query.trim() || loading) {
+    if (!query.trim() || loading || disabled) {
       return;
     }
     await onSubmit(query.trim());
@@ -42,8 +42,8 @@ export default function AnalysisForm({ onSubmit, loading }) {
             </button>
           ))}
         </div>
-        <button type="submit" className="primary-button" disabled={loading}>
-          {loading ? "提交中..." : "开始分析"}
+        <button type="submit" className="primary-button" disabled={loading || disabled}>
+          {loading ? "提交中..." : disabled ? "当前任务执行中..." : "开始分析"}
         </button>
       </form>
     </section>

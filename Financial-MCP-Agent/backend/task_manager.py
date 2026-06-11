@@ -96,7 +96,8 @@ class AnalysisTaskManager:
                     current["step_progresses"][step] = round(progress * 100, 1)
                 if step in current.get("step_messages", {}):
                     current["step_messages"][step] = message or current["step_messages"][step]
-                current["progress_percent"] = round(progress * 100, 1)
+                if step == "workflow":
+                    current["progress_percent"] = round(progress * 100, 1)
                 current["updated_at"] = datetime.utcnow().isoformat()
                 updated = update_task_record(
                     task_id,
@@ -111,6 +112,20 @@ class AnalysisTaskManager:
                 await self._publish(task_id, updated)
 
             final_state = await run_analysis_workflow(query, progress_callback=progress_callback)
+            current = get_task_record(task_id) or {}
+            final_report = final_state.get("final_report") or ""
+            summary_failed = str(final_report).startswith("报告生成失败")
+            step_statuses = current.get("step_statuses", {}).copy()
+            step_progresses = current.get("step_progresses", {}).copy()
+            step_messages = current.get("step_messages", {}).copy()
+            for step_key in ["fundamental", "technical", "value", "news", "forecast"]:
+                if step_statuses.get(step_key) != "failed":
+                    step_statuses[step_key] = "completed"
+                    step_progresses[step_key] = 100.0
+                    step_messages[step_key] = "已完成"
+            step_statuses["summary"] = "failed" if summary_failed else "completed"
+            step_progresses["summary"] = 95.0 if summary_failed else 100.0
+            step_messages["summary"] = "执行失败" if summary_failed else "综合报告已完成"
             updated = update_task_record(
                 task_id,
                 {
@@ -127,6 +142,9 @@ class AnalysisTaskManager:
                     "execution_time": final_state.get("execution_time"),
                     "charts": final_state.get("charts", []),
                     "progress_percent": 100.0,
+                    "step_statuses": step_statuses,
+                    "step_progresses": step_progresses,
+                    "step_messages": step_messages,
                     "updated_at": datetime.utcnow().isoformat(),
                 },
             )

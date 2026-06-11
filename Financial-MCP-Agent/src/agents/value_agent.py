@@ -3,7 +3,7 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from typing import Any, Dict
 
-from ..tools.analysis_helpers import llm_generate_analysis
+from ..tools.analysis_helpers import LLMUnavailableError, build_offline_analysis, llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
 from ..utils.progress import run_with_heartbeat
@@ -73,14 +73,28 @@ async def value_agent(
 
 {tool_payload}
 """
-        analysis = await run_with_heartbeat(
-            llm_generate_analysis(VALUE_SYSTEM_PROMPT, prompt),
-            notify,
-            message="生成估值分析",
-            start=0.45,
-            end=0.92,
-            expected_seconds=18.0,
-        )
+        try:
+            analysis = await run_with_heartbeat(
+                llm_generate_analysis(VALUE_SYSTEM_PROMPT, prompt),
+                notify,
+                message="生成估值分析",
+                start=0.45,
+                end=0.92,
+                expected_seconds=18.0,
+            )
+        except LLMUnavailableError as exc:
+            analysis = build_offline_analysis(
+                title="估值分析",
+                stock_name=state.get("stock_name", ""),
+                stock_code=stock_code,
+                tool_payload=tool_payload,
+                reason=str(exc),
+                bullet_points=[
+                    "已成功获取基础信息、历史行情、分红和行业工具结果。",
+                    "当前因模型不可用，无法自动形成低估/合理/高估的自然语言判断。",
+                    "你仍可以根据下方原始估值相关数据和前端雷达图做人工复核。",
+                ],
+            )
         await notify("整理估值结论", 0.95)
         await notify("估值分析完成", 1.0)
         logger.info("%s 估值分析完成", SUCCESS_ICON)

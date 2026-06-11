@@ -3,7 +3,7 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from typing import Any, Dict
 
-from ..tools.analysis_helpers import llm_generate_analysis
+from ..tools.analysis_helpers import LLMUnavailableError, build_offline_analysis, llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
 from ..utils.progress import run_with_heartbeat
@@ -58,14 +58,28 @@ async def news_agent(
 
 {tool_payload}
 """
-        analysis = await run_with_heartbeat(
-            llm_generate_analysis(NEWS_SYSTEM_PROMPT, prompt),
-            notify,
-            message="生成新闻舆情分析",
-            start=0.45,
-            end=0.92,
-            expected_seconds=15.0,
-        )
+        try:
+            analysis = await run_with_heartbeat(
+                llm_generate_analysis(NEWS_SYSTEM_PROMPT, prompt),
+                notify,
+                message="生成新闻舆情分析",
+                start=0.45,
+                end=0.92,
+                expected_seconds=15.0,
+            )
+        except LLMUnavailableError as exc:
+            analysis = build_offline_analysis(
+                title="新闻舆情分析",
+                stock_name=state.get("stock_name", ""),
+                stock_code=state.get("stock_code", ""),
+                tool_payload=tool_payload,
+                reason=str(exc),
+                bullet_points=[
+                    "已成功获取新闻工具结果或兜底新闻内容。",
+                    "当前因模型不可用，无法自动总结风险等级与情绪倾向。",
+                    "你可以先从下方新闻标题、摘要、来源中人工判断短期舆情方向。",
+                ],
+            )
         await notify("整理新闻结论", 0.95)
         await notify("新闻分析完成", 1.0)
         logger.info("%s 新闻分析完成", SUCCESS_ICON)

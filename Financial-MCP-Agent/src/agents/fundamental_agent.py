@@ -3,7 +3,7 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from typing import Any, Dict
 
-from ..tools.analysis_helpers import llm_generate_analysis
+from ..tools.analysis_helpers import LLMUnavailableError, build_offline_analysis, llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.execution_logger import get_execution_logger
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
@@ -75,14 +75,28 @@ async def fundamental_agent(
 
 {tool_payload}
 """
-        analysis = await run_with_heartbeat(
-            llm_generate_analysis(FUNDAMENTAL_SYSTEM_PROMPT, prompt),
-            notify,
-            message="生成基本面分析",
-            start=0.45,
-            end=0.92,
-            expected_seconds=20.0,
-        )
+        try:
+            analysis = await run_with_heartbeat(
+                llm_generate_analysis(FUNDAMENTAL_SYSTEM_PROMPT, prompt),
+                notify,
+                message="生成基本面分析",
+                start=0.45,
+                end=0.92,
+                expected_seconds=20.0,
+            )
+        except LLMUnavailableError as exc:
+            analysis = build_offline_analysis(
+                title="基本面分析",
+                stock_name=state.get("stock_name", ""),
+                stock_code=stock_code,
+                tool_payload=tool_payload,
+                reason=str(exc),
+                bullet_points=[
+                    "已成功获取财务、成长、资产负债、现金流、杜邦和分红等工具数据。",
+                    "当前因模型不可用，返回基于原始工具结果的降级版说明。",
+                    "你仍可根据下方原始数据人工复核盈利能力、成长性、偿债能力与分红情况。",
+                ],
+            )
         await notify("整理基本面结论", 0.95)
         get_execution_logger().log_interaction(
             "fundamental_agent",

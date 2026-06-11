@@ -3,7 +3,7 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from typing import Any, Dict
 
-from ..tools.analysis_helpers import llm_generate_analysis
+from ..tools.analysis_helpers import LLMUnavailableError, build_offline_analysis, llm_generate_analysis
 from ..tools.mcp_client import run_tools
 from ..utils.logging_config import ERROR_ICON, SUCCESS_ICON, setup_logger
 from ..utils.progress import run_with_heartbeat
@@ -70,14 +70,28 @@ async def forecast_agent(
 
 {tool_payload}
 """
-        analysis = await run_with_heartbeat(
-            llm_generate_analysis(FORECAST_SYSTEM_PROMPT, prompt),
-            notify,
-            message="生成走势预测解读",
-            start=0.45,
-            end=0.92,
-            expected_seconds=15.0,
-        )
+        try:
+            analysis = await run_with_heartbeat(
+                llm_generate_analysis(FORECAST_SYSTEM_PROMPT, prompt),
+                notify,
+                message="生成走势预测解读",
+                start=0.45,
+                end=0.92,
+                expected_seconds=15.0,
+            )
+        except LLMUnavailableError as exc:
+            analysis = build_offline_analysis(
+                title="走势预测分析",
+                stock_name=state.get("stock_name", ""),
+                stock_code=state.get("stock_code", ""),
+                tool_payload=tool_payload,
+                reason=str(exc),
+                bullet_points=[
+                    "已成功获取预测工具输出和历史行情摘要。",
+                    "当前因模型不可用，无法进一步生成对方向、置信度和局限性的自然语言归纳。",
+                    "你可以先参考下方预测原始结果与前端收益/回撤图表做辅助判断。",
+                ],
+            )
         await notify("整理预测结论", 0.95)
         await notify("预测分析完成", 1.0)
         logger.info("%s 走势预测分析完成", SUCCESS_ICON)
